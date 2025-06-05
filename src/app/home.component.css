@@ -1,0 +1,74 @@
+/* スマートフォンサイズに固定 */
+.smartphone-wrapper {
+    width: 393px;
+    max-width: 100%;
+    min-height: 852px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+
+.header-toolbar {
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #26BCE3;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.home-button.mat-mdc-stroked-button {
+    border: 2px solid #26BCE3; /* border-width, style も一緒に書いたほうが確実 */
+    color: #26BCE3;
+    border-width: #26BCE3;
+    font-style: #26BCE3;
+}  
+
+.home-button{
+    width: 80%;
+    max-width: 400px;
+    height: 50px;
+    margin-top: 16px;
+    padding: 16px 0;
+    border-color: #26BCE3;
+    color: #26BCE3;
+    border-radius: 8px;
+    background-color: transparent;
+    font-family: Arial, sans-serif;
+}
+
+
+.home-button:hover {
+    background-color: rgba(38, 188, 227, 0.1);
+}
+
+.button-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.label-ja {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+}
+
+
