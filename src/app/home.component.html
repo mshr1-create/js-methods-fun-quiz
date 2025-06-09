@@ -1,0 +1,28 @@
+<div class="smartphone-wrapper">
+    <mat-toolbar color="primary" class="header-toolbar">
+        <span class="logo-text">logo</span>
+    </mat-toolbar>
+
+    <div class="home-container">
+        <!-- ボタン①:モード&時間設定 -->
+        <button mat-stroked-button color="primary" class="home-button" (click)="onModeClick()">
+            <div class="button-label">
+                <div class="label-ja">モード & 時間設定</div>
+            </div>
+        </button>
+
+        <!-- ボタン②:プロフィール -->
+        <button mat-stroked-button color="primary" class="home-button" (click)="onProfileClick()">
+            <div class="button-label">
+                <div class="label-ja">プロフィール</div>
+            </div>
+        </button>
+
+        <!-- ボタン③：進捗／学習履歴 -->
+        <button mat-stroked-button color="primary" class="home-button" (click)="onHistoryClick()">
+            <div class="button-label">
+                <div class="label-ja">進捗／学習履歴</div>
+            </div>
+        </button>
+    </div>
+</div>
