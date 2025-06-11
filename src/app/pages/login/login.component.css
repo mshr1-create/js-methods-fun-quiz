@@ -1,0 +1,127 @@
+.login-wrapper {
+    width: 100%;
+    max-width: 393px;
+    min-height: 852px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-header {
+    height: 84px;
+    background-color: #5cc4e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .logo-text {
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+}
+
+.login-content {
+    flex: 1;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: #ffffff;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.input-box {
+    width: 93%;
+    height: 48px;
+    padding: 0 12px;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333333;
+    background-color: #ffffff;
+
+    &::placeholder {
+        color: #aaaaaa;
+    }
+
+    &:focus {
+        border-color: #5cc4e0;
+        outline: none;
+    }
+}
+
+.btn-primary {
+    width: 100%;
+    height: 48px;
+    background-color: #5fb264;   /* 緑色 */
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #54a758; /* 少し濃い緑 */
+    }
+}
+
+.divider {
+    border: none;
+    height: 1px;
+    background-color: #dddddd;
+    margin: 24px 0;
+}
+
+.btn-google {
+    width: 100%;
+    height: 48px;
+    background-color: #ffffff;
+    color: #26BCE3;
+    border: 2px solid #26BCE3;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+&:hover {
+    background-color:(92, 196, 224, 0.1);
+}
+
+.btn-google-icon {
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+}
+
+.link-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin: 16px;
+}
+
+.link-group a {
+    display: block;
+    color: #26BCE3;
+    margin: 8px 0;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 4px 0;
+}
+
+&:hover {
+    text-decoration: underline;
+}
