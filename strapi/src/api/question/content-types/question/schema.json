@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "questions",
+  "info": {
+    "singularName": "question",
+    "pluralName": "questions",
+    "displayName": "Question"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Text": {
+      "type": "text"
+    },
+    "hint": {
+      "type": "string"
+    },
+    "choice": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::choice.choice",
+      "mappedBy": "question"
+    }
+  }
+}
