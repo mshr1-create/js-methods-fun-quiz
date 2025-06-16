@@ -1,0 +1,32 @@
+<div class="question-screen">
+    <h2>{{ level | titlecase }} 問題 (全{{ questions.length }}問)</h2>
+
+    <article *ngFor="let q of questions" class="card">
+        <div class="card-header">
+            Q{{ q.id }}/{{ questions.length }} {{q.title}}
+            <img *ngIf="q.hintAvailable"
+                src="assets/images/hint-icon.png"
+                class="hint-icon" alt="ヒント">
+        </div>
+
+        <!-- 解答UI切り替え -->
+        <ng-container [ngSwitch]="q.answerType">
+            <app-multiple-choice>
+                *ngSwitchCase="'multiple'"
+                [option]="q.options"
+                (answer)="onAnswer(q.id, $event)">
+            </app-multiple-choice>
+            <app-text-answer
+                *ngSwitchCase="'text'"
+                (answer)="onAnswer(q.id, $event)">
+            </app-text-answer>
+        </ng-container>
+
+        <!-- 中級・上級のみ「採点する」ボタン -->
+        <button *ngIf="feedbackMode=== 'deferred'"
+                (click)="submitAll()"
+                class="answer-btn">
+            採点する
+        </button>
+    </article>
+</div>

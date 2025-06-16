@@ -1,0 +1,14 @@
+<!-- src/app/shared/multiple-choice/multiple-choice.component.html -->
+<ul>
+    <li *ngFor="let opt of options">
+        <label>
+        <input
+        type="radio"
+        name="mc"
+        [value]="opt"
+        (change)="onChange(opt)"
+        />
+        {{ opt }}
+    </label>
+    </li>
+</ul>
