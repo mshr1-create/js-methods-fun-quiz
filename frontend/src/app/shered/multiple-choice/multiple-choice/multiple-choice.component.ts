@@ -5,6 +5,7 @@ import { NgFor } from '@angular/common';
 @Component({
     selector: 'app-multiple-choice',
     templateUrl: './multiple-choice.component.html',
+    styleUrls: ['./multiple-choice.component.css'],
     imports: [NgFor],    
 })
 export class MultipleChoiceComponent {

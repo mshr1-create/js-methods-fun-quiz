@@ -4,13 +4,14 @@
   "info": {
     "singularName": "question",
     "pluralName": "questions",
-    "displayName": "Question"
+    "displayName": "Question",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "Text": {
+    "text": {
       "type": "text"
     },
     "hint": {
@@ -21,6 +22,22 @@
       "relation": "oneToOne",
       "target": "api::choice.choice",
       "mappedBy": "question"
+    },
+    "quizid": {
+      "type": "integer"
+    },
+    "explanation": {
+      "type": "text"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "mcq",
+        "input"
+      ]
     }
   }
 }

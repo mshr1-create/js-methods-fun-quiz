@@ -1,0 +1,104 @@
+.question-screen {
+    /* 既存のスタイルの上に追記 */
+    max-width: 393px;
+    min-height: 852px;
+    margin: 0 auto;      /* 横幅を中央寄せ */
+    width: 100%;         /* 親幅いっぱいに広げる */
+    box-sizing: border-box;  /* パディング込みでサイズ管理 */
+}
+  
+
+  /* ヘッダー */
+.qs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #57b5f0;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+  
+  /* カード群 */
+.cards {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* カード同士の間隔 */
+}
+  
+  /* 各カード */
+.card {
+    background-color: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+  /* 選択肢リスト */
+.cards .options {
+    list-style: none;      /* リストマーカーを消す */
+    margin: 0;
+    padding: 0;
+}
+.cards .options li {
+    margin-bottom: 8px;
+}  
+
+  /* カードヘッダー */
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #57b5f0;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 14px;
+    position: relative;
+}
+  
+  /* ヒントアイコン */
+.hint-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+  
+  /* コードブロック */
+.code-block {
+    background-color: #eaf9ff;
+    border-left: 4px solid #29b6f6;
+    margin: 12px;
+    padding: 12px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+}
+  
+  /* 解答 UI の余白調整 */
+  app-multiple-choice,
+  app-text-answer {
+    display: block;
+    margin: 0 12px 12px;
+  }
+  
+  /* 「採点する」ボタン */
+.answer-btn {
+    display: block;
+    margin: 0 12px 12px;
+    padding: 8px 0;
+    width: calc(100% - 24px);
+    background-color: #7bc96f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+  
+  /* ボタンのホバー効果 */
+.answer-btn:hover {
+    background-color: #68b75f;
+}
+  

@@ -509,6 +509,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
 export interface ApiChoiceChoice extends Struct.CollectionTypeSchema {
   collectionName: 'choices';
   info: {
+    description: '';
     displayName: 'Choice';
     pluralName: 'choices';
     singularName: 'choice';
@@ -520,6 +521,7 @@ export interface ApiChoiceChoice extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    iscorrect: Schema.Attribute.Boolean;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -528,6 +530,8 @@ export interface ApiChoiceChoice extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     question: Schema.Attribute.Relation<'oneToOne', 'api::question.question'>;
+    questionid: Schema.Attribute.Integer;
+    text: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -569,6 +573,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
 export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
   collectionName: 'questions';
   info: {
+    description: '';
     displayName: 'Question';
     pluralName: 'questions';
     singularName: 'question';
@@ -581,6 +586,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    explanation: Schema.Attribute.Text;
     hint: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -588,8 +594,43 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
       'api::question.question'
     > &
       Schema.Attribute.Private;
+    order: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
-    Text: Schema.Attribute.Text;
+    quizid: Schema.Attribute.Integer;
+    text: Schema.Attribute.Text;
+    type: Schema.Attribute.Enumeration<['mcq', 'input']>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiQuizQuiz extends Struct.CollectionTypeSchema {
+  collectionName: 'quizzes';
+  info: {
+    description: '';
+    displayName: 'Quiz';
+    pluralName: 'quizzes';
+    singularName: 'quiz';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    duration: Schema.Attribute.Integer;
+    identifier: Schema.Attribute.Integer;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::quiz.quiz'> &
+      Schema.Attribute.Private;
+    mode: Schema.Attribute.Enumeration<
+      ['beginner', 'intermediate', 'advanced']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    questioncount: Schema.Attribute.Integer;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1112,6 +1153,7 @@ declare module '@strapi/strapi' {
       'api::choice.choice': ApiChoiceChoice;
       'api::global.global': ApiGlobalGlobal;
       'api::question.question': ApiQuestionQuestion;
+      'api::quiz.quiz': ApiQuizQuiz;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quizzes",
+  "info": {
+    "singularName": "quiz",
+    "pluralName": "quizzes",
+    "displayName": "Quiz",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "identifier": {
+      "type": "integer"
+    },
+    "title": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "enumeration",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced"
+      ]
+    },
+    "duration": {
+      "type": "integer"
+    },
+    "questioncount": {
+      "type": "integer"
+    }
+  }
+}

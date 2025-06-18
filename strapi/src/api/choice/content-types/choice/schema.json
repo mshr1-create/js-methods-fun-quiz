@@ -4,7 +4,8 @@
   "info": {
     "singularName": "choice",
     "pluralName": "choices",
-    "displayName": "Choice"
+    "displayName": "Choice",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,6 +16,15 @@
       "relation": "oneToOne",
       "target": "api::question.question",
       "inversedBy": "choice"
+    },
+    "text": {
+      "type": "string"
+    },
+    "questionid": {
+      "type": "integer"
+    },
+    "iscorrect": {
+      "type": "boolean"
     }
   }
 }
