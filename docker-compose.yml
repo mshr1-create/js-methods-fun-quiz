@@ -20,6 +20,7 @@ services:
       - -c
       - |
         yarn install
+        yarn add @strapi/plugin-documentation
         yarn develop
     tty: true
 

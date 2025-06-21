@@ -1,0 +1,44 @@
+<div class="feedback-overlay">
+    <div class="popup-card">
+      <!-- カード①：ヘッダー -->
+      <div class="card header-card">
+        Q{{ question.id }}/{{ totalQuestions }} {{ question.title }}
+      </div>
+  
+      <!-- カード②：コードスニペット -->
+      <div class="card code-card">
+        <pre>{{ question.code }}</pre>
+      </div>
+  
+      <!-- カード③：正誤判定 -->
+      <div
+        class="card verdict-card"
+        [ngClass]="{ 'correct': data.correct, 'wrong': !data.correct }"
+      >
+        <div class="verdict-icon">{{ data.correct ? '✔' : '✖' }}</div>
+        <div class="verdict-text">
+          {{ data.correct ? '正解！' : '不正解' }}
+          <span *ngIf="data.method" class="verdict-method">A. {{ data.method }}</span>
+        </div>
+      </div>
+  
+      <!-- カード④：解説 -->
+      <div
+        class="card explanation-card"
+        [ngClass]="{ 'correct-border': data.correct, 'wrong-border': !data.correct }"
+      >
+        <h3>解説</h3>
+        <p>{{ data.explanation }}</p>
+      </div>
+  
+      <!-- 次へボタン -->
+      <button
+        class="btn-next"
+        [ngClass]="{ 'btn-correct': data.correct, 'btn-wrong': !data.correct }"
+        (click)="onNext()"
+      >
+        次へ / Next
+      </button>
+    </div>
+</div>
+  

@@ -1,0 +1,81 @@
+<!-- frontend/src/app/pages/question-screen/question-screen.component.html -->
+<div class="question-screen">
+    <header class="qs-header">
+        <div>Q/{{ questions.length }}</div>
+        <div>logo</div>
+        <div>Timer {{ timerDisplay }}</div>
+    </header>
+
+    <section class="cards">
+      <article *ngFor="let q of questions" class="card">
+        <div class="card-header">
+            Q{{ q.id }}/{{ questions.length }} {{ q.title }}
+            <img *ngIf="q.hintAvailable"
+                src="assets/icons/hint-icon.png"
+                class="hint-icon" alt="ヒント">
+        </div>
+
+        <!-- コードブロック -->
+        <pre class="code-block">{{ q.code }}</pre>
+
+        <!-- 解答UI -->
+        <ng-container [ngSwitch]="q.answerType">
+            <app-multiple-choice
+                *ngSwitchCase="'multiple'"
+                [options]="q.options"
+                (answer)="onAnswer(q.id, $event)">
+            </app-multiple-choice>
+
+            <app-text-answer
+                *ngSwitchCase="'text'"
+                (answer)="onAnswer(q.id, $event)">
+            </app-text-answer>
+        </ng-container>
+
+            <!-- カード右下の解答ボタン -->
+    <button *ngIf="feedbackMode==='immediate'"
+            (click)="onSubmit(q.id)"
+            class="answer-btn">
+        解答
+    </button>
+
+      <!-- ポップアップフィードバック -->
+      <app-feedback-popup
+        *ngIf="feedbackMode === 'immediate' && popupOpen"
+        [question]="questions[currentIndex]"
+        [totalQuestions]="questions.length"
+        [data]="feedbackData"
+        (close)="onCloseFeedback()">
+      </app-feedback-popup>
+
+
+
+
+          <!-- インラインフィードバックウィンドウ -->
+          <div *ngIf="feedbackOpen[q.id]" class="feedback-window">
+            <div class="fb-header" [ngClass]="{ 'correct': feedbackResult[q.id].correct, 'wrong': !feedbackResult[q.id].correct }">
+              <span class="icon">
+                {{ feedbackResult[q.id].correct ? '✔ 正解！' : '✖ 不正解' }}
+              </span>
+              <span *ngIf="feedbackResult[q.id].method" class="method">
+                A. {{ feedbackResult[q.id].method }}
+              </span>
+            </div>
+            <div class="fb-body">
+              {{ feedbackResult[q.id].explanation }}
+            </div>
+            <button class="fb-next" (click)="feedbackOpen[q.id] = false">
+              次へ/Next
+            </button>
+          </div>
+
+
+        <!-- 中級・上級のみボタン -->
+        <button *ngIf="feedbackMode==='deferred'"
+                (click)="submitAll()"
+                class="answer-btn">
+            採点する
+        </button>
+        </article>
+    </section>
+</div>

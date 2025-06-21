@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "questions",
+  "info": {
+    "singularName": "question",
+    "pluralName": "questions",
+    "displayName": "Question",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "text": {
+      "type": "text"
+    },
+    "hint": {
+      "type": "string"
+    },
+    "choice": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::choice.choice",
+      "mappedBy": "question"
+    },
+    "quizid": {
+      "type": "integer"
+    },
+    "explanation": {
+      "type": "text"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "mcq",
+        "input"
+      ]
+    }
+  }
+}
