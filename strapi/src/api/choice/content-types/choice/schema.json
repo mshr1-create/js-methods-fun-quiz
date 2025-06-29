@@ -11,12 +11,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "question": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::question.question",
-      "inversedBy": "choice"
-    },
     "text": {
       "type": "string"
     },
@@ -25,6 +19,12 @@
     },
     "iscorrect": {
       "type": "boolean"
+    },
+    "question": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::question.question",
+      "inversedBy": "choices"
     }
   }
 }

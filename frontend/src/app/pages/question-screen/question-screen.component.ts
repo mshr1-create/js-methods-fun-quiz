@@ -58,8 +58,22 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.level = this.route.snapshot.paramMap.get('level') as any;
-    this.questions = this.quizService.getQuestions(this.level);
+    // URLから 'level' パラメータを取得して、this.levelに設定する
+    const levelParam = this.route.snapshot.paramMap.get('level');
+
+    // パラメータが 'beginner', 'intermediate', 'advanced' のいずれかであることを確認
+    if (levelParam === 'beginner' || levelParam === 'intermediate' || levelParam === 'advanced') {
+      this.level = levelParam;
+    } else {
+      // 不正なURLの場合はエラー処理やリダイレクトを行う
+      console.error('Invalid level parameter in URL');
+      return; // 処理を中断
+    }    
+
+    // getQuestionsはObservableを返すのでsubscribeする
+    this.quizService.getQuizzes(this.level).subscribe((questions: Question[]) => {
+      this.questions = questions;
+  });
     this.feedbackMode = this.level === 'beginner' ? 'immediate' : 'deferred';
     // タイマー開始
     this.startTimer();

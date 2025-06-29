@@ -1,47 +1,58 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Question } from "../models/question.model";
+import { HttpClient } from "@angular/common/http";
+import { Observable, map } from "rxjs";
 
-// frontend/src/app/services/quiz.service.ts
+
 type Level = 'beginner'|'intermediate'|'advanced';
 
 @Injectable({ providedIn:'root' })
 export class QuizService {
-    private data: Record<Level, Question[]> = {
-        beginner: [
-            { id:1, title:'新しい配列の作成', code:`const nums=[1,2,3];\nconst res=nums._______(n=>n*2);`,
-            options:['map','filter','reduce','forEach'], answerType:'multiple', hintAvailable:true },
-        // …他8問…
-    ],
-    intermediate: [
-      // たとえば最初の半数は multiple、後半は text
-        { id:1, title:'文字列置換', code:`const text='foo';\n//…`, options:[], answerType:'text', hintAvailable:true },
-      // …残り2問…
-    ],
-    advanced: [
-      // 全問 text
-        { id:1, title:'正規表現応用', code:`…`, options:[], answerType:'text', hintAvailable:false },
-      // …
-    ]
+    private http = inject(HttpClient);
+    // APIから取得した問題と回答を保持する
+    private questionsWithAnswers: (Question & { correctAnswer : string; methodName? : string; explanation?: string})[] = []; 
+
+    /** API から問題を取得し、サービス内に保持する*/
+    getQuizzes(level: Level): Observable<Question[]> {
+        const mockApiUrl = `http://localhost:1337/api/quizzes?mode=${level}`;
+        return this.http
+            .get<{ data: (Question & { 
+                    correctAnswer: string; 
+                    methodName?: string; 
+                    explanation?: string 
+                })[];
+                meta: any
+                }>(mockApiUrl)
+            .pipe(
+                map(res => {
+                    console.log('APIから取得した問題:', res.data);
+                    // ①ラッパーから配列だけ取り出す
+                    const items = res.data;
+                    // ②サービス内キャッシュに丸ごと保存
+                    this.questionsWithAnswers = items;
+                    // ③Question部分だけを返す
+                    return items.map(({correctAnswer, methodName, explanation, ...q}) => q); 
+                })
+            );
 };
-    getQuestions(level: Level): Question[] {
-        return this.data[level];
-    }
 
     isCorrect(id: number, answer: string): boolean {
         // ID ごとの正答チェックを実装
-        return answer==='map'; // 仮
+        const question = this.questionsWithAnswers.find(q => q.id === id);
+        return question ? question.correctAnswer === answer : false;
     }
 
         /** 解答メソッド名を取得（フィードバック用） */
     getMethodName(id: number): string {
-            // 問題IDに応じたメソッド名を返す
-        return '';
+        // ID ごとの解答メソッド名を返す
+        const question = this.questionsWithAnswers.find(q => q.id === id);
+        return question?.methodName ?? '';            
     }
     
         /** 解説テキストを取得（フィードバック用） */
     getExplanation(id: number): string {
             // 問題IDに応じた解説を返す
-        return '';
+            const question = this.questionsWithAnswers.find(q => q.id === id);
+            return question?.explanation ?? '';
     }
-    
 }

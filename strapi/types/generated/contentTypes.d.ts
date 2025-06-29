@@ -529,7 +529,7 @@ export interface ApiChoiceChoice extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    question: Schema.Attribute.Relation<'oneToOne', 'api::question.question'>;
+    question: Schema.Attribute.Relation<'manyToOne', 'api::question.question'>;
     questionid: Schema.Attribute.Integer;
     text: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -582,7 +582,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    choice: Schema.Attribute.Relation<'oneToOne', 'api::choice.choice'>;
+    choices: Schema.Attribute.Relation<'oneToMany', 'api::choice.choice'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -596,6 +596,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     order: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
+    quiz: Schema.Attribute.Relation<'manyToOne', 'api::quiz.quiz'>;
     quizid: Schema.Attribute.Integer;
     text: Schema.Attribute.Text;
     type: Schema.Attribute.Enumeration<['mcq', 'input']>;
@@ -621,15 +622,15 @@ export interface ApiQuizQuiz extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     duration: Schema.Attribute.Integer;
-    identifier: Schema.Attribute.Integer;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::quiz.quiz'> &
       Schema.Attribute.Private;
     mode: Schema.Attribute.Enumeration<
       ['beginner', 'intermediate', 'advanced']
     >;
+    number_of_question: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
-    questioncount: Schema.Attribute.Integer;
+    questions: Schema.Attribute.Relation<'oneToMany', 'api::question.question'>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
