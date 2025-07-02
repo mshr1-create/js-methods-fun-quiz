@@ -5,8 +5,8 @@ import { QuizService } from '../../services/quiz.service';
 import { NgFor, NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MultipleChoiceComponent } from '../../shered/multiple-choice/multiple-choice/multiple-choice.component';
-import { TextAnswerComponent } from '../../shered/text-answer/text-answer.component';
+import { MultipleChoiceComponent } from '../../shared/multiple-choice/multiple-choice/multiple-choice.component';
+import { TextAnswerComponent } from '../../shared/text-answer/text-answer.component';
 import { interval, Subscription } from 'rxjs';
 import { takeWhile }            from 'rxjs/operators';
 import { FeedbackPopupComponent, FeedbackData } from './feedback-popup/feedback-popup.component';
@@ -70,10 +70,12 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       return; // 処理を中断
     }    
 
-    // getQuestionsはObservableを返すのでsubscribeする
-    this.quizService.getQuizzes(this.level).subscribe((questions: Question[]) => {
-      this.questions = questions;
-  });
+    // getQuizzesはObservableを返すのでsubscribeする
+    this.quizService.getQuizzes(this.level)
+      .subscribe(qs => {
+      console.log('questions from service:', qs);
+      this.questions = qs;
+    });
     this.feedbackMode = this.level === 'beginner' ? 'immediate' : 'deferred';
     // タイマー開始
     this.startTimer();

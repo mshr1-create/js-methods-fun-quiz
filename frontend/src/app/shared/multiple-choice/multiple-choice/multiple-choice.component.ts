@@ -10,6 +10,7 @@ import { NgFor } from '@angular/common';
 })
 export class MultipleChoiceComponent {
     @Input() options: string[] = [];
+    @Input() questionId!: number;
     @Output() answer = new EventEmitter<string>();
 
     onChange(option: string) {

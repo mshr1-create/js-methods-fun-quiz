@@ -1,8 +1,11 @@
 export interface Question {
     id: number;
-    title: string;
-    code: string;
+    text: string;
+    hint: string;
     options: string[];
-    answerType: 'multiple'|'text';
-    hintAvailable: boolean;
+    quizid: number;
+    explanation: string;
+    type: 'multiple'|'text';
+    order: number;
+    
 }
