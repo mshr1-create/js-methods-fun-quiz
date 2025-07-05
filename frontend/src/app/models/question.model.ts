@@ -5,7 +5,7 @@ export interface Question {
     options: string[];
     quizid: number;
     explanation: string;
-    type: 'multiple'|'text';
+    type: string;
     order: number;
     
 }
