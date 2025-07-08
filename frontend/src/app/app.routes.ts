@@ -7,14 +7,15 @@ import { ModeDurationComponent } from './pages/mode-duration/mode-duration.compo
 import { QuestionScreenComponent } from './pages/question-screen/question-screen.component';
 // import { ProfileComponent } from './profile.component';
 // import { HistoryComponent } from './history.component';
+import { HttpClient } from '@angular/common/http';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
+    // { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'app-mode-duration', component: ModeDurationComponent },
     // { path: 'profile',    component: ProfileComponent },
     // { path: 'history',    component: HistoryComponent },
-    { path: 'questions/:level', component: QuestionScreenComponent},
-    { path: '', redirectTo: 'questions/beginner', pathMatch: 'full' },
+    { path: 'quizzes/:level', component: QuestionScreenComponent},
+    { path: '', redirectTo: 'quizzes/beginner', pathMatch: 'full' },
 ];

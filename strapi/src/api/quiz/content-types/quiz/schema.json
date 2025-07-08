@@ -11,9 +11,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "identifier": {
-      "type": "integer"
-    },
     "title": {
       "type": "string"
     },
@@ -28,8 +25,14 @@
     "duration": {
       "type": "integer"
     },
-    "questioncount": {
+    "number_of_question": {
       "type": "integer"
+    },
+    "questions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::question.question",
+      "mappedBy": "quiz"
     }
   }
 }

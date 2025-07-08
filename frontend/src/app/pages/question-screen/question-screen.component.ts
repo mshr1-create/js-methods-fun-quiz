@@ -5,8 +5,8 @@ import { QuizService } from '../../services/quiz.service';
 import { NgFor, NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MultipleChoiceComponent } from '../../shered/multiple-choice/multiple-choice/multiple-choice.component';
-import { TextAnswerComponent } from '../../shered/text-answer/text-answer.component';
+import { MultipleChoiceComponent } from '../../shared/multiple-choice/multiple-choice/multiple-choice.component';
+import { TextAnswerComponent } from '../../shared/text-answer/text-answer.component';
 import { interval, Subscription } from 'rxjs';
 import { takeWhile }            from 'rxjs/operators';
 import { FeedbackPopupComponent, FeedbackData } from './feedback-popup/feedback-popup.component';
@@ -58,8 +58,24 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.level = this.route.snapshot.paramMap.get('level') as any;
-    this.questions = this.quizService.getQuestions(this.level);
+    // URLから 'level' パラメータを取得して、this.levelに設定する
+    const levelParam = this.route.snapshot.paramMap.get('level');
+
+    // パラメータが 'beginner', 'intermediate', 'advanced' のいずれかであることを確認
+    if (levelParam === 'beginner' || levelParam === 'intermediate' || levelParam === 'advanced') {
+      this.level = levelParam;
+    } else {
+      // 不正なURLの場合はエラー処理やリダイレクトを行う
+      console.error('Invalid level parameter in URL');
+      return; // 処理を中断
+    }    
+
+    // getQuizzesはObservableを返すのでsubscribeする
+    this.quizService.getQuizzes(this.level)
+      .subscribe(qs => {
+      console.log('questions from service:', qs);
+      this.questions = qs;
+    });
     this.feedbackMode = this.level === 'beginner' ? 'immediate' : 'deferred';
     // タイマー開始
     this.startTimer();

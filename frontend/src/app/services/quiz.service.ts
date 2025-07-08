@@ -1,47 +1,93 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Question } from "../models/question.model";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Observable, of } from "rxjs";
+import { map, catchError } from "rxjs/operators";
+import { Quiz } from "../models/quiz.model";
 
-// frontend/src/app/services/quiz.service.ts
-type Level = 'beginner'|'intermediate'|'advanced';
-
-@Injectable({ providedIn:'root' })
-export class QuizService {
-    private data: Record<Level, Question[]> = {
-        beginner: [
-            { id:1, title:'新しい配列の作成', code:`const nums=[1,2,3];\nconst res=nums._______(n=>n*2);`,
-            options:['map','filter','reduce','forEach'], answerType:'multiple', hintAvailable:true },
-        // …他8問…
-    ],
-    intermediate: [
-      // たとえば最初の半数は multiple、後半は text
-        { id:1, title:'文字列置換', code:`const text='foo';\n//…`, options:[], answerType:'text', hintAvailable:true },
-      // …残り2問…
-    ],
-    advanced: [
-      // 全問 text
-        { id:1, title:'正規表現応用', code:`…`, options:[], answerType:'text', hintAvailable:false },
-      // …
-    ]
-};
-    getQuestions(level: Level): Question[] {
-        return this.data[level];
-    }
-
-    isCorrect(id: number, answer: string): boolean {
-        // ID ごとの正答チェックを実装
-        return answer==='map'; // 仮
-    }
-
-        /** 解答メソッド名を取得（フィードバック用） */
-    getMethodName(id: number): string {
-            // 問題IDに応じたメソッド名を返す
-        return '';
-    }
-    
-        /** 解説テキストを取得（フィードバック用） */
-    getExplanation(id: number): string {
-            // 問題IDに応じた解説を返す
-        return '';
-    }
-    
+// Strapi のフラットな Quiz レスポンス型定義
+interface ApiQuestionAttrs {
+  id: number;
+  text: string;
+  hint: string;
+  options: string[];
+  quizid: number;
+  explanation: string;
+  type: 'mcq' | 'text';
+  order: number;
 }
+
+interface QuizResponse {
+  data: Quiz[];
+}
+
+
+type Level = 'beginner' | 'intermediate' | 'advanced';
+
+@Injectable({ providedIn: 'root' })
+export class QuizService {
+  private http = inject(HttpClient);
+  // cache: includes correctAnswer, methodName, explanation, order
+  private questionsWithAnswers: (Question & {
+    correctAnswer: string;
+    methodName?: string;
+    explanation?: string;
+    order: number;
+  })[] = [];
+
+  /** Quiz → Questions をまとめて取得し、Question[] を返す */
+  getQuizzes(level: Level): Observable<Question[]> {
+    const params = new HttpParams()
+      .set('filters[mode][$eq]', level)
+      .set('populate', 'questions');
+  
+    return this.http
+      .get<QuizResponse>(`http://localhost:1337/api/quizzes`, { params })
+      .pipe(
+        map(res => {
+          // 取得した Quiz レコード（mode に合ったもの）
+          const quizItem = res.data[1];
+          console.log('res', res);
+          console.log(quizItem);
+          // ネストされた Question 配列を取り出し
+          const rawQs = quizItem.questions;
+          console.log('rawQs', rawQs);
+          return rawQs.map((question: Question) => {
+            // Question 型にマッピング
+            return {
+              id: question.id,
+              text: question.text,
+              hint: question.hint ?? '',
+              options: question.options ?? [],
+              quizid: question.quizid ?? 0, // quizid がない場合は 0 を設定
+              explanation: question.explanation ?? '',
+              type: question.type === 'mcq' ? 'multiple' : '',
+              order: question.order ?? 0 // order がない場合は 0 を設定
+            };
+          }
+          );
+        }),
+        catchError(err => {
+          console.error('getQuizzes error', err);
+          return of([] as Question[]);
+        })
+      );
+  }
+
+  
+
+  isCorrect(id: number, answer: string): boolean {
+    const q = this.questionsWithAnswers.find(x => x.id === id);
+    return q ? q.correctAnswer === answer : false;
+  }
+
+  getMethodName(id: number): string {
+    return this.questionsWithAnswers.find(x => x.id === id)?.methodName ?? '';
+  }
+
+  getExplanation(id: number): string {
+    return this.questionsWithAnswers.find(x => x.id === id)?.explanation ?? '';
+  }
+}
+
+
