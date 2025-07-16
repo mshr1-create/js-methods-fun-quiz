@@ -101,4 +101,18 @@
 .answer-btn:hover {
     background-color: #68b75f;
 }
-  
+
+  /* 選択肢カード */
+.choice-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.choice-card:hover {
+    background-color: #f9f9f9;
+}

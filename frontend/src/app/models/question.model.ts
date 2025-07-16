@@ -1,8 +1,10 @@
+import { Choice } from "./choice.model";
+
 export interface Question {
     id: number;
     text: string;
     hint: string;
-    options: string[];
+    choices: Choice[];
     quizid: number;
     explanation: string;
     type: string;
