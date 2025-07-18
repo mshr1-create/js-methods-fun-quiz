@@ -1,6 +1,6 @@
-// src/app/shared/multiple-choice/multiple-choice.component.ts
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgFor } from '@angular/common';
+import { QuizService } from '../../../services/quiz.service';
 
 @Component({
     selector: 'app-multiple-choice',
@@ -9,11 +9,13 @@ import { NgFor } from '@angular/common';
     imports: [NgFor],    
 })
 export class MultipleChoiceComponent {
-    @Input() options: string[] = [];
+    @Input() choices: string[] = [];
     @Input() questionId!: number;
     @Output() answer = new EventEmitter<string>();
 
-    onChange(option: string) {
-        this.answer.emit(option);
+    onChange(choice: string) {
+        this.answer.emit(choice);
+        console.log('Selected choice:', choice);
+
     }
 }

@@ -5,17 +5,6 @@ import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { Quiz } from "../models/quiz.model";
 
-// Strapi のフラットな Quiz レスポンス型定義
-interface ApiQuestionAttrs {
-  id: number;
-  text: string;
-  hint: string;
-  options: string[];
-  quizid: number;
-  explanation: string;
-  type: 'mcq' | 'text';
-  order: number;
-}
 
 interface QuizResponse {
   data: Quiz[];
@@ -39,14 +28,17 @@ export class QuizService {
   getQuizzes(level: Level): Observable<Question[]> {
     const params = new HttpParams()
       .set('filters[mode][$eq]', level)
-      .set('populate', 'questions');
+      .set('populate', 'questions.choices'); // choices をネストして取得
   
     return this.http
       .get<QuizResponse>(`http://localhost:1337/api/quizzes`, { params })
       .pipe(
         map(res => {
-          // 取得した Quiz レコード（mode に合ったもの）
-          const quizItem = res.data[1];
+          // 条件に基づいてクイズを選択
+          const quizItem = res.data.find(item => item.questions && item.questions.length > 0) || res.data[0];
+          if (!quizItem) {
+            throw new Error('No quiz found for the specified level');
+          }
           console.log('res', res);
           console.log(quizItem);
           // ネストされた Question 配列を取り出し
@@ -58,14 +50,17 @@ export class QuizService {
               id: question.id,
               text: question.text,
               hint: question.hint ?? '',
-              options: question.options ?? [],
+              choices: question.choices?.map(choice => ({
+                id: choice.id, // Choice 型に必要な id を追加
+                text: choice.text,
+                iscorrect: choice.iscorrect ?? false // Choice 型に必要な iscorrect を追加
+              })) ?? [], // choices がない場合は空配列を設定
               quizid: question.quizid ?? 0, // quizid がない場合は 0 を設定
               explanation: question.explanation ?? '',
               type: question.type === 'mcq' ? 'multiple' : '',
               order: question.order ?? 0 // order がない場合は 0 を設定
             };
-          }
-          );
+          });
         }),
         catchError(err => {
           console.error('getQuizzes error', err);
@@ -89,5 +84,3 @@ export class QuizService {
     return this.questionsWithAnswers.find(x => x.id === id)?.explanation ?? '';
   }
 }
-
-
