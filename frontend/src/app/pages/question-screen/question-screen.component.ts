@@ -10,6 +10,7 @@ import { TextAnswerComponent } from '../../shared/text-answer/text-answer.compon
 import { interval, Subscription } from 'rxjs';
 import { takeWhile }            from 'rxjs/operators';
 import { FeedbackPopupComponent, FeedbackData } from './feedback-popup/feedback-popup.component';
+import { HintDialogComponent } from "../../shared/hint-dialog/hint-dialog.component";
 
 @Component({
   selector: 'app-question-screen',
@@ -21,8 +22,9 @@ import { FeedbackPopupComponent, FeedbackData } from './feedback-popup/feedback-
     RouterModule,
     MultipleChoiceComponent,
     TextAnswerComponent,
-    FeedbackPopupComponent
-  ],
+    FeedbackPopupComponent,
+    HintDialogComponent
+],
   templateUrl: './question-screen.component.html',
   styleUrls: ['./question-screen.component.css']
 })
