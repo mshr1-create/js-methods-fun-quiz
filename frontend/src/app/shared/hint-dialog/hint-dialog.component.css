@@ -41,6 +41,7 @@ button {
     overflow: hidden;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     padding: 0;
+    margin-left: 10px;
 }
   
   /* ① ヘッダー */
@@ -53,7 +54,7 @@ button {
     width: 50px;
 }
   
-  /* ② コードカード */
+  /* ② ヒントカード */
 .hint-card {
     border: 1px solid #ddd;
 }
@@ -65,6 +66,8 @@ button {
     font-family: monospace;
     white-space: pre-wrap;
     font-size: 0.85rem;
+    color: black;
+    
 }
 
 /* 閉じるボタン */
@@ -79,4 +82,5 @@ button {
     align-self: flex-end;
     min-width: 50px;
     background-color: #4aa; /* モックの淡いブルー */
+    margin-left: 10px;
 }
