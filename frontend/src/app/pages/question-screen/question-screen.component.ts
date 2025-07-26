@@ -36,9 +36,12 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   answers: Record<number, string> = {};
   feedbackMode: 'immediate' | 'deferred' = 'deferred';
   currentIndex = 0; // 現在の問題インデックス
+  duration: number = 0; // クイズの制限時間（秒単位）
 
   // タイマー残秒数
-  private remainingSeconds = 6 * 60 + 30; // 6分30秒
+  // quizService.getQuiz() で取得したdurationを使用
+  
+  private remainingSeconds!: number; // API 取得後に初期化
   // 表示用文字列
   timerDisplay = '';
   // 定期購読保持用
@@ -73,14 +76,18 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
     }    
 
     // getQuizzesはObservableを返すのでsubscribeする
-    this.quizService.getQuizzes(this.level)
+    this.quizService.getQuiz(this.level)
       .subscribe(qs => {
       console.log('questions from service:', qs);
       this.questions = qs;
+      this.remainingSeconds = this.quizService.currentDurationSec;
+      this.timerDisplay = this.formatTime(this.remainingSeconds);
+      // タイマー開始
+      this.startTimer();
     });
     this.feedbackMode = this.level === 'beginner' ? 'immediate' : 'deferred';
-    // タイマー開始
-    this.startTimer();
+    
+
   }
 
   ngOnDestroy() {
