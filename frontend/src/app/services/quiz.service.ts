@@ -52,7 +52,18 @@ export class QuizService {
           // ネストされた Question 配列を取り出し
           const rawQs = quizItem.questions;
           console.log('rawQs', rawQs);
+          
           return rawQs.map((question: Question) => {
+            console.log('questionsWithAnswers', this.questionsWithAnswers);
+            // 正解のtextを取得
+            const rightChoice = question.choices.find(c => c.iscorrect);
+            const rightText   = rightChoice?.text ?? '';
+            // correctAnswer をキャッシュに保存
+            this.questionsWithAnswers.push({
+              ...question, // 浅いコピー
+              correctAnswer: rightText, // 正解のテキストを保存
+            })
+
             // Question 型にマッピング
             return {
               id: question.id,
@@ -68,7 +79,9 @@ export class QuizService {
               type: question.type === 'mcq' ? 'multiple' : '',
               order: question.order ?? 0, // order がない場合は 0 を設定
               duration: timeLimit, // クイズの制限時間を追加
+              
             };
+
           });
         }),
         catchError(err => {
@@ -82,8 +95,10 @@ export class QuizService {
 
   isCorrect(id: number, answer: string): boolean {
     const q = this.questionsWithAnswers.find(x => x.id === id);
+    console.log({ expected: q?.correctAnswer, answer });
     return q ? q.correctAnswer === answer : false;
   }
+
 
   getMethodName(id: number): string {
     return this.questionsWithAnswers.find(x => x.id === id)?.methodName ?? '';
