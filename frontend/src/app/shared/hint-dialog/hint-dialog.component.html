@@ -7,15 +7,11 @@
 <div *ngIf="open" class="hintwindow-overlay">
     <ng-container *ngIf="q as question">
         <div class="popup-card">
-            <!-- カード①：ヘッダー -->
-            <!-- <div class="card header-card">
-            ヒント
-            </div> -->
-            <!-- カード②：ヒントスペース -->
+            <!-- カード：ヒントスペース -->
         <div class="card hint-card">
             <img src="/assets/icons/hint-icon.png" class="hint-icon" alt="ヒント">  
             <pre>{{ q.hint }}</pre>
-                        <!-- 閉じるボタン -->
+        <!-- 閉じるボタン -->
         <button
         (click)="open = false"
         class="btn-close"
