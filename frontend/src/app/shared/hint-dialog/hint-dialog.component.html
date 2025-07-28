@@ -8,20 +8,22 @@
     <ng-container *ngIf="q as question">
         <div class="popup-card">
             <!-- カード①：ヘッダー -->
-            <div class="card header-card">
+            <!-- <div class="card header-card">
             ヒント
-        </div>
+            </div> -->
             <!-- カード②：ヒントスペース -->
         <div class="card hint-card">
+            <img src="/assets/icons/hint-icon.png" class="hint-icon" alt="ヒント">  
             <pre>{{ q.hint }}</pre>
+                        <!-- 閉じるボタン -->
+        <button
+        (click)="open = false"
+        class="btn-close"
+        (click)="onClose()"
+    >
+        <img src="/assets/icons/close-icon.png" class="close-icon" alt="閉じる">
+    </button>  
         </div> 
     
-            <!-- 閉じるボタン -->
-        <button
-            (click)="open = false"
-            class="btn-close"
-            (click)="onClose()"
-        >
-            閉じる
-        </button>  
+
 </div>
