@@ -9,10 +9,8 @@
       <section class="cards">
         <article *ngFor="let q of questions" class="card">
           <div class="card-header">
-            Q{{ q.id }}/{{ questions.length }} {{ q.text }}
-            <img *ngIf="q.hint"
-                src="/assets/icons/hint-icon.png"
-                class="hint-icon" alt="ヒント">
+            Q{{ q.id }}/{{ questions.length }}
+            <app-hint-dialog [q]="q"></app-hint-dialog>
         </div>
 
         <!-- コードブロック -->

@@ -1,0 +1,76 @@
+.hint-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: block;
+    align-self: center;
+}
+
+button {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 3px;
+}
+
+/* オーバーレイ全画面 */
+.hintwindows-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+  /* 外側の白背景カード */
+.hint-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1rem;
+    max-width: 360px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+  /* 共通カードスタイル */
+.card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 0;
+    margin-left: 10px;
+}
+  /* ① ヘッダー */
+.header-card {
+    background: #4aa; /* モックの淡いブルー */
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+    font-weight: bold;
+    font-size: 0.5rem;
+    width: 50px;
+}
+
+  /* ② ヒントカード */
+.hint-card {
+    border: 1px solid #ddd;
+}
+.hint-card pre {
+    margin: 0.5rem;
+    padding: 0.75rem;
+    background: #fafafa;
+    border-radius: 4px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    font-size: 0.85rem;
+    color: black;
+    
+}
+
+/* 閉じるボタン */
+.close-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
