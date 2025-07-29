@@ -7,9 +7,9 @@
 
     <ng-container *ngIf="questions.length; else loading">
       <section class="cards">
-        <article *ngFor="let q of questions" class="card">
+        <article *ngFor="let q of questions; let i = index" class="card">
           <div class="card-header">
-            Q{{ q.id }}/{{ questions.length }}
+            Q{{ i + 1 }}/{{ questions.length }}
             <app-hint-dialog [q]="q"></app-hint-dialog>
         </div>
 
