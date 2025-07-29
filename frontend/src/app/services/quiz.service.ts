@@ -10,12 +10,10 @@ interface QuizResponse {
   data: Quiz[];
 }
 
-
 type Level = 'beginner' | 'intermediate' | 'advanced';
 
 @Injectable({ providedIn: 'root' })
 export class QuizService {
-  private http = inject(HttpClient);
   // cache: includes correctAnswer, methodName, explanation, order
   private questionsWithAnswers: (Question & {
     correctAnswer: string;
@@ -23,13 +21,18 @@ export class QuizService {
     explanation?: string;
     order: number;
   })[] = [];
+    private http = inject(HttpClient);
+    /** ★ バッキングフィールドを追加 */
+    private _currentDurationSec = 0;
+
+  
 
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
-  getQuizzes(level: Level): Observable<Question[]> {
+  getQuiz(level: Level): Observable<Question[]> {
     const params = new HttpParams()
       .set('filters[mode][$eq]', level)
       .set('populate', 'questions.choices'); // choices をネストして取得
-  
+
     return this.http
       .get<QuizResponse>(`http://localhost:1337/api/quizzes`, { params })
       .pipe(
@@ -39,12 +42,28 @@ export class QuizService {
           if (!quizItem) {
             throw new Error('No quiz found for the specified level');
           }
+          // durationの情報をログに出力
+          console.log(`Quiz duration for level ${level}:`, quizItem.duration);
+          const timeLimit = quizItem.duration * 60; // 分を秒に変換
+          // durationの情報をキャッシュに保存
+          this._currentDurationSec = timeLimit;
           console.log('res', res);
           console.log(quizItem);
           // ネストされた Question 配列を取り出し
           const rawQs = quizItem.questions;
           console.log('rawQs', rawQs);
+          
           return rawQs.map((question: Question) => {
+            console.log('questionsWithAnswers', this.questionsWithAnswers);
+            // 正解のtextを取得
+            const rightChoice = question.choices.find(c => c.iscorrect);
+            const rightText   = rightChoice?.text ?? '';
+            // correctAnswer をキャッシュに保存
+            this.questionsWithAnswers.push({
+              ...question, // 浅いコピー
+              correctAnswer: rightText, // 正解のテキストを保存
+            })
+
             // Question 型にマッピング
             return {
               id: question.id,
@@ -58,12 +77,15 @@ export class QuizService {
               quizid: question.quizid ?? 0, // quizid がない場合は 0 を設定
               explanation: question.explanation ?? '',
               type: question.type === 'mcq' ? 'multiple' : '',
-              order: question.order ?? 0 // order がない場合は 0 を設定
+              order: question.order ?? 0, // order がない場合は 0 を設定
+              duration: timeLimit, // クイズの制限時間を追加
+              
             };
+
           });
         }),
         catchError(err => {
-          console.error('getQuizzes error', err);
+          console.error('getQuiz error', err);
           return of([] as Question[]);
         })
       );
@@ -73,8 +95,10 @@ export class QuizService {
 
   isCorrect(id: number, answer: string): boolean {
     const q = this.questionsWithAnswers.find(x => x.id === id);
+    console.log({ expected: q?.correctAnswer, answer });
     return q ? q.correctAnswer === answer : false;
   }
+
 
   getMethodName(id: number): string {
     return this.questionsWithAnswers.find(x => x.id === id)?.methodName ?? '';
@@ -82,5 +106,9 @@ export class QuizService {
 
   getExplanation(id: number): string {
     return this.questionsWithAnswers.find(x => x.id === id)?.explanation ?? '';
+  }
+
+  get currentDurationSec(): number {
+    return this._currentDurationSec;
   }
 }
