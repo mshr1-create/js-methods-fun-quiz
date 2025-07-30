@@ -103,6 +103,13 @@
     font-weight: bold;
     cursor: pointer;
 }
+/* 解答後にボタンの色を変更 */
+.answer-btn:disabled {
+  background-color: #c0c0c0;   /* グレー系へ */
+  color: #666;                 /* 文字も薄めに */
+  cursor: not-allowed;         /* アイコンで無効を示す */
+  opacity: 0.7;
+}
   
   /* ボタンのホバー効果 */
 .answer-btn:hover {

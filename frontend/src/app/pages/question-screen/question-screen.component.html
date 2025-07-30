@@ -25,6 +25,7 @@
                 name="question-{{ q.id }}" 
                 [value]="choice.text" 
                 (change)="onAnswer(q.id, choice.text)"
+                [disabled]="answered[q.id]"
               />
               {{ choice.text }}
             </label>
@@ -45,9 +46,10 @@
             </app-text-answer>
         </ng-container>
 
-            <!-- カード右下の解答ボタン -->
+            <!-- カード下の解答ボタン -->
     <button *ngIf="feedbackMode==='immediate'"
             (click)="onSubmit(q.id)"
+            [disabled]="answered[q.id]"
             class="answer-btn">
         解答
     </button>
