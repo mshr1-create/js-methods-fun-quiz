@@ -38,9 +38,6 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   currentIndex = 0; // 現在の問題インデックス
   duration: number = 0; // クイズの制限時間（秒単位）
   answered: Record<number, boolean> = {}; // 問題ごとの回答済みフラグ 
-
-  // タイマー残秒数
-  // quizService.getQuiz() で取得したdurationを使用
   
   private remainingSeconds!: number; // API 取得後に初期化
   // 表示用文字列
@@ -76,8 +73,8 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       return; // 処理を中断
     }    
 
-    // getQuizzesはObservableを返すのでsubscribeする
-    this.quizService.getQuiz(this.level)
+    // getQuestionはObservableを返すのでsubscribeする
+    this.quizService.getQuestion(this.level)
       .subscribe(qs => {
       console.log('questions from service:', qs);
       this.questions = qs;
