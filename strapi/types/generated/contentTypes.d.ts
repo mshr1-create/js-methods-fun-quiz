@@ -583,6 +583,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
   };
   attributes: {
     choices: Schema.Attribute.Relation<'oneToMany', 'api::choice.choice'>;
+    code: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -594,11 +595,11 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
       'api::question.question'
     > &
       Schema.Attribute.Private;
-    order: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
+    questionid: Schema.Attribute.Integer;
     quiz: Schema.Attribute.Relation<'manyToOne', 'api::quiz.quiz'>;
-    quizid: Schema.Attribute.Integer;
     text: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
     type: Schema.Attribute.Enumeration<['mcq', 'input']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

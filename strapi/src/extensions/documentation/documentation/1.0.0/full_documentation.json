@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-08-04T07:24:48.652Z"
+    "x-generation-date": "2025-08-06T04:10:54.641Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -10079,14 +10079,11 @@
                   }
                 }
               },
-              "quizid": {
+              "questionid": {
                 "type": "integer"
               },
               "explanation": {
                 "type": "string"
-              },
-              "order": {
-                "type": "integer"
               },
               "type": {
                 "type": "string",
@@ -10187,6 +10184,12 @@
                     }
                   }
                 }
+              },
+              "code": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -11439,14 +11442,11 @@
                   "example": "string or id"
                 }
               },
-              "quizid": {
+              "questionid": {
                 "type": "integer"
               },
               "explanation": {
                 "type": "string"
-              },
-              "order": {
-                "type": "integer"
               },
               "type": {
                 "type": "string",
@@ -11465,6 +11465,12 @@
                   }
                 ],
                 "example": "string or id"
+              },
+              "code": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
               },
               "locale": {
                 "type": "string"
@@ -11586,14 +11592,11 @@
                         }
                       }
                     },
-                    "quizid": {
+                    "questionid": {
                       "type": "integer"
                     },
                     "explanation": {
                       "type": "string"
-                    },
-                    "order": {
-                      "type": "integer"
                     },
                     "type": {
                       "type": "string",
@@ -11947,6 +11950,12 @@
                         }
                       }
                     },
+                    "code": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
                     "createdAt": {
                       "type": "string",
                       "format": "date-time"
@@ -12054,14 +12063,11 @@
               }
             }
           },
-          "quizid": {
+          "questionid": {
             "type": "integer"
           },
           "explanation": {
             "type": "string"
-          },
-          "order": {
-            "type": "integer"
           },
           "type": {
             "type": "string",
@@ -12080,6 +12086,12 @@
                 "type": "string"
               }
             }
+          },
+          "code": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -12621,14 +12633,11 @@
                     }
                   }
                 },
-                "quizid": {
+                "questionid": {
                   "type": "integer"
                 },
                 "explanation": {
                   "type": "string"
-                },
-                "order": {
-                  "type": "integer"
                 },
                 "type": {
                   "type": "string",
@@ -12729,6 +12738,12 @@
                       }
                     }
                   }
+                },
+                "code": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",

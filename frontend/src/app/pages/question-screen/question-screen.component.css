@@ -73,6 +73,15 @@
 }
   
   /* コードブロック */
+  .text-block {
+    background-color: #eaf9ff;
+    border-left: 4px solid #4CAF50;
+    margin: 12px;
+    padding: 12px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+}
 .code-block {
     background-color: #eaf9ff;
     border-left: 4px solid #29b6f6;

@@ -14,7 +14,8 @@
         </div>
 
         <!-- コードブロック -->
-        <pre class="code-block">{{ q.text }}</pre>
+        <pre class="text-block">{{ q.text }}</pre>
+        <pre class="code-block">{{ q.code }}</pre>
 
         <!-- 選択肢をカード形式で表示 -->
         <div *ngIf="q.choices.length > 0">

@@ -67,6 +67,7 @@ export class QuizService {
             return {
               id: question.id,
               text: question.text,
+              code: question.code ?? '', // code がない場合は空文字を設定
               hint: question.hint ?? '',
               choices: question.choices?.map(choice => ({
                 id: choice.id, // Choice 型に必要な id を追加
