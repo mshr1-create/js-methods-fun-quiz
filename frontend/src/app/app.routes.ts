@@ -8,14 +8,22 @@ import { QuestionScreenComponent } from './pages/question-screen/question-screen
 // import { ProfileComponent } from './profile.component';
 // import { HistoryComponent } from './history.component';
 import { HttpClient } from '@angular/common/http';
+import { quizResolver } from './pages/question-screen/quiz.resolver';
 
 export const routes: Routes = [
     // { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'app-mode-duration', component: ModeDurationComponent },
+    { path: 'app-home', component: HomeComponent },
     // { path: 'profile',    component: ProfileComponent },
     // { path: 'history',    component: HistoryComponent },
-    { path: 'quizzes/:level', component: QuestionScreenComponent},
-    { path: '', redirectTo: 'quizzes/beginner', pathMatch: 'full' },
+    { 
+        path: 'questions', 
+        component: QuestionScreenComponent,
+        resolve: {
+            quiz: quizResolver // quizResolverを使用してクイズデータを取得
+        }
+    },
+    { path: '', redirectTo: 'quizzes/beginner', pathMatch: 'full' }
 ];

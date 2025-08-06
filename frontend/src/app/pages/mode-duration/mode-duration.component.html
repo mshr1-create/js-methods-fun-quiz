@@ -1,44 +1,46 @@
-<div class="signup-wrapper">
-    <header class="signup-header">
-        <span class="logo-text">logo</span>
-    </header>
+<div [formGroup]="selectForm" class="smartphone-wrapper">
+    <mat-toolbar color="primary" class="header-toolbar">
+        <span class="logo-text">モード & 時間設定</span>
+    </mat-toolbar>
+    <p class="mode-duration-title">モード選択</p>
+    <mat-button-toggle-group formControlName="mode" class="mode-toggle-group">
+        <mat-button-toggle value="beginner" class="beginner-toggle">
+            <span class="toggle-label">初級</span>
+        </mat-button-toggle>
+        <mat-button-toggle value="intermediate" class="intermediate-toggle">
+            <span class="toggle-label">中級</span>
+        </mat-button-toggle>
+        <mat-button-toggle value="advanced" class="advanced-toggle">
+            <span class="toggle-label">上級</span>
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+    <p class="mode-duration-title">時間設定</p>
+    <mat-button-toggle-group formControlName="duration" class="duration-toggle-group">
+        <mat-button-toggle [value]="10" class="ten-minutes-toggle">
+            <span class="toggle-label">10分</span>
+        </mat-button-toggle>
+        <mat-button-toggle [value]="15" class="fifteen-minutes-toggle">
+            <span class="toggle-label">15分</span>
+        </mat-button-toggle>
+        <mat-button-toggle [value]="30" class="thirty-minutes-toggle">
+            <span class="toggle-label">30分</span>
+        </mat-button-toggle>
+    </mat-button-toggle-group>
 
-    <div class="signup-content">
-        <div class="form-group">
-            <input 
-                type="text" 
-                class="input-box" 
-                placeholder="Username"
-            />
-        </div>
-        <div class="form-group">
-            <input 
-                type="email" 
-                class="input-box" 
-                placeholder="Email"
-            />
-        </div>
-        <div class="form-group">
-            <input 
-                type="password" 
-                class="input-box" 
-                placeholder="Password"
-            />
-        </div>
-        <div class="form-group">
-            <input 
-                type="password" 
-                class="input-box" 
-                placeholder="Confirm Password"
-            />
-        </div>
+    <div class="home-container">
 
-        <div class="form-group">
-            <button class="btn-primary">登録</button>
-        </div>
+        <!-- ボタン①：学習開始 -->
+        <button mat-stroked-button color="primary" [disabled]="selectForm.invalid" class="start-button" (click)="onStartClick()">
+            <div class="button-label">
+                <div class="label-ja">スタート</div>
+            </div>
+        </button>
 
-        <div class="link-group">
-            <a class="link-login" href="login">ログイン画面に戻る</a>
-        </div>
+        <!-- ボタン②：戻るボタン -->
+        <button mat-stroked-button color="primary" class="back-button" (click)="onBackClick()">
+            <div class="button-label">
+                <div class="label-ja">戻る</div>
+            </div>
+        </button>
     </div>
 </div>

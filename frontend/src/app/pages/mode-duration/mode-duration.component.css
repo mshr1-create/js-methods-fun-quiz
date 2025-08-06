@@ -1,0 +1,108 @@
+/* スマートフォンサイズに固定 */
+.smartphone-wrapper {
+    width: 393px;
+    max-width: 100%;
+    min-height: 852px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+
+.header-toolbar {
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #26BCE3;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.mode-duration-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #26BCE3;
+    margin-bottom: 5px;
+    align-self: center;
+}
+
+.mode-toggle-group, .duration-toggle-group {
+    display: flex;
+    width: 80%;
+    max-width: 500px;
+    height: 35px;
+    margin-top: 16px;
+    padding: 16px 0;
+    border-color: #26BCE3;
+    color: #26BCE3;
+    border-radius: 8px;
+    background-color: transparent;
+    font-family: Arial, sans-serif;
+    align-self: center;
+}
+mat-button-toggle{
+    flex: 1 0 0;
+    text-align: center;
+}
+
+.start-button{
+    width: 80%;
+    max-width: 150px;
+    height: 50px;
+    margin-top: 16px;
+    padding: 16px 0;
+    border-color:#4CAF50;
+    color: #ffffff;
+    border-radius: 8px;
+    background-color: #4CAF50;
+    font-family: Arial, sans-serif;
+}
+.back-button {
+    width: 80%;
+    max-width: 150px;
+    height: 50px;
+    margin-top: 16px;
+    padding: 16px 0;
+    border-color: #9A9A9A;
+    color: #9A9A9A;
+    border-radius: 8px;
+    background-color: transparent;
+    font-family: Arial, sans-serif;   
+}
+
+.start-button:hover{
+    background-color: rgba(16, 91, 56, 0.1);
+}
+.back-button:hover {
+    background-color: rgba(101, 101, 101, 0.1);
+}
+
+.button-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.label-ja {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+}
+
+

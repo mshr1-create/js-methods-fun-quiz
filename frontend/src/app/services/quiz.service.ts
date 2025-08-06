@@ -4,13 +4,15 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { Quiz } from "../models/quiz.model";
+import { quizResolver } from "../pages/question-screen/quiz.resolver";
 
 
 interface QuizResponse {
   data: Quiz[];
 }
 
-type Level = 'beginner' | 'intermediate' | 'advanced';
+type Mode = 'beginner' | 'intermediate' | 'advanced';
+type Duration = 10 | 15 | 30; // 分単位の制限時間
 
 @Injectable({ providedIn: 'root' })
 export class QuizService {
@@ -23,14 +25,16 @@ export class QuizService {
   })[] = [];
     private http = inject(HttpClient);
     /** ★ バッキングフィールドを追加 */
-    private _currentDurationSec = 0;
+    // private _currentDurationSec = 0;
 
   
 
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
-  getQuestion(level: Level): Observable<Question[]> {
+  getQuestion(mode: Mode, duration: Duration): Observable<Question[]> {
+    this
     const params = new HttpParams()
-      .set('filters[mode][$eq]', level)
+      .set('filters[mode][$eq]', mode)
+      .set('filters[duration][$eq]', duration)
       .set('populate', 'questions.choices'); // choices をネストして取得
 
     return this.http
@@ -40,13 +44,8 @@ export class QuizService {
           // 条件に基づいてクイズを選択
           const quizItem = res.data.find(item => item.questions && item.questions.length > 0) || res.data[0];
           if (!quizItem) {
-            throw new Error('No quiz found for the specified level');
+            throw new Error('No quiz found for the specified mode');
           }
-          // durationの情報をログに出力
-          console.log(`Quiz duration for level ${level}:`, quizItem.duration);
-          const timeLimit = quizItem.duration * 60; // 分を秒に変換
-          // durationの情報をキャッシュに保存
-          this._currentDurationSec = timeLimit;
           console.log('res', res);
           console.log(quizItem);
           // ネストされた Question 配列を取り出し
@@ -78,7 +77,6 @@ export class QuizService {
               explanation: question.explanation ?? '',
               type: question.type === 'mcq' ? 'multiple' : '',
               order: question.order ?? 0, // order がない場合は 0 を設定
-              duration: timeLimit, // クイズの制限時間を追加
               
             };
 
@@ -106,9 +104,5 @@ export class QuizService {
 
   getExplanation(id: number): string {
     return this.questionsWithAnswers.find(x => x.id === id)?.explanation ?? '';
-  }
-
-  get currentDurationSec(): number {
-    return this._currentDurationSec;
   }
 }

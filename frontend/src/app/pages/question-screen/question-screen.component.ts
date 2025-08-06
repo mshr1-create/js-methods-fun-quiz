@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Question } from '../../models/question.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ResolveStart } from '@angular/router';
 import { QuizService } from '../../services/quiz.service';
 import { NgFor, NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,8 @@ import { interval, Subscription } from 'rxjs';
 import { takeWhile }            from 'rxjs/operators';
 import { FeedbackPopupComponent, FeedbackData } from './feedback-popup/feedback-popup.component';
 import { HintDialogComponent } from "../../shared/hint-dialog/hint-dialog.component";
+import { quizResolver } from './quiz.resolver';
+import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-question-screen',
@@ -23,21 +25,22 @@ import { HintDialogComponent } from "../../shared/hint-dialog/hint-dialog.compon
     MultipleChoiceComponent,
     TextAnswerComponent,
     FeedbackPopupComponent,
-    HintDialogComponent
+    HintDialogComponent,
 ],
   templateUrl: './question-screen.component.html',
   styleUrls: ['./question-screen.component.css']
 })
 
-
+@Injectable({ providedIn: 'root' })
 export class QuestionScreenComponent implements OnInit, OnDestroy {
-  level!: 'beginner' | 'intermediate' | 'advanced';
+  mode!: 'beginner' | 'intermediate' | 'advanced';
   questions: Question[] = [];
   answers: Record<number, string> = {};
   feedbackMode: 'immediate' | 'deferred' = 'deferred';
   currentIndex = 0; // 現在の問題インデックス
   duration: number = 0; // クイズの制限時間（秒単位）
   answered: Record<number, boolean> = {}; // 問題ごとの回答済みフラグ 
+  quizResolver = quizResolver; // Resolverを使用するための変数
   
   private remainingSeconds!: number; // API 取得後に初期化
   // 表示用文字列
@@ -61,29 +64,33 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // URLから 'level' パラメータを取得して、this.levelに設定する
-    const levelParam = this.route.snapshot.paramMap.get('level');
+    // URLから 'mode' パラメータを取得して、this.levelに設定する
+    const modeParam = this.route.snapshot.queryParamMap.get('mode');
+    const durationParam = this.route.snapshot.queryParamMap.get('duration');
+    this.duration = durationParam ? +durationParam : 15; // デフォルトは15分
+    console.log('modeParam:', modeParam);
+    console.log('durationParam:', durationParam);
 
     // パラメータが 'beginner', 'intermediate', 'advanced' のいずれかであることを確認
-    if (levelParam === 'beginner' || levelParam === 'intermediate' || levelParam === 'advanced') {
-      this.level = levelParam;
+    if (modeParam === 'beginner' || modeParam === 'intermediate' || modeParam === 'advanced') {
+      this.mode = modeParam;
     } else {
       // 不正なURLの場合はエラー処理やリダイレクトを行う
-      console.error('Invalid level parameter in URL');
+      console.error('Invalid mode parameter in URL');
       return; // 処理を中断
     }    
-
+    
     // getQuestionはObservableを返すのでsubscribeする
-    this.quizService.getQuestion(this.level)
-      .subscribe(qs => {
-      console.log('questions from service:', qs);
-      this.questions = qs;
-      this.remainingSeconds = this.quizService.currentDurationSec;
+    this.route.data.subscribe(d => {
+      console.log('questions from service:', d['quiz']);
+      this.questions = d['quiz'];
+      // this.remainingSeconds = (+this.route.snapshot.queryParamMap.get('duration')!) * 60;
+      this.remainingSeconds = this.duration * 60; // 秒単位に変換
       this.timerDisplay = this.formatTime(this.remainingSeconds);
       // タイマー開始
       this.startTimer();
     });
-    this.feedbackMode = this.level === 'beginner' ? 'immediate' : 'deferred';
+    this.feedbackMode = this.mode === 'beginner' ? 'immediate' : 'deferred';
     
 
   }
