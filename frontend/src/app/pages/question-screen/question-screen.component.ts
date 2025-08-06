@@ -86,6 +86,27 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       this.questions = d['quiz'];
       // this.remainingSeconds = (+this.route.snapshot.queryParamMap.get('duration')!) * 60;
       this.remainingSeconds = this.duration * 60; // 秒単位に変換
+      // randomize questions
+      let numberOfQuestions = 5;
+      let randomIndexes: number[] = [];
+      if (this.duration === 10) {
+
+        numberOfQuestions = 5; // 10分モードは3問
+      }else if (this.duration === 15) {
+        numberOfQuestions = 10; // 15分モードは5問
+      } else if (this.duration === 30) {
+        numberOfQuestions = 15; // 30分モードは10問
+      }
+      
+      while (randomIndexes.length < numberOfQuestions) {
+        const randomIndex = Math.floor(Math.random() * this.questions.length);
+        if (!randomIndexes.includes(randomIndex)) {
+          randomIndexes.push(randomIndex);
+        }
+      }
+      this.questions = randomIndexes.map(index => this.questions[index]);
+      console.log('randomized questions:', this.questions);
+
       this.timerDisplay = this.formatTime(this.remainingSeconds);
       // タイマー開始
       this.startTimer();

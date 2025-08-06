@@ -30,11 +30,11 @@ export class QuizService {
   
 
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
-  getQuestion(mode: Mode, duration: Duration): Observable<Question[]> {
+  getQuestion(mode: Mode): Observable<Question[]> {
     this
     const params = new HttpParams()
       .set('filters[mode][$eq]', mode)
-      .set('filters[duration][$eq]', duration)
+      // .set('filters[duration][$eq]', duration)
       .set('populate', 'questions.choices'); // choices をネストして取得
 
     return this.http

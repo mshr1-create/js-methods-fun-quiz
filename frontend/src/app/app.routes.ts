@@ -15,7 +15,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'app-mode-duration', component: ModeDurationComponent },
-    { path: 'app-home', component: HomeComponent },
+    { path: '', component: HomeComponent },
     // { path: 'profile',    component: ProfileComponent },
     // { path: 'history',    component: HistoryComponent },
     { 
@@ -25,5 +25,5 @@ export const routes: Routes = [
             quiz: quizResolver // quizResolverを使用してクイズデータを取得
         }
     },
-    { path: '', redirectTo: 'quizzes/beginner', pathMatch: 'full' }
+    { path: '', redirectTo: 'app-home', pathMatch: 'full' }
 ];

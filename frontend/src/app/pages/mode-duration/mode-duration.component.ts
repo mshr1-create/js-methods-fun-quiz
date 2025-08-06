@@ -33,10 +33,12 @@ export class ModeDurationComponent {
   onStartClick(): void {
     const { mode, duration } = this.selectForm.getRawValue() as { mode: string; duration: number }; // ここで値確定
     this.router.navigate(['/questions'], { queryParams: { mode, duration } });
+    localStorage.setItem('duration',duration.toString());
     console.log('スタートボタンをクリック');
   }
 
   onBackClick(): void {
     console.log('戻るボタンをクリック');
+    this.router.navigate(['/']);
   }
 }

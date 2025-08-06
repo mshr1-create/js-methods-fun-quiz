@@ -9,7 +9,7 @@ export const quizResolver: ResolveFn<Question[]> = (route) => {
   type Mode = 'beginner' | 'intermediate' | 'advanced';
   type Duration = 10 | 15 | 30; // 分単位の制限時間
   const mode = route.queryParamMap.get('mode') as Mode;
-  const dur = +route.queryParamMap.get('duration')! as Duration;
-  return quizService.getQuestion(mode, dur);
+  // const dur = +route.queryParamMap.get('duration')! as Duration;
+  return quizService.getQuestion(mode);// 
 
 };
