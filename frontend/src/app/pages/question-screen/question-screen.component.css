@@ -18,8 +18,15 @@
     padding: 8px 16px;
     border-radius: 4px;
     font-weight: bold;
+    animation: slideDown 0.3s ease-in-out;
 }
-  
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #57b5f0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+} 
   /* カード群 */
 .cards {
     margin-top: 16px;
@@ -96,6 +103,13 @@
     font-weight: bold;
     cursor: pointer;
 }
+/* 解答後にボタンの色を変更 */
+.answer-btn:disabled {
+  background-color: #c0c0c0;   /* グレー系へ */
+  color: #666;                 /* 文字も薄めに */
+  cursor: not-allowed;         /* アイコンで無効を示す */
+  opacity: 0.7;
+}
   
   /* ボタンのホバー効果 */
 .answer-btn:hover {
@@ -111,6 +125,8 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    width: 90%;
+    margin-left: 10px;
 }
 
 .choice-card:hover {

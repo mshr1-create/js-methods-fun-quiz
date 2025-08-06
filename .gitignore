@@ -47,3 +47,5 @@ frontend/node_modules/
 frontend/.angular/
 frontend/dist/
 
+# Strapi specific
+/strapi/src/extensions/documentation/documentation/**/full_documentation.json

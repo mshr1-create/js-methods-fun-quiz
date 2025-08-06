@@ -28,7 +28,7 @@ export class QuizService {
   
 
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
-  getQuiz(level: Level): Observable<Question[]> {
+  getQuestion(level: Level): Observable<Question[]> {
     const params = new HttpParams()
       .set('filters[mode][$eq]', level)
       .set('populate', 'questions.choices'); // choices をネストして取得
@@ -85,7 +85,7 @@ export class QuizService {
           });
         }),
         catchError(err => {
-          console.error('getQuiz error', err);
+          console.error('getQuestion error', err);
           return of([] as Question[]);
         })
       );

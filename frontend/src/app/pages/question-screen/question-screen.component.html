@@ -1,5 +1,5 @@
 <div class="question-screen">
-    <header class="qs-header">
+    <header class="qs-header sticky">
         <div>Q/{{ questions.length }}</div>
         <div>logo</div>
         <div>Timer {{ timerDisplay }}</div>
@@ -7,9 +7,9 @@
 
     <ng-container *ngIf="questions.length; else loading">
       <section class="cards">
-        <article *ngFor="let q of questions" class="card">
+        <article *ngFor="let q of questions; let i = index" class="card">
           <div class="card-header">
-            Q{{ q.id }}/{{ questions.length }}
+            Q{{ i + 1 }}/{{ questions.length }}
             <app-hint-dialog [q]="q"></app-hint-dialog>
         </div>
 
@@ -25,6 +25,7 @@
                 name="question-{{ q.id }}" 
                 [value]="choice.text" 
                 (change)="onAnswer(q.id, choice.text)"
+                [disabled]="answered[q.id]"
               />
               {{ choice.text }}
             </label>
@@ -45,9 +46,10 @@
             </app-text-answer>
         </ng-container>
 
-            <!-- カード右下の解答ボタン -->
+            <!-- カード下の解答ボタン -->
     <button *ngIf="feedbackMode==='immediate'"
             (click)="onSubmit(q.id)"
+            [disabled]="answered[q.id]"
             class="answer-btn">
         解答
     </button>
