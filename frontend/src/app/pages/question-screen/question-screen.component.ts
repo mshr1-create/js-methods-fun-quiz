@@ -91,11 +91,11 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       let randomIndexes: number[] = [];
       if (this.duration === 10) {
 
-        numberOfQuestions = 5; // 10分モードは3問
+        numberOfQuestions = 7; // 10分モードは3問
       }else if (this.duration === 15) {
         numberOfQuestions = 10; // 15分モードは5問
       } else if (this.duration === 30) {
-        numberOfQuestions = 15; // 30分モードは10問
+        numberOfQuestions = 20; // 30分モードは10問
       }
       
       while (randomIndexes.length < numberOfQuestions) {

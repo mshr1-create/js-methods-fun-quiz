@@ -26,7 +26,7 @@ export class ModeDurationComponent {
   constructor(private router: Router, private quizService: QuizService) {}
 
   selectForm = new FormGroup({
-    mode: new FormControl('intermediate'),
+    mode: new FormControl('beginner'),
     duration: new FormControl<number>(15),
   });
 
