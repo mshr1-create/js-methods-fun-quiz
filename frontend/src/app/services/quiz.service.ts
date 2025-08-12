@@ -31,7 +31,6 @@ export class QuizService {
 
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
   getQuestion(mode: Mode): Observable<Question[]> {
-    this
     const params = new HttpParams()
       .set('filters[mode][$eq]', mode)
       // .set('filters[duration][$eq]', duration)
@@ -76,7 +75,7 @@ export class QuizService {
               })) ?? [], // choices がない場合は空配列を設定
               quizid: question.quizid ?? 0, // quizid がない場合は 0 を設定
               explanation: question.explanation ?? '',
-              type: question.type === 'mcq' ? 'multiple' : '',
+              type: question.type === 'mcq' ? 'mcq' : 'input', // type がない場合は 'text' を設定
               order: question.order ?? 0, // order がない場合は 0 を設定
               
             };

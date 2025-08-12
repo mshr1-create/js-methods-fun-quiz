@@ -3,9 +3,11 @@ import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-text-answer',
-    templateUrl: './text-answer.component.html',
+    standalone: true,
+    templateUrl: './input-answer.component.html',
+    styleUrls: ['./input-answer.component.css']
 })
-export class TextAnswerComponent {
+export class InputAnswerComponent {
     @Output() answer = new EventEmitter<string>();
 
     onInput(e: Event) {

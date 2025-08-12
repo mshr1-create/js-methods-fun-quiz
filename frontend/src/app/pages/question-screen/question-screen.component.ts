@@ -6,7 +6,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MultipleChoiceComponent } from '../../shared/multiple-choice/multiple-choice/multiple-choice.component';
-import { TextAnswerComponent } from '../../shared/text-answer/text-answer.component';
+import { InputAnswerComponent } from '../../shared/text-answer/input-answer.component';
 import { interval, Subscription } from 'rxjs';
 import { takeWhile }            from 'rxjs/operators';
 import { FeedbackPopupComponent, FeedbackData } from './feedback-popup/feedback-popup.component';
@@ -23,7 +23,7 @@ import { Injectable } from '@angular/core';
     CommonModule,
     RouterModule,
     MultipleChoiceComponent,
-    TextAnswerComponent,
+    InputAnswerComponent,
     FeedbackPopupComponent,
     HintDialogComponent,
 ],
@@ -89,7 +89,6 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       let numberOfQuestions = 5;
       let randomIndexes: number[] = [];
       if (this.duration === 10) {
-
         numberOfQuestions = 7; // 10分モードは3問
       }else if (this.duration === 15) {
         numberOfQuestions = 10; // 15分モードは5問

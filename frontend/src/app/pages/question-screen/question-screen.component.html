@@ -17,26 +17,10 @@
         <pre class="text-block">{{ q.text }}</pre>
         <pre class="code-block">{{ q.code }}</pre>
 
-        <!-- 選択肢をカード形式で表示 -->
-        <!-- <div *ngIf="q.choices.length > 0">
-          <div *ngFor="let choice of q.choices" class="choice-card">
-            <label>
-              <input 
-                type="radio" 
-                name="question-{{ q.id }}" 
-                [value]="choice.text" 
-                (change)="onAnswer(q.id, choice.text)"
-                [disabled]="answered[q.id]"
-              />
-              {{ choice.text }}
-            </label>
-          </div>
-        </div> -->
-
         <!-- 解答UI -->
         <ng-container [ngSwitch]="q.type">
             <app-multiple-choice
-                *ngSwitchCase="'multiple'"
+                *ngSwitchCase="'mcq'"
                 [question]="q"
                 (answer)="onAnswer(q.id, $event)"
                 [disabled]="answered[q.id]"
@@ -44,7 +28,7 @@
             </app-multiple-choice>
 
             <app-text-answer
-                *ngSwitchCase="'text'"
+                *ngSwitchCase="'input'"
                 (answer)="onAnswer(q.id, $event)">
             </app-text-answer>
         </ng-container>
@@ -86,11 +70,6 @@
 
 
         <!-- 中級・上級のみボタン -->
-        <button *ngIf="feedbackMode==='deferred'"
-                (click)="submitAll()"
-                class="answer-btn">
-            採点する
-        </button>
 
         </article>
       </section>
@@ -98,4 +77,11 @@
     <ng-template #loading>
       <p>問題を読み込み中…</p>
     </ng-template>
+    <!-- 採点、解説画面へ -->
+    <button *ngIf="feedbackMode==='immediate'||'deferred'"
+      (click)="submitAll()"
+      class="answer-btn">
+        採点する
+    </button>
 </div>
+
