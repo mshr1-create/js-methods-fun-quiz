@@ -18,7 +18,7 @@
         <pre class="code-block">{{ q.code }}</pre>
 
         <!-- 選択肢をカード形式で表示 -->
-        <div *ngIf="q.choices.length > 0">
+        <!-- <div *ngIf="q.choices.length > 0">
           <div *ngFor="let choice of q.choices" class="choice-card">
             <label>
               <input 
@@ -31,14 +31,16 @@
               {{ choice.text }}
             </label>
           </div>
-        </div>
+        </div> -->
 
         <!-- 解答UI -->
         <ng-container [ngSwitch]="q.type">
             <app-multiple-choice
                 *ngSwitchCase="'multiple'"
-                
-                (answer)="onAnswer(q.id, $event)">
+                [question]="q"
+                (answer)="onAnswer(q.id, $event)"
+                [disabled]="answered[q.id]"
+                >
             </app-multiple-choice>
 
             <app-text-answer

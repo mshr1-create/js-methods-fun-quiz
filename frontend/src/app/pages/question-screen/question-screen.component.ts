@@ -31,7 +31,6 @@ import { Injectable } from '@angular/core';
   styleUrls: ['./question-screen.component.css']
 })
 
-@Injectable({ providedIn: 'root' })
 export class QuestionScreenComponent implements OnInit, OnDestroy {
   mode!: 'beginner' | 'intermediate' | 'advanced';
   questions: Question[] = [];
