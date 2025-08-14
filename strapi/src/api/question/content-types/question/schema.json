@@ -23,14 +23,11 @@
       "target": "api::choice.choice",
       "mappedBy": "question"
     },
-    "quizid": {
+    "questionid": {
       "type": "integer"
     },
     "explanation": {
       "type": "text"
-    },
-    "order": {
-      "type": "integer"
     },
     "type": {
       "type": "enumeration",
@@ -44,6 +41,12 @@
       "relation": "manyToOne",
       "target": "api::quiz.quiz",
       "inversedBy": "questions"
+    },
+    "code": {
+      "type": "text"
+    },
+    "title": {
+      "type": "string"
     }
   }
 }

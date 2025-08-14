@@ -1,13 +1,13 @@
-<ul>
-    <li *ngFor="let opt of choices">
+<div *ngIf="(question?.choices ?? []).length > 0">
+    <div *ngFor="let choice of question?.choices" class="choice-card">
         <label>
-        <input
-        type="radio"
-        name="mc-{{questionId}}" 
-        [value]="opt"
-        (change)="onChange(opt)"
-        />
-        {{ opt }}
-    </label>
-    </li>
-</ul>
+            <input 
+            type="radio" 
+            name="question-{{ question?.id }}" 
+            [value]="choice.text" 
+            (change)="onAnswer(question?.id!, choice.text)"
+            />
+        {{ choice.text }}
+        </label>
+    </div>
+</div>

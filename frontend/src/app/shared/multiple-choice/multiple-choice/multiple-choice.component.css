@@ -1,6 +1,16 @@
-/* リストの左側の「・」を非表示にする */
-ul, ol {
-    list-style: none;    /* マーカーを消す */
-    padding-left: 0;     /* デフォルトのインデントを消す */
-    margin: 0;           /* 必要に応じて余白もリセット */
+  /* 選択肢カード */
+  .choice-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 90%;
+    margin-left: 10px;
+}
+
+.choice-card:hover {
+    background-color: #f9f9f9;
 }
