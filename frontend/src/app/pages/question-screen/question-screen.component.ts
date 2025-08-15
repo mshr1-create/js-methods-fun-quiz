@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Question } from '../../models/question.model';
-import { ActivatedRoute, ResolveStart } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { QuizService } from '../../services/quiz.service';
 import { NgFor, NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,6 @@ import { takeWhile }            from 'rxjs/operators';
 import { FeedbackPopupComponent, FeedbackData } from './feedback-popup/feedback-popup.component';
 import { HintDialogComponent } from "../../shared/hint-dialog/hint-dialog.component";
 import { quizResolver } from './quiz.resolver';
-import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-question-screen',

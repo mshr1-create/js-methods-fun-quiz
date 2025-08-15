@@ -10,5 +10,6 @@ export interface Question {
     explanation: string;
     type: string;
     order: number;
+    answer: string;
     
 }

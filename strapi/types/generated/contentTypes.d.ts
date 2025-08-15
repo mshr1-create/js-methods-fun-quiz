@@ -582,6 +582,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    answer: Schema.Attribute.String;
     choices: Schema.Attribute.Relation<'oneToMany', 'api::choice.choice'>;
     code: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;

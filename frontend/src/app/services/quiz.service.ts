@@ -54,8 +54,8 @@ export class QuizService {
           return rawQs.map((question: Question) => {
             console.log('questionsWithAnswers', this.questionsWithAnswers);
             // 正解のtextを取得
-            const rightChoice = question.choices.find(c => c.iscorrect);
-            const rightText   = rightChoice?.text ?? '';
+            const rightText = question.answer;
+            // const rightText   = rightChoice?.text ?? '';
             // correctAnswer をキャッシュに保存
             this.questionsWithAnswers.push({
               ...question, // 浅いコピー
@@ -77,7 +77,7 @@ export class QuizService {
               explanation: question.explanation ?? '',
               type: question.type === 'mcq' ? 'mcq' : 'input', // type がない場合は 'text' を設定
               order: question.order ?? 0, // order がない場合は 0 を設定
-              
+              answer: question.answer ?? '' // answer がない場合は空文字を設定
             };
 
           });
