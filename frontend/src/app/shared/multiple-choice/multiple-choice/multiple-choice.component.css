@@ -3,12 +3,11 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
-    margin: 5px 0;
-    display: flex;
+    margin: 8px 0;
+    display: block;
     align-items: center;
     cursor: pointer;
-    width: 90%;
-    margin-left: 10px;
+    width: 94%;
 }
 
 .choice-card:hover {
