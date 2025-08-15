@@ -4,7 +4,6 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { Quiz } from "../models/quiz.model";
-import { quizResolver } from "../pages/question-screen/quiz.resolver";
 
 
 interface QuizResponse {
@@ -12,7 +11,6 @@ interface QuizResponse {
 }
 
 type Mode = 'beginner' | 'intermediate' | 'advanced';
-type Duration = 10 | 15 | 30; // 分単位の制限時間
 
 @Injectable({ providedIn: 'root' })
 export class QuizService {
@@ -24,8 +22,6 @@ export class QuizService {
     order: number;
   })[] = [];
     private http = inject(HttpClient);
-    /** ★ バッキングフィールドを追加 */
-    // private _currentDurationSec = 0;
 
   
 
@@ -55,8 +51,6 @@ export class QuizService {
             console.log('questionsWithAnswers', this.questionsWithAnswers);
             // 正解のtextを取得
             const rightText = question.answer;
-            // const rightText   = rightChoice?.text ?? '';
-            // correctAnswer をキャッシュに保存
             this.questionsWithAnswers.push({
               ...question, // 浅いコピー
               correctAnswer: rightText, // 正解のテキストを保存
@@ -88,8 +82,6 @@ export class QuizService {
         })
       );
   }
-
-  
 
   isCorrect(id: number, answer: string): boolean {
     const q = this.questionsWithAnswers.find(x => x.id === id);

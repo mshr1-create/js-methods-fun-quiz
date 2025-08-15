@@ -109,8 +109,6 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       this.startTimer();
     });
     this.feedbackMode = this.mode === 'beginner' ? 'immediate' : 'deferred';
-    
-
   }
 
   ngOnDestroy() {
@@ -168,5 +166,10 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
     const m = Math.floor(seconds / 60);
     const s = (seconds % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
+  }
+
+  isHintEnabled(q: Question): boolean {
+    const modeOK = this.mode === 'beginner' || this.mode === 'intermediate';
+    return modeOK;
   }
 }
