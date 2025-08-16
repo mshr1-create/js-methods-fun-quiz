@@ -23,7 +23,7 @@
         <!-- 解答UI -->
         <ng-container [ngSwitch]="q.type">
             <app-multiple-choice
-                *ngSwitchCase="'mcq'"
+                *ngSwitchCase="'multiple'"
                 [question]="q"
                 (answer)="onAnswer(q.id, $event)"
                 [disabled]="answered[q.id]"

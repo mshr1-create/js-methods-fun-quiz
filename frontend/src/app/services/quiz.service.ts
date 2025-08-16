@@ -69,7 +69,7 @@ export class QuizService {
               })) ?? [], // choices がない場合は空配列を設定
               quizid: question.quizid ?? 0, // quizid がない場合は 0 を設定
               explanation: question.explanation ?? '',
-              type: question.type === 'mcq' ? 'mcq' : 'input', // type がない場合は 'text' を設定
+              type: question.type === 'mcq' ? 'multiple' : 'input', // type がない場合は 'text' を設定
               order: question.order ?? 0, // order がない場合は 0 を設定
               answer: question.answer ?? '' // answer がない場合は空文字を設定
             };
