@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Question } from '../../models/question.model';
-import { ActivatedRoute, ResolveStart } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { QuizService } from '../../services/quiz.service';
 import { NgFor, NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,6 @@ import { takeWhile }            from 'rxjs/operators';
 import { FeedbackPopupComponent, FeedbackData } from './feedback-popup/feedback-popup.component';
 import { HintDialogComponent } from "../../shared/hint-dialog/hint-dialog.component";
 import { quizResolver } from './quiz.resolver';
-import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-question-screen',
@@ -40,6 +39,8 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   duration: number = 0; // クイズの制限時間（秒単位）
   answered: Record<number, boolean> = {}; // 問題ごとの回答済みフラグ 
   quizResolver = quizResolver; // Resolverを使用するための変数
+  errorMap: Record<number, boolean> = {};// 未回答エラーをカード単位で管理
+
   
   private remainingSeconds!: number; // API 取得後に初期化
   // 表示用文字列
@@ -110,8 +111,6 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       this.startTimer();
     });
     this.feedbackMode = this.mode === 'beginner' ? 'immediate' : 'deferred';
-    
-
   }
 
   ngOnDestroy() {
@@ -120,10 +119,13 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
 
   onAnswer(id: number, answer: string) {
     this.answers[id] = answer;
+    if (answer?.trim()) this.errorMap[id] = false; // 赤枠を外す
   }
 
   /// 「解答」ボタン押下
   onSubmit(id: number) {
+    
+    // if (!this.validateAll()) return;
     if (!this.answers[id]) return;
 
     if (this.feedbackMode === 'immediate') {
@@ -139,6 +141,7 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   }
 
   submitAll() {
+    if (!this.validateAll()) return;
     Object.keys(this.answers).forEach(key => this.showInlineFeedback(+key));
   }
 
@@ -169,5 +172,29 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
     const m = Math.floor(seconds / 60);
     const s = (seconds % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
+  }
+
+  isHintEnabled(q: Question): boolean {
+    const modeOK = this.mode === 'beginner' || this.mode === 'intermediate';
+    return modeOK;
+  }
+
+  // validationの関数
+  private validateAll(): boolean{
+    const missingIds = this.questions
+      .filter(q => !this.answers[q.id] || this.answers[q.id].trim() === '')
+      .map(q => q.id);
+
+    // マップを更新（未回答だけ true）
+    this.errorMap = {};
+    missingIds.forEach(id => {
+      this.errorMap[id] = true;
+    });
+
+    // 先頭の未回答にスクロールしたい場合はここで
+    // const first = missingIds[0];
+    // if (first) document.getElementById(`q-${first}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    return missingIds.length === 0;
   }
 }

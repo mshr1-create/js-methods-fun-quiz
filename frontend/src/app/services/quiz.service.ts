@@ -4,7 +4,6 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { Quiz } from "../models/quiz.model";
-import { quizResolver } from "../pages/question-screen/quiz.resolver";
 
 
 interface QuizResponse {
@@ -12,7 +11,6 @@ interface QuizResponse {
 }
 
 type Mode = 'beginner' | 'intermediate' | 'advanced';
-type Duration = 10 | 15 | 30; // 分単位の制限時間
 
 @Injectable({ providedIn: 'root' })
 export class QuizService {
@@ -24,8 +22,6 @@ export class QuizService {
     order: number;
   })[] = [];
     private http = inject(HttpClient);
-    /** ★ バッキングフィールドを追加 */
-    // private _currentDurationSec = 0;
 
   
 
@@ -54,9 +50,7 @@ export class QuizService {
           return rawQs.map((question: Question) => {
             console.log('questionsWithAnswers', this.questionsWithAnswers);
             // 正解のtextを取得
-            const rightChoice = question.choices.find(c => c.iscorrect);
-            const rightText   = rightChoice?.text ?? '';
-            // correctAnswer をキャッシュに保存
+            const rightText = question.answer;
             this.questionsWithAnswers.push({
               ...question, // 浅いコピー
               correctAnswer: rightText, // 正解のテキストを保存
@@ -75,9 +69,9 @@ export class QuizService {
               })) ?? [], // choices がない場合は空配列を設定
               quizid: question.quizid ?? 0, // quizid がない場合は 0 を設定
               explanation: question.explanation ?? '',
-              type: question.type === 'mcq' ? 'mcq' : 'input', // type がない場合は 'text' を設定
+              type: question.type === 'mcq' ? 'multiple' : 'input', // type がない場合は 'text' を設定
               order: question.order ?? 0, // order がない場合は 0 を設定
-              
+              answer: question.answer ?? '' // answer がない場合は空文字を設定
             };
 
           });
@@ -88,8 +82,6 @@ export class QuizService {
         })
       );
   }
-
-  
 
   isCorrect(id: number, answer: string): boolean {
     const q = this.questionsWithAnswers.find(x => x.id === id);
