@@ -7,7 +7,10 @@
 
     <ng-container *ngIf="questions.length; else loading">
       <section class="cards">
-        <article *ngFor="let q of questions; let i = index" class="card">
+        <article *ngFor="let q of questions; let i = index" 
+            class="card"
+            [id]="'q-' + q.id"
+            [ngClass]="{ 'card--error': errorMap[q.id] }">
           <div class="card-header">
             Q{{ i + 1 }}/{{ questions.length }}
                 <app-hint-dialog 
@@ -70,10 +73,9 @@
               次へ/Next
             </button>
           </div>
-
-
-        <!-- 中級・上級のみボタン -->
-
+          <div class="card__error" *ngIf="errorMap[q.id]">
+            未解答です
+          </div>
         </article>
       </section>
     </ng-container>
