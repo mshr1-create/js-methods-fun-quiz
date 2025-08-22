@@ -175,8 +175,7 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   }
 
   isHintEnabled(q: Question): boolean {
-    const modeOK = this.mode === 'beginner' || this.mode === 'intermediate';
-    return modeOK;
+    return this.mode === 'beginner' || this.mode === 'intermediate';
   }
 
   // validationの関数
