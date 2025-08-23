@@ -83,9 +83,7 @@
       <p>問題を読み込み中…</p>
     </ng-template>
     <!-- 採点、解説画面へ -->
-    <button *ngIf="feedbackMode==='immediate'||'deferred'"
-      (click)="submitAll()"
-      class="answer-btn">
+    <button (click)="submitAll()" class="answer-btn">
         採点する
     </button>
 </div>

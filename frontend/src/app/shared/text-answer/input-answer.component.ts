@@ -1,5 +1,5 @@
 // src/app/shared/text-answer/text-answer.component.ts
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
     selector: 'app-text-answer',
@@ -8,6 +8,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./input-answer.component.css']
 })
 export class InputAnswerComponent {
+    @Input() value: string = '';
     @Output() answer = new EventEmitter<string>();
 
     onInput(e: Event) {

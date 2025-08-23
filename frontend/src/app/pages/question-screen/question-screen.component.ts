@@ -143,6 +143,7 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   submitAll() {
     if (!this.validateAll()) return;
     Object.keys(this.answers).forEach(key => this.showInlineFeedback(+key));
+    console.log('All answers submitted:', this.answers);
   }
 
   private showInlineFeedback(id: number) {
