@@ -12,6 +12,7 @@ import { takeWhile }            from 'rxjs/operators';
 import { FeedbackPopupComponent, FeedbackData } from './feedback-popup/feedback-popup.component';
 import { HintDialogComponent } from "../../shared/hint-dialog/hint-dialog.component";
 import { quizResolver } from './quiz.resolver';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question-screen',
@@ -58,7 +59,8 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private quizService: QuizService
+    private quizService: QuizService,
+    private router: Router
   ) { 
     this.timerDisplay = this.formatTime(this.remainingSeconds);
   }
@@ -143,7 +145,14 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   submitAll() {
     if (!this.validateAll()) return;
     Object.keys(this.answers).forEach(key => this.showInlineFeedback(+key));
-    console.log('All answers submitted:', this.answers);
+    // console.log('All answers submitted:', this.answers);
+    const totalDurationSec = this.duration * 60;
+    const remainingSec = this.remainingSeconds ?? 0;
+  
+    this.quizService.finishQuiz(this.questions, this.answers, totalDurationSec, remainingSec);
+  
+    // ★結果画面へ
+    this.router.navigate(['/result']);
   }
 
   private showInlineFeedback(id: number) {

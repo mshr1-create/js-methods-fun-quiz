@@ -10,6 +10,21 @@ interface QuizResponse {
   data: Quiz[];
 }
 
+export interface ResultItem {
+  questionId: number;
+  userAnswer: string;
+  correct: boolean;
+  method?: string;
+  explanation: string;
+  answerTimeSec: number | null;
+}
+export interface QuestionSnap { id: number; text: string; code: string; }
+export interface Summary { correctCount: number; avgTimeSec: number | null; maxStreak: number; }
+
+const KEY_RESULTS = 'results';
+const KEY_SNAPS   = 'snaps';
+const KEY_SUMMARY = 'summary';
+
 type Mode = 'beginner' | 'intermediate' | 'advanced';
 
 @Injectable({ providedIn: 'root' })
@@ -21,9 +36,10 @@ export class QuizService {
     explanation?: string;
     order: number;
   })[] = [];
-    private http = inject(HttpClient);
-
-  
+  private resultsCache: ResultItem[] | null = null;
+  private snapsCache:   QuestionSnap[] | null = null;
+  private summaryCache: Summary | null = null;
+  private http = inject(HttpClient);
 
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
   getQuestion(mode: Mode): Observable<Question[]> {
@@ -83,12 +99,84 @@ export class QuizService {
       );
   }
 
+  // 共通の判定関数
+  judge(questionId: number, rawAnswer: unknown): ResultItem {
+    const userAnswer = this.normalizeAnswer(rawAnswer);
+    const q = this.questionsWithAnswers.find(x => x.id === questionId);
+    const correct = q ? q.correctAnswer === userAnswer : false;
+    const method = this.getMethodName?.(questionId) ?? '';
+    const explanation = this.getExplanation?.(questionId) ?? '';
+    return { questionId, userAnswer, correct, method, explanation, answerTimeSec: null };
+  }
+  
+  // 互換用：既存コードが呼んでいても壊さない
   isCorrect(id: number, answer: string): boolean {
-    const q = this.questionsWithAnswers.find(x => x.id === id);
-    console.log({ expected: q?.correctAnswer, answer });
-    return q ? q.correctAnswer === answer : false;
+    return this.judge(id, answer).correct;
+  }
+  
+  finishQuiz(
+    questions: Question[],
+    answers: Record<number, string>,
+    totalDurationSec: number,
+    remainingSec: number,
+    perQuestionTime?: Record<number, number>
+  ): void {
+    const results = questions.map(q => {
+      const ans = this.normalizeAnswer(answers[q.id]);
+      const r = this.judge(q.id, ans);
+      r.answerTimeSec = perQuestionTime?.[q.id] ?? null;
+      return r;
+    });
+
+    const correctCount = results.reduce((a, r) => a + (r.correct ? 1 : 0), 0);
+    const answerCount  = results.length;
+    const elapsedSec   = Math.max(0, totalDurationSec - (remainingSec ?? 0));
+    const avgTimeSec   = answerCount === 0 ? null : Math.round(elapsedSec / answerCount);
+    const maxStreak    = this.computeMaxStreak(results);
+    const summary: Summary = { correctCount, avgTimeSec, maxStreak };
+
+    const snaps: QuestionSnap[] = questions.map(q => ({ id: q.id, text: q.text, code: q.code ?? '' }));
+
+    this.resultsCache = results;
+    this.snapsCache   = snaps;
+    this.summaryCache = summary;
+    sessionStorage.setItem(KEY_RESULTS, JSON.stringify(results));
+    sessionStorage.setItem(KEY_SNAPS,   JSON.stringify(snaps));
+    sessionStorage.setItem(KEY_SUMMARY, JSON.stringify(summary));
   }
 
+  getResults(): ResultItem[] {
+    if (this.resultsCache === null) {
+      const raw = sessionStorage.getItem(KEY_RESULTS);
+      this.resultsCache = raw ? (JSON.parse(raw) as ResultItem[]) : [];
+    }
+    return this.resultsCache;
+  }
+  getSnaps(): QuestionSnap[] {
+    if (this.snapsCache === null){
+      const raw = sessionStorage.getItem(KEY_SNAPS);
+      this.snapsCache = raw ? (JSON.parse(raw) as QuestionSnap[]) : [];
+    }
+    return this.snapsCache;
+  }
+  getSummary(): Summary | null {
+    if (this.summaryCache !== null) return this.summaryCache;
+    const raw = sessionStorage.getItem(KEY_SUMMARY);
+    this.summaryCache = raw ? JSON.parse(raw) : null;
+    return this.summaryCache;
+  }
+
+  private normalizeAnswer(v: unknown): string {
+    if (v == null) return '未解答';
+    if (Array.isArray(v)) return v.length ? v.join(', ') : '未解答';
+    const s = String(v).trim();
+    return s ? s : '未解答';
+  }
+  private computeMaxStreak(rows: ResultItem[]): number {
+    let cur = 0, max = 0;
+    for (const r of rows) { if (r.correct) { cur++; max = Math.max(max, cur); } else { cur = 0; } }
+    return max;
+  }
 
   getMethodName(id: number): string {
     return this.questionsWithAnswers.find(x => x.id === id)?.methodName ?? '';

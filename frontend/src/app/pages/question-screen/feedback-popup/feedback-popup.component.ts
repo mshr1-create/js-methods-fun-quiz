@@ -16,9 +16,11 @@ export interface FeedbackData {
   styleUrls: ['./feedback-popup.component.css']
 })
 export class FeedbackPopupComponent {
-  @Input() question!: Question;
+  @Input() question!: Pick<Question, 'id' | 'text'> & { code?: string };
   @Input() totalQuestions!: number;
   @Input() data!: FeedbackData;
+  @Input() variant: 'overlay' | 'static' = 'overlay';
+  @Input() showNext: boolean = true;
   @Output() close = new EventEmitter<void>();
 
 

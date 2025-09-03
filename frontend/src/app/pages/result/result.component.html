@@ -1,0 +1,48 @@
+<div class="result-wrapper">
+    <header class="result-header">
+        <span class="logo-text">logo</span>
+    </header>
+
+    <div class="result-card">
+      <mat-card-content>
+        <dl class="stats-dl">
+          <div class="row">
+            <dt>正答数</dt><dd></dd>
+          </div>
+          <mat-divider></mat-divider>
+  
+          <div class="row">
+            <dt>平均解答時間</dt><dd></dd>
+          </div>
+          <mat-divider></mat-divider>
+  
+          <div class="row">
+            <dt>連続正解記録</dt><dd></dd>
+          </div>
+        </dl>
+      </mat-card-content>
+    </div>
+
+    <!-- 結果カード一覧：FeedbackPopup を静的表示で再利用 -->
+  <section class="cards">
+    <app-feedback-popup
+      *ngFor="let row of displayRows; let i = index"
+      [question]="{ id: row.questionId, text: row.text, code: row.code }"
+      [totalQuestions]="displayRows.length"
+      [data]="{ correct: row.correct, method: row.method, explanation: row.explanation }"
+      variant="static"
+      [showNext]="false">
+    </app-feedback-popup>
+  </section>
+
+  <div class="button-row">
+    <button mat-raised-button color="primary" class="retry-button" routerLink="/app-mode-duration">
+      <mat-icon>play_arrow</mat-icon>
+      もう一度挑戦
+    </button>
+    <button mat-raised-button color="primary" class="home-button" routerLink="/">
+      <mat-icon>home</mat-icon>
+      ホームへ戻る
+    </button>
+  </div>
+</div>

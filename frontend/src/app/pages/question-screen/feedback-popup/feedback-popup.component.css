@@ -1,5 +1,5 @@
-/* オーバーレイ全画面 */
-.feedback-overlay {
+/* オーバーレイ全画面
+.feedback-root {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.4);
@@ -7,8 +7,34 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+} */
+
+/* 共通 */
+.feedback-root {
+    width: 100%;
 }
   
+  /* Overlay 用（即時フィードバック） */
+  .feedback-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Static 用（結果画面） */
+  .feedback-static {
+    background: #fff;    /* 背景白 */
+    margin: 16px auto;   /* 縦に並べるため margin を設定 */
+    max-width: 600px;    /* カード幅を制限すると見やすい */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 12px;
+  } 
+
   /* 外側の白背景カード */
 .popup-card {
     background: #ffffff;
