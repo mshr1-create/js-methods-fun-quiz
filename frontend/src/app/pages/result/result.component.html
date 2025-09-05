@@ -7,17 +7,17 @@
       <mat-card-content>
         <dl class="stats-dl">
           <div class="row">
-            <dt>正答数</dt><dd></dd>
+            <dt>正答数</dt><dd>{{ summary?.correctCount }}問</dd>
           </div>
           <mat-divider></mat-divider>
   
           <div class="row">
-            <dt>平均解答時間</dt><dd></dd>
+            <dt>平均解答時間</dt><dd>{{ summary?.avgTimeSec }}秒</dd>
           </div>
           <mat-divider></mat-divider>
   
           <div class="row">
-            <dt>連続正解記録</dt><dd></dd>
+            <dt>連続正解記録</dt><dd>{{ summary?.maxStreak }}問</dd>
           </div>
         </dl>
       </mat-card-content>

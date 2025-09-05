@@ -45,6 +45,23 @@
 .row {
     font-size: 14px;
 }
+/* 親dlは縦に積む */
+.stats-dl {
+    margin: 0;
+    padding: 0;
+}
+.stats-dl .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+.stats-dl dt {
+    font-weight: bold;
+}
+.stats-dl dd {
+    margin: 0;
+    text-align: right;
+}
 .button-row{
     display: flex;
     justify-content: center;
