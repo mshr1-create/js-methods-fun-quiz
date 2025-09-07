@@ -14,7 +14,7 @@ import { ResultComponent } from './pages/result/result.component';
 export const routes: Routes = [
     // { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'signup', component: SignupComponent },
+    { path: 'app-signup', component: SignupComponent },
     { path: 'app-mode-duration', component: ModeDurationComponent },
     { path: '', component: HomeComponent },
     // { path: 'profile',    component: ProfileComponent },

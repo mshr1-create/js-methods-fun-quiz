@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { Quiz } from "../models/quiz.model";
-
+import { environment } from "../../environments/environment.development";
 
 interface QuizResponse {
   data: Quiz[];
@@ -41,6 +41,11 @@ export class QuizService {
   private summaryCache: Summary | null = null;
   private http = inject(HttpClient);
 
+  signUp(payload: { username: string; email: string; password: string; }): Observable<any> {
+     // base URL は environment.apiBase に退避を推奨
+  return this.http.post('/api/auth/local/register', payload);
+  }
+
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
   getQuestion(mode: Mode): Observable<Question[]> {
     const params = new HttpParams()
@@ -49,7 +54,7 @@ export class QuizService {
       .set('populate', 'questions.choices'); // choices をネストして取得
 
     return this.http
-      .get<QuizResponse>(`http://localhost:1337/api/quizzes`, { params })
+      .get<QuizResponse>(`${environment.apiBase}api/quizzes`, { params })
       .pipe(
         map(res => {
           // 条件に基づいてクイズを選択

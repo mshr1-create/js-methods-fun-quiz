@@ -3,42 +3,34 @@
         <span class="logo-text">logo</span>
     </header>
 
-    <div class="signup-content">
+    <form class="signup-content" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
         <div class="form-group">
-            <input 
-                type="text" 
-                class="input-box" 
-                placeholder="Username"
-            />
+            <input type="text" class="input-box" placeholder="Username"
+            name="username" [(ngModel)]="form.username" required />
         </div>
         <div class="form-group">
-            <input 
-                type="email" 
-                class="input-box" 
-                placeholder="Email"
-            />
+            <input type="email" class="input-box" placeholder="Email"
+            name="email" [(ngModel)]="form.email" required email />
         </div>
         <div class="form-group">
-            <input 
-                type="password" 
-                class="input-box" 
-                placeholder="Password"
-            />
+            <input type="password" class="input-box" placeholder="Password"
+            name="password" [(ngModel)]="form.password" required minlength="6" />
         </div>
         <div class="form-group">
-            <input 
-                type="password" 
-                class="input-box" 
-                placeholder="Confirm Password"
-            />
+            <input type="password" class="input-box" placeholder="Confirm Password"
+            name="confirm" [(ngModel)]="form.confirm" required />
         </div>
 
         <div class="form-group">
-            <button class="btn-primary">登録</button>
+            <button type="submit" class="btn-primary" [disabled]="f.invalid || loading">
+                {{ loading ? '登録中…' : '登録' }}
+            </button>
         </div>
 
         <div class="link-group">
-            <a class="link-login" href="login">ログイン画面に戻る</a>
+            <a class="link-login" [routerLink]="'/login'">ログイン画面に戻る</a>
         </div>
-    </div>
+
+        <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+    </form>
 </div>
