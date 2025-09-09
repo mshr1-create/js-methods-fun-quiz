@@ -9,6 +9,7 @@ import { QuestionScreenComponent } from './pages/question-screen/question-screen
 // import { HistoryComponent } from './history.component';
 import { HttpClient } from '@angular/common/http';
 import { quizResolver } from './pages/question-screen/quiz.resolver';
+import { ResultComponent } from './pages/result/result.component';
 
 export const routes: Routes = [
     // { path: '', component: HomeComponent },
@@ -25,5 +26,6 @@ export const routes: Routes = [
             quiz: quizResolver // quizResolverを使用してクイズデータを取得
         }
     },
-    { path: '', redirectTo: 'app-home', pathMatch: 'full' }
+    { path: '', redirectTo: 'app-home', pathMatch: 'full' },
+    { path: 'result', component: ResultComponent, resolve: { quiz: quizResolver } } // 結果画面のルート
 ];

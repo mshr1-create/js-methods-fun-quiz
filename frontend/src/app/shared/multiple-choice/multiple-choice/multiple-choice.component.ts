@@ -18,7 +18,7 @@ export class MultipleChoiceComponent {
     @Input() selected: string = ''; 
     @Output() answer = new EventEmitter<string>();
 
-    onAnswer(id: number, answer: string) {
+    emitAnswer(id: number, answer: string) {
         if (this.disabled) return; // 回答が無効な場合は何もしない
         this.answer.emit(answer); // 親コンポーネントに回答を通知
     }

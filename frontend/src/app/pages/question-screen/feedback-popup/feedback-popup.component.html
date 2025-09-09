@@ -1,4 +1,8 @@
-<div class="feedback-overlay">
+<div class="feedback-root" 
+[class.feedback-overlay]="variant === 'overlay'"
+[class.feedback-static]="variant === 'static'">
+    
+  
     <div class="popup-card">
       <!-- カード①：ヘッダー -->
       <div class="card header-card">
@@ -33,6 +37,7 @@
   
       <!-- 次へボタン -->
       <button
+        *ngIf="showNext"
         class="btn-next"
         [ngClass]="{ 'btn-correct': data.correct, 'btn-wrong': !data.correct }"
         (click)="onNext()"

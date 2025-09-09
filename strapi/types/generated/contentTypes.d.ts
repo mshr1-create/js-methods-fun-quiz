@@ -601,7 +601,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
     quiz: Schema.Attribute.Relation<'manyToOne', 'api::quiz.quiz'>;
     text: Schema.Attribute.Text;
     title: Schema.Attribute.String;
-    type: Schema.Attribute.Enumeration<['mcq', 'input']>;
+    type: Schema.Attribute.Enumeration<['multiple', 'input']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

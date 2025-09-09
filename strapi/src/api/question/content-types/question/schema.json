@@ -32,7 +32,7 @@
     "type": {
       "type": "enumeration",
       "enum": [
-        "mcq",
+        "multiple",
         "input"
       ]
     },

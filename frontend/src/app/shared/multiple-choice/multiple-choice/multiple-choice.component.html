@@ -5,7 +5,7 @@
             type="radio" 
             name="question-{{ question?.id }}" 
             [value]="choice.text" 
-            (change)="onAnswer(question?.id!, choice.text)"
+            (change)="emitAnswer(question?.id!, choice.text)"
             />
         {{ choice.text }}
         </label>
