@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { QuizService } from '../../services/quiz.service';
 import { ErrorService } from '../../services/error.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -20,6 +21,7 @@ export class SignupComponent {
   private quizService = inject(QuizService);
   private errorService = inject(ErrorService);
   private router = inject(Router);
+  private userService = inject(UserService);
 
   form = { username: '', email: '', password: '', confirm: '' };
   loading = false;
@@ -34,7 +36,7 @@ export class SignupComponent {
     }
     this.loading = true;
     try {
-      const res = await this.quizService
+      const res = await this.userService
         .signUp({ username: this.form.username, email: this.form.email, password: this.form.password })
         .toPromise();
 

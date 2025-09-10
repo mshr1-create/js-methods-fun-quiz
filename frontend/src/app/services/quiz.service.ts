@@ -41,11 +41,6 @@ export class QuizService {
   private summaryCache: Summary | null = null;
   private http = inject(HttpClient);
 
-  signUp(payload: { username: string; email: string; password: string; }): Observable<any> {
-     // base URL は environment.apiBase に退避を推奨
-  return this.http.post('/api/auth/local/register', payload);
-  }
-
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
   getQuestion(mode: Mode): Observable<Question[]> {
     const params = new HttpParams()
