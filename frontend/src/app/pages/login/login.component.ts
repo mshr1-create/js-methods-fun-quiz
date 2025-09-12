@@ -40,7 +40,7 @@ export class LoginComponent {
       );
 
       console.log('ログイン成功:', res);
-      await this.router.navigate(['/']);
+      await this.router.navigate(['/app-home']);
     } catch (e: unknown) {
       this.errorMsg = this.errorService.toFriendlyMessage(e);
       console.error(e);

@@ -40,7 +40,7 @@ export class SignupComponent {
         .signUp({ username: this.form.username, email: this.form.email, password: this.form.password })
         .toPromise();
 
-      await this.router.navigate(['/']); // 初回プロフィール画面などへ
+      await this.router.navigate(['/app-home']); // 初回プロフィール画面などへ
     } catch (e: any) {
       this.errorMsg = this.errorService.toFriendlyMessage(e);
       console.error(e);

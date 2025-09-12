@@ -49,7 +49,7 @@ export class QuizService {
       .set('populate', 'questions.choices'); // choices をネストして取得
 
     return this.http
-      .get<QuizResponse>(`${environment.apiBase}api/quizzes`, { params })
+      .get<QuizResponse>(`${environment.apiBase}/api/quizzes`, { params })
       .pipe(
         map(res => {
           // 条件に基づいてクイズを選択

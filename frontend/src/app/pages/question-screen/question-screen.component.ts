@@ -75,6 +75,7 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
 
     // パラメータが 'beginner', 'intermediate', 'advanced' のいずれかであることを確認
     if (modeParam === 'beginner' || modeParam === 'intermediate' || modeParam === 'advanced') {
+      console.log('Valid mode parameter:', modeParam);
       this.mode = modeParam;
     } else {
       // 不正なURLの場合はエラー処理やリダイレクトを行う

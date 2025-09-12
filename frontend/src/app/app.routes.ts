@@ -16,7 +16,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'app-signup', component: SignupComponent },
     { path: 'app-mode-duration', component: ModeDurationComponent },
-    { path: '', component: HomeComponent },
+    { path: 'app-home', component: HomeComponent },
     // { path: 'profile',    component: ProfileComponent },
     // { path: 'history',    component: HistoryComponent },
     { 
@@ -26,6 +26,5 @@ export const routes: Routes = [
             quiz: quizResolver // quizResolverを使用してクイズデータを取得
         }
     },
-    { path: '', redirectTo: 'app-home', pathMatch: 'full' },
-    { path: 'result', component: ResultComponent, resolve: { quiz: quizResolver } } // 結果画面のルート
+    { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
