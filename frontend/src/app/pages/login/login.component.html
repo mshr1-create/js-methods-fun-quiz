@@ -4,9 +4,13 @@
     </header>
 
     <div class="login-content">
+        <form (ngSubmit)="onSubmit()" #f="ngForm" novalidate class="login-content">
         <div class="form-group">
             <input 
-                type="email" 
+                type="email"
+                name="email"    
+                required
+                [(ngModel)]="form.email"
                 class="input-box" 
                 placeholder="Email"
             />
@@ -14,6 +18,9 @@
         <div class="form-group">
             <input 
                 type="password" 
+                name="password"
+                required
+                [(ngModel)]="form.password"
                 class="input-box" 
                 placeholder="Password"
             />
@@ -22,8 +29,11 @@
         <hr class="divider" />
 
         <div class="form-group">
-            <button class="btn-primary">ログイン</button>
+            <button type="submit" [disabled]="f.invalid || loading" class="btn-primary">
+                {{ loading ? 'ログイン中…' : 'ログイン' }}
+            </button>
         </div>
+        <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
 
         <div class="form-group">
             <button class="btn-google">
@@ -40,7 +50,8 @@
         <div class="link-group">
             <a class="link-guest" href="#">ゲストで始める</a>
             <a class="link-forget" href="#">パスワードをお忘れですか？</a>
-            <a class="link-sign-up" href="signup">新規登録</a>
+            <a class="link-sign-up" routerLink="/app-signup">新規登録</a>
         </div>
+        </form>
     </div>
 </div>

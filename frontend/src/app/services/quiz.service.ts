@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { Quiz } from "../models/quiz.model";
-
+import { environment } from "../../environments/environment.development";
 
 interface QuizResponse {
   data: Quiz[];
@@ -49,7 +49,7 @@ export class QuizService {
       .set('populate', 'questions.choices'); // choices をネストして取得
 
     return this.http
-      .get<QuizResponse>(`http://localhost:1337/api/quizzes`, { params })
+      .get<QuizResponse>(`${environment.apiBase}/api/quizzes`, { params })
       .pipe(
         map(res => {
           // 条件に基づいてクイズを選択
