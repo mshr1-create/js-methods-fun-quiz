@@ -1,8 +1,10 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
-
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { HomeComponent } from './home.component';
+import { authInterceptor } from './http/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -11,3 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient()
   ]
 };
+
+bootstrapApplication(HomeComponent, {
+  providers: [provideHttpClient(withInterceptors([authInterceptor]))]
+});

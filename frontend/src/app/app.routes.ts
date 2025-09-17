@@ -10,6 +10,7 @@ import { QuestionScreenComponent } from './pages/question-screen/question-screen
 import { HttpClient } from '@angular/common/http';
 import { quizResolver } from './pages/question-screen/quiz.resolver';
 import { ResultComponent } from './pages/result/result.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     // { path: '', component: HomeComponent },
@@ -21,10 +22,17 @@ export const routes: Routes = [
     // { path: 'history',    component: HistoryComponent },
     { 
         path: 'questions', 
-        component: QuestionScreenComponent,
-        resolve: {
-            quiz: quizResolver // quizResolverを使用してクイズデータを取得
-        }
+        canActivate: [authGuard],
+        resolve: { quiz: quizResolver },// quizResolverを使用してクイズデータを取得        
+        loadComponent: () => 
+            import('./pages/question-screen/question-screen.component')
+                .then(m => m.QuestionScreenComponent)
+    },
+    {
+        path: 'result',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./pages/result/result.component').then(m => m.ResultComponent)
     },
     { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

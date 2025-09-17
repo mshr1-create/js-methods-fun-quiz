@@ -40,6 +40,7 @@ export class SignupComponent {
         .signUp({ username: this.form.username, email: this.form.email, password: this.form.password })
         .toPromise();
 
+      localStorage.setItem('jwt', res.jwt); // ★ここで保存
       await this.router.navigate(['/app-home']); // 初回プロフィール画面などへ
     } catch (e: any) {
       this.errorMsg = this.errorService.toFriendlyMessage(e);
