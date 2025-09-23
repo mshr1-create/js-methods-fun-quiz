@@ -1,0 +1,6 @@
+<header class="app-header">
+    <span *ngIf="user.isLoggedIn$ | async" (click)="user.logout()">
+        <button (click)="onLogout()">ログアウト</button>
+    </span>
+    <a *ngIf="!(user.isLoggedIn$ | async)" routerLink="/login">Quiz Appログイン</a>
+</header>

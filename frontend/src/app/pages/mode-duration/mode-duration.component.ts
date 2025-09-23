@@ -39,6 +39,6 @@ export class ModeDurationComponent {
 
   onBackClick(): void {
     console.log('戻るボタンをクリック');
-    this.router.navigate(['/']);
+    this.router.navigate(['app-home']);
   }
 }
