@@ -48,4 +48,5 @@ frontend/.angular/
 frontend/dist/
 
 # Strapi specific
-/strapi/src/extensions/documentation/documentation/**/full_documentation.json
+strapi/types/generated/
+strapi/src/extensions/documentation/**/full_documentation.json

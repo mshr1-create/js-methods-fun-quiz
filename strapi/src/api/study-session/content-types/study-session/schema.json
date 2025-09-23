@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "study_sessions",
+  "info": {
+    "singularName": "study-session",
+    "pluralName": "study-sessions",
+    "displayName": "StudySession",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "mode": {
+      "type": "enumeration",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced"
+      ]
+    },
+    "startedAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "finishedAt": {
+      "type": "datetime"
+    },
+    "durationSec": {
+      "type": "integer"
+    },
+    "score": {
+      "type": "integer"
+    },
+    "correctCount": {
+      "type": "integer"
+    },
+    "totalCount": {
+      "type": "integer"
+    },
+    "maxStreak": {
+      "type": "integer"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "studySessions"
+    }
+  }
+}

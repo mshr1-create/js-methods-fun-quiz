@@ -35,5 +35,6 @@ export class HomeComponent {
 
   onHistoryClick(): void {
     console.log('Progress/History クリック');
+    this.router.navigate(['/app-progress-history']);
   }
 }
