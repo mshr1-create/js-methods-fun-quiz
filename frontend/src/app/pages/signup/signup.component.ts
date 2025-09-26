@@ -7,7 +7,7 @@ import { ErrorService } from '../../services/error.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-signup',
+  selector: 'signup',
   standalone: true,
   imports: [
     CommonModule,
@@ -41,7 +41,7 @@ export class SignupComponent {
         .toPromise();
 
       localStorage.setItem('jwt', res.jwt); // ★ここで保存
-      await this.router.navigate(['/app-home']); // 初回プロフィール画面などへ
+      await this.router.navigate(['/home']); // 初回プロフィール画面などへ
     } catch (e: any) {
       this.errorMsg = this.errorService.toFriendlyMessage(e);
       console.error(e);

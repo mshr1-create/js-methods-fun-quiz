@@ -15,11 +15,11 @@ import { ProgressHistoryComponent } from './pages/progress-history/progress-hist
 export const routes: Routes = [
     // { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'app-signup', component: SignupComponent },
-    { path: 'app-mode-duration', component: ModeDurationComponent },
-    { path: 'app-home', component: HomeComponent },
+    { path: 'signup', component: SignupComponent },
+    { path: 'mode', component: ModeDurationComponent },
+    { path: 'home', component: HomeComponent },
     // { path: 'profile',    component: ProfileComponent },
-    { path: 'app-progress-history',    component: ProgressHistoryComponent },
+    { path: 'history',    component: ProgressHistoryComponent },
     { 
         path: 'questions', 
         canActivate: [authGuard],
@@ -32,7 +32,7 @@ export const routes: Routes = [
         path: 'result',
         canActivate: [authGuard],
         loadComponent: () =>
-          import('./pages/result/result.component').then(m => m.ResultComponent)
+            import('./pages/result/result.component').then(m => m.ResultComponent)
     },
     { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

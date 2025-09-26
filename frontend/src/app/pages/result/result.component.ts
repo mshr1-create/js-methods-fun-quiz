@@ -47,7 +47,7 @@ export class ResultComponent implements OnInit {
     const snaps   = this.quizService.getSnaps();
 
     if (!results.length) {
-      this.router.navigate(['/app-mode-duration']);
+      this.router.navigate(['/mode']);
       return;
     }
 

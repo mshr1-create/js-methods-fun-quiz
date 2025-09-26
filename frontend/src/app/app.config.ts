@@ -10,10 +10,11 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes),
-    provideHttpClient()
+    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor]))
   ]
 };
 
-bootstrapApplication(HomeComponent, {
-  providers: [provideHttpClient(withInterceptors([authInterceptor]))]
-});
+// bootstrapApplication(HomeComponent, {
+//   providers: [provideHttpClient(withInterceptors([authInterceptor]))]
+// });

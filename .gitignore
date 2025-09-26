@@ -48,5 +48,10 @@ frontend/.angular/
 frontend/dist/
 
 # Strapi specific
+# cspell:ignore strapi
 strapi/types/generated/
 strapi/src/extensions/documentation/**/full_documentation.json
+
+# Explicitly ignore specific generated files
+strapi/src/extensions/documentation/documentation/1.0.0/full_documentation.json
+strapi/types/generated/contentTypes.d.ts
