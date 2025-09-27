@@ -82,8 +82,8 @@ export class ResultComponent implements OnInit {
         mode: meta.mode,
         startedAt: meta.startedAt,
         finishedAt: meta.finishedAt,
-        durationSec: meta.durationSec,
-        score: summary.correctCount, // とりあえず正答数をscoreに
+        durationSec: (meta.plannedDurationMin ?? 0) * 60,
+        score: (summary.correctCount ?? 0) * 10,
         correctCount: summary.correctCount,
         totalCount: meta.totalCount,
         maxStreak: summary.maxStreak,

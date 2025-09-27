@@ -112,8 +112,8 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       this.timerDisplay = this.formatTime(this.remainingSeconds);
       // タイマー開始
       this.startTimer();
-      // セッション開始メタを保存
-      this.quizService.beginSession(this.mode);
+      // セッション開始メタを保存（設定時間の分を一緒に保存）
+      this.quizService.beginSession(this.mode, this.duration);
     });
     this.feedbackMode = this.mode === 'beginner' ? 'immediate' : 'deferred';
   }

@@ -20,7 +20,7 @@ export interface ResultItem {
 }
 export interface QuestionSnap { id: number; text: string; code: string; }
 export interface Summary { correctCount: number; avgTimeSec: number | null; maxStreak: number; }
-export interface SessionMeta { mode: Mode; startedAt: string; finishedAt: string | null; durationSec: number | null; totalCount: number; }
+export interface SessionMeta { mode: Mode; startedAt: string; finishedAt: string | null; durationSec: number | null; totalCount: number; plannedDurationMin: number; }
 
 const KEY_RESULTS = 'results';
 const KEY_SNAPS   = 'snaps';
@@ -200,9 +200,9 @@ export class QuizService {
   }
 
   /** 学習セッションの開始を記録（保存は sessionStorage） */
-  beginSession(mode: Mode): void {
+  beginSession(mode: Mode, plannedDurationMin: number): void {
     const startedAt = new Date().toISOString();
-    const meta: SessionMeta = { mode, startedAt, finishedAt: null, durationSec: null, totalCount: 0 };
+    const meta: SessionMeta = { mode, startedAt, finishedAt: null, durationSec: null, totalCount: 0, plannedDurationMin };
     this.sessionMetaCache = meta;
     sessionStorage.setItem(KEY_SESSION_META, JSON.stringify(meta));
   }
