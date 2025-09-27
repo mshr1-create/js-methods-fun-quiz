@@ -41,11 +41,11 @@
     "maxStreak": {
       "type": "integer"
     },
-    "users_permissions_user": {
+    "user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "studySessions"
+      "inversedBy": "study_sessions"
     }
   }
 }

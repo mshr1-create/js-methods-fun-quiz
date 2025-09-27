@@ -11,8 +11,7 @@ import { UserService } from './user.service';
 export class HistoryService {
   private http = inject(HttpClient);
   private readonly baseUrl = `${environment.apiBase}/api/study-sessions`;
-  private userService = inject(UserService);
-  private user = 'user_permissions_user';
+  // private userService = inject(UserService); // 現状未使用
 
   list(options?: {
     page?: number;
@@ -67,7 +66,7 @@ export class HistoryService {
     totalCount?: number | null;
     maxStreak?: number | null;
   }): Observable<StudySession> {
-    const payload = { data: { ...body, publishedAt: new Date().toISOString() } };
+    const payload = { data: { ...body } };
     return this.http.post<any>(this.baseUrl, payload).pipe(
       map(res => {
         const it = res?.data ?? res;

@@ -676,7 +676,7 @@ export interface ApiStudySessionStudySession
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users_permissions_user: Schema.Attribute.Relation<
+    user: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
     >;
@@ -1170,7 +1170,7 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    studySessions: Schema.Attribute.Relation<
+    study_sessions: Schema.Attribute.Relation<
       'oneToMany',
       'api::study-session.study-session'
     >;

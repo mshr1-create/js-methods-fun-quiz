@@ -65,11 +65,11 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "studySessions": {
+    "study_sessions": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::study-session.study-session",
-      "mappedBy": "users_permissions_user"
+      "mappedBy": "user"
     }
   }
 }

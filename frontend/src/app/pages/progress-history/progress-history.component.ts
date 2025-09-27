@@ -7,6 +7,7 @@ import { MatDividerModule} from '@angular/material/divider';
 import { MatTableModule} from '@angular/material/table';
 import { HistoryService } from '../../services/history.service';
 import { StudySession } from '../../models/study-session.model';
+import { RouterModule } from '@angular/router';
 
 type HistoryRow = { mode: string; duration: string; dateTime: string; score: string };
 
@@ -17,7 +18,8 @@ type HistoryRow = { mode: string; duration: string; dateTime: string; score: str
             MatButtonModule, 
             MatIconModule,
             MatDividerModule,
-            MatTableModule],
+            MatTableModule,
+            RouterModule],
   templateUrl: './progress-history.component.html',
   styleUrls: ['./progress-history.component.css']
 })
