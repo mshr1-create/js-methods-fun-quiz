@@ -71,3 +71,13 @@
     margin-top: 24px;
     margin-bottom: 24px;
 }
+
+.save-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}

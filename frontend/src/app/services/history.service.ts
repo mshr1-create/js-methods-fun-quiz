@@ -56,4 +56,34 @@ export class HistoryService {
         })
       );
   }
+
+  create(body: {
+    mode: StudyMode;
+    startedAt: string;
+    finishedAt?: string | null;
+    durationSec?: number | null;
+    score?: number | null;
+    correctCount?: number | null;
+    totalCount?: number | null;
+    maxStreak?: number | null;
+  }): Observable<StudySession> {
+    const payload = { data: { ...body, publishedAt: new Date().toISOString() } };
+    return this.http.post<any>(this.baseUrl, payload).pipe(
+      map(res => {
+        const it = res?.data ?? res;
+        const a = it?.attributes ?? it;
+        return {
+          id: it?.id ?? a?.id ?? 0,
+          mode: a?.mode,
+          startedAt: a?.startedAt,
+          finishedAt: a?.finishedAt ?? null,
+          durationSec: a?.durationSec ?? null,
+          score: a?.score ?? null,
+          correctCount: a?.correctCount ?? null,
+          totalCount: a?.totalCount ?? null,
+          maxStreak: a?.maxStreak ?? null,
+        } as StudySession;
+      })
+    );
+  }
 }

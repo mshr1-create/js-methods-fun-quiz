@@ -8,7 +8,7 @@ import { MatTableModule} from '@angular/material/table';
 import { HistoryService } from '../../services/history.service';
 import { StudySession } from '../../models/study-session.model';
 
-type HistoryRow = { mode: string; duration: string; dateTime: string };
+type HistoryRow = { mode: string; duration: string; dateTime: string; correct: string; total: string; maxStreak: string; score: string };
 
 @Component({
   selector: 'history',
@@ -23,7 +23,7 @@ type HistoryRow = { mode: string; duration: string; dateTime: string };
 })
 export class ProgressHistoryComponent implements OnInit {
   private history = inject(HistoryService);
-  displayedColumns: string[] = ['mode', 'duration', 'dateTime'];
+  displayedColumns: string[] = ['mode', 'duration', 'dateTime', 'correct', 'total', 'maxStreak', 'score'];
   historyData: HistoryRow[] = [];
   ngOnInit(): void {
     this.history
@@ -33,6 +33,10 @@ export class ProgressHistoryComponent implements OnInit {
           mode: r.mode,
           duration: r.durationSec ? `${Math.round((r.durationSec ?? 0) / 60)} mins` : '-',
           dateTime: r.startedAt,
+          correct: r.correctCount != null ? String(r.correctCount) : '-',
+          total: r.totalCount != null ? String(r.totalCount) : '-',
+          maxStreak: r.maxStreak != null ? String(r.maxStreak) : '-',
+          score: r.score != null ? String(r.score) : '-',
         }));
       });
   }

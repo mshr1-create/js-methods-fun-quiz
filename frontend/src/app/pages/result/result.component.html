@@ -22,6 +22,11 @@
         </dl>
       </mat-card-content>
     </div>
+    <div class="save-button">
+      <button mat-raised-button color="primary" class="save-button" (click)="onSave()" [disabled]="saving || saved">
+        {{ saved ? '保存済み' : (saving ? '保存中...' : 'データを保存する') }}
+      </button>
+    </div>
 
     <!-- 結果カード一覧：FeedbackPopup を静的表示で再利用 -->
   <section class="cards">

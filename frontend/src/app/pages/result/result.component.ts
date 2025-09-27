@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FeedbackPopupComponent, FeedbackData } from '../question-screen/feedback-popup/feedback-popup.component';
 import { QuizService } from '../../services/quiz.service';
+import { HistoryService } from '../../services/history.service';
 import { MatCardModule} from '@angular/material/card';
 import { MatButtonModule} from '@angular/material/button';
 import { MatIconModule} from '@angular/material/icon';
@@ -36,10 +37,12 @@ type DisplayRow = {
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
-  constructor(private quizService: QuizService, private router: Router) {}
+  constructor(private quizService: QuizService, private history: HistoryService, private router: Router) {}
 
   summary: any;
   displayRows: DisplayRow[] = [];
+  saving = false;
+  saved = false;
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     this.summary = this.quizService.getSummary();
@@ -65,6 +68,29 @@ export class ResultComponent implements OnInit {
         explanation: r.explanation,
         answerTimeSec: r.answerTimeSec,
       });
+    }
+  }
+
+  async onSave(): Promise<void> {
+    if (this.saved || this.saving) return;
+    this.saving = true;
+    try {
+      const summary = this.quizService.getSummary();
+      const meta = this.quizService.getSessionMeta();
+      if (!summary || !meta) return;
+      await this.history.create({
+        mode: meta.mode,
+        startedAt: meta.startedAt,
+        finishedAt: meta.finishedAt,
+        durationSec: meta.durationSec,
+        score: summary.correctCount, // とりあえず正答数をscoreに
+        correctCount: summary.correctCount,
+        totalCount: meta.totalCount,
+        maxStreak: summary.maxStreak,
+      }).toPromise();
+      this.saved = true;
+    } finally {
+      this.saving = false;
     }
   }
 }

@@ -20,10 +20,12 @@ export interface ResultItem {
 }
 export interface QuestionSnap { id: number; text: string; code: string; }
 export interface Summary { correctCount: number; avgTimeSec: number | null; maxStreak: number; }
+export interface SessionMeta { mode: Mode; startedAt: string; finishedAt: string | null; durationSec: number | null; totalCount: number; }
 
 const KEY_RESULTS = 'results';
 const KEY_SNAPS   = 'snaps';
 const KEY_SUMMARY = 'summary';
+const KEY_SESSION_META = 'session_meta';
 
 type Mode = 'beginner' | 'intermediate' | 'advanced';
 
@@ -39,6 +41,7 @@ export class QuizService {
   private resultsCache: ResultItem[] | null = null;
   private snapsCache:   QuestionSnap[] | null = null;
   private summaryCache: Summary | null = null;
+  private sessionMetaCache: SessionMeta | null = null;
   private http = inject(HttpClient);
 
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
@@ -143,6 +146,16 @@ export class QuizService {
     sessionStorage.setItem(KEY_RESULTS, JSON.stringify(results));
     sessionStorage.setItem(KEY_SNAPS,   JSON.stringify(snaps));
     sessionStorage.setItem(KEY_SUMMARY, JSON.stringify(summary));
+
+    // セッションメタ更新
+    const meta = this.getSessionMeta();
+    if (meta) {
+      meta.finishedAt = new Date().toISOString();
+      meta.durationSec = elapsedSec;
+      meta.totalCount = answerCount;
+      this.sessionMetaCache = meta;
+      sessionStorage.setItem(KEY_SESSION_META, JSON.stringify(meta));
+    }
   }
 
   getResults(): ResultItem[] {
@@ -184,5 +197,21 @@ export class QuizService {
 
   getExplanation(id: number): string {
     return this.questionsWithAnswers.find(x => x.id === id)?.explanation ?? '';
+  }
+
+  /** 学習セッションの開始を記録（保存は sessionStorage） */
+  beginSession(mode: Mode): void {
+    const startedAt = new Date().toISOString();
+    const meta: SessionMeta = { mode, startedAt, finishedAt: null, durationSec: null, totalCount: 0 };
+    this.sessionMetaCache = meta;
+    sessionStorage.setItem(KEY_SESSION_META, JSON.stringify(meta));
+  }
+
+  /** 学習セッションのメタデータ取得（結果保存用） */
+  getSessionMeta(): SessionMeta | null {
+    if (this.sessionMetaCache !== null) return this.sessionMetaCache;
+    const raw = sessionStorage.getItem(KEY_SESSION_META);
+    this.sessionMetaCache = raw ? (JSON.parse(raw) as SessionMeta) : null;
+    return this.sessionMetaCache;
   }
 }
