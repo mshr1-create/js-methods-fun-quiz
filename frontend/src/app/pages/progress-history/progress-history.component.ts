@@ -54,7 +54,13 @@ export class ProgressHistoryComponent implements OnInit {
           }
           answered += r.totalCount ?? 0;
           correct  += r.correctCount ?? 0;
-          sumDuration += r.durationSec ?? 0;
+          // 実際の経過秒（finishedAt - startedAt）で平均解答時間を算出
+          const startMs = r.startedAt ? new Date(r.startedAt).getTime() : null;
+          const finishMs = r.finishedAt ? new Date(r.finishedAt).getTime() : null;
+          const elapsed = (startMs != null && finishMs != null && finishMs > startMs)
+            ? Math.floor((finishMs - startMs) / 1000)
+            : 0;
+          sumDuration += elapsed;
           sumScore += r.score ?? 0;
         }
         this.totalAnswered = answered;
