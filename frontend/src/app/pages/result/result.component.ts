@@ -9,6 +9,7 @@ import { MatButtonModule} from '@angular/material/button';
 import { MatIconModule} from '@angular/material/icon';
 import { MatDividerModule} from '@angular/material/divider';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 type DisplayRow = {
   questionId: number;
@@ -78,16 +79,16 @@ export class ResultComponent implements OnInit {
       const summary = this.quizService.getSummary();
       const meta = this.quizService.getSessionMeta();
       if (!summary || !meta) return;
-      await this.history.create({
+      await firstValueFrom(this.history.create({
         mode: meta.mode,
         startedAt: meta.startedAt,
         finishedAt: meta.finishedAt,
-        durationSec: (meta.plannedDurationMin ?? 0) * 60,
+        durationSec: meta.durationSec ?? ((meta.plannedDurationMin ?? 0) * 60),
         score: (summary.correctCount ?? 0) * 10,
         correctCount: summary.correctCount,
         totalCount: meta.totalCount,
         maxStreak: summary.maxStreak,
-      }).toPromise();
+      }));
       this.saved = true;
     } finally {
       this.saving = false;
