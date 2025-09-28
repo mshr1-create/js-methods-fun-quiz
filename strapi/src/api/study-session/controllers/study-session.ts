@@ -6,24 +6,16 @@ import { factories } from '@strapi/strapi'
 
 export default factories.createCoreController('api::study-session.study-session', ({ strapi }) => ({
   async create(ctx) {
-    const currentUser = ctx.state.user;
-    if (!currentUser) return ctx.unauthorized('Authentication required');
+    const uid = ctx.state.user?.id;
+    if (!uid) return ctx.unauthorized('Login required');
 
-    // 実行時にモデルの属性を確認し、user フィールドの有無をログ出し
-    const model = strapi.getModel('api::study-session.study-session');
-    const attrs = Object.keys(model?.attributes || {});
-    strapi.log.info('[study-session] ATTRS: ' + attrs.join(','));
-    const hasUserField = attrs.includes('user');
+    const body = ctx.request.body ?? {};
+    body.data = body.data ?? {};
+    // v5 は connect 構文、フィールド名は user
+    body.data.user = { connect: [{ id: uid }] };
 
-    const body = ctx.request.body || {};
-    const data = { ...(body.data || {}) } as any;
-    if (!hasUserField) {
-      strapi.log.warn('[study-session] user field not found on model. Skipping relation connect.');
-    }
-    ctx.request.body = { data };
-
-    const res = await super.create(ctx);
-    return res;
+    const entity = await strapi.service('api::study-session.study-session').create(body);
+    return this.transformResponse(entity);
   },
 
   async find(ctx) {
