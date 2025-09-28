@@ -48,6 +48,7 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   timerDisplay = '';
   // 定期購読保持用
   private timerSub?: Subscription;
+  private finished = false; // ★二重送信/二重遷移防止フラグ
 
     // ポップアップフィードバック
     popupOpen = false;
@@ -93,11 +94,11 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       let numberOfQuestions = 5;
       let randomIndexes: number[] = [];
       if (this.duration === 10) {
-        numberOfQuestions = 7; // 10分モードは3問
+        numberOfQuestions = 7; // 10分モードは７問
       }else if (this.duration === 15) {
-        numberOfQuestions = 10; // 15分モードは5問
+        numberOfQuestions = 10; // 15分モードは１0問
       } else if (this.duration === 30) {
-        numberOfQuestions = 20; // 30分モードは10問
+        numberOfQuestions = 20; // 30分モードは20問
       }
       
       while (randomIndexes.length < numberOfQuestions) {
@@ -146,15 +147,41 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   }
 
   submitAll() {
-    if (!this.validateAll()) return;
-    Object.keys(this.answers).forEach(key => this.showInlineFeedback(+key));
-    // console.log('All answers submitted:', this.answers);
+    this.finalizeQuiz('manual'); // ★共通化（下に実装）
+  }
+
+  // ★時間切れハンドラ
+  private onTimeUp() {
+    if (this.finished) return;
+    this.finalizeQuiz('timeout'); // バリデーションなしで採点→結果へ
+  }
+
+  // ★共通の締め処理：採点→保存→結果画面遷移
+  private finalizeQuiz(trigger: 'manual' | 'timeout') {
+    if (this.finished) return;
+
+    // manual のときだけ未回答チェック
+    if (trigger === 'manual' && !this.validateAll()) {
+      return;
+    }
+
+    // timeout のときは赤枠などのエラー表示をクリア（任意）
+    if (trigger === 'timeout') {
+      this.errorMap = {};
+    }
+
+    // immediate モード時、manual のときだけインラインFBを出す
+    if (trigger === 'manual') {
+      Object.keys(this.answers).forEach(key => this.showInlineFeedback(+key));
+    }
+
     const totalDurationSec = this.duration * 60;
     const remainingSec = this.remainingSeconds ?? 0;
-  
+
     this.quizService.finishQuiz(this.questions, this.answers, totalDurationSec, remainingSec);
-  
-    // ★結果画面へ
+
+    this.finished = true;
+    this.timerSub?.unsubscribe();
     this.router.navigate(['/result']);
   }
 
@@ -178,6 +205,9 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.remainingSeconds--;
         this.timerDisplay = this.formatTime(this.remainingSeconds);
+        if (this.remainingSeconds === 0) {
+          this.onTimeUp(); // ★0になった瞬間に自動採点→結果へ
+        }
       });
   }
 
