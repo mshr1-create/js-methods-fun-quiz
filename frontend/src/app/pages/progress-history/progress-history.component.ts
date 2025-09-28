@@ -33,12 +33,20 @@ export class ProgressHistoryComponent implements OnInit {
   accuracyPct: number | null = null;
   avgSecPerAnswer: number | null = null;
   totalScore = 0;
+  private toModeLabel(mode: string): string {
+    switch (mode) {
+      case 'beginner': return '初級';
+      case 'intermediate': return '中級';
+      case 'advanced': return '上級';
+      default: return mode;
+    }
+  }
   ngOnInit(): void {
     this.history
       .list({ page: 1, pageSize: 10, sort: 'startedAt:desc' })
       .subscribe(({ rows }) => {
         this.historyData = rows.map((r: StudySession) => ({
-          mode: r.mode,
+          mode: this.toModeLabel(r.mode),
           duration: (r.durationSec ?? 0) > 0 ? `${Math.round((r.durationSec ?? 0) / 60)} 分` : '-',
           dateTime: r.startedAt,
           score: r.score != null ? String(r.score) : '-',
