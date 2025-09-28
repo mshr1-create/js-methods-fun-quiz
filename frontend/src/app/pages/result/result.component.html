@@ -34,6 +34,7 @@
       *ngFor="let row of displayRows; let i = index"
       [question]="{ id: row.questionId, text: row.text, code: row.code }"
       [totalQuestions]="displayRows.length"
+      [order]="i + 1"
       [data]="{ correct: row.correct, method: row.method, explanation: row.explanation }"
       variant="static"
       [showNext]="false">

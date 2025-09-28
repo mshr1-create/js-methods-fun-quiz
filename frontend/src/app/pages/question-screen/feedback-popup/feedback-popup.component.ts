@@ -18,6 +18,8 @@ export interface FeedbackData {
 export class FeedbackPopupComponent {
   @Input() question!: Pick<Question, 'id' | 'text'> & { code?: string };
   @Input() totalQuestions!: number;
+  // ★ 追加：出題順（1-based）
+  @Input() order: number = 1;
   @Input() data!: FeedbackData;
   @Input() variant: 'overlay' | 'static' = 'overlay';
   @Input() showNext: boolean = true;

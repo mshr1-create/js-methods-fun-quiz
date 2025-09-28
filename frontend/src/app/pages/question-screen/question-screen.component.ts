@@ -42,6 +42,13 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   quizResolver = quizResolver; // Resolverを使用するための変数
   errorMap: Record<number, boolean> = {};// 未回答エラーをカード単位で管理
 
+  // 表示順の安定化用: question.id -> 1-based order
+  idOrder: Record<number, number> = {};
+  // 現在フィードバック表示対象の質問ID（即時/一括共通）
+  currentQuestionId: number | null = null;
+  // 一括採点のレビューキューは不要
+  // reviewQueue: number[] = [];
+
   
   private remainingSeconds!: number; // API 取得後に初期化
   // 表示用文字列
@@ -110,6 +117,9 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       this.questions = randomIndexes.map(index => this.questions[index]);
       console.log('randomized questions:', this.questions);
 
+      // 質問配列が確定したタイミングでID→連番のマップを構築
+      this.buildIdOrderMap();
+
       this.timerDisplay = this.formatTime(this.remainingSeconds);
       // タイマー開始
       this.startTimer();
@@ -133,6 +143,7 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
     
     // if (!this.validateAll()) return;
     if (!this.answers[id]) return;
+    this.currentQuestionId = id;
 
     if (this.feedbackMode === 'immediate') {
       const ok = this.quizService.isCorrect(id, this.answers[id]);
@@ -147,7 +158,7 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   }
 
   submitAll() {
-    this.finalizeQuiz('manual'); // ★共通化（下に実装）
+    this.finalizeQuiz('manual'); // 結果画面に遷移
   }
 
   // ★時間切れハンドラ
@@ -196,7 +207,6 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   // フィードバックウインドウを閉じる
   onCloseFeedback(): void {
     this.popupOpen = false;
-    // 次の問題表示ロジックなど
   }
 
   private startTimer() {
@@ -239,4 +249,23 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
 
     return missingIds.length === 0;
   }
+
+  // ===== 連番マップ & ヘルパー =====
+  private buildIdOrderMap() {
+    this.idOrder = Object.fromEntries(
+      this.questions.map((q, idx) => [q.id, idx + 1])
+    );
+  }
+
+  getOrderById = (id: number | null): number => {
+    if (id == null) return 0;
+    return this.idOrder[id] ?? (this.questions.findIndex(q => q.id === id) + 1);
+  }
+
+  getQuestionById(id: number | null) {
+    if (id == null) return undefined as any;
+    return this.questions.find(q => q.id === id);
+  }
+
+  // 一括採点後のレビュー制御は不要
 }
