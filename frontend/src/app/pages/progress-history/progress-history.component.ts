@@ -39,7 +39,7 @@ export class ProgressHistoryComponent implements OnInit {
       .subscribe(({ rows }) => {
         this.historyData = rows.map((r: StudySession) => ({
           mode: r.mode,
-          duration: (r.durationSec ?? 0) > 0 ? `${Math.round((r.durationSec ?? 0) / 60)} mins` : '-',
+          duration: (r.durationSec ?? 0) > 0 ? `${Math.round((r.durationSec ?? 0) / 60)} 分` : '-',
           dateTime: r.startedAt,
           score: r.score != null ? String(r.score) : '-',
         }));
