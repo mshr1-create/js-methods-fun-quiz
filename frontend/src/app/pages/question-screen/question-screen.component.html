@@ -49,9 +49,10 @@
 
       <!-- ポップアップフィードバック -->
       <app-feedback-popup
-        *ngIf="feedbackMode === 'immediate' && popupOpen"
-        [question]="questions[currentIndex]"
+        *ngIf="popupOpen"
+        [question]="getQuestionById(currentQuestionId)"
         [totalQuestions]="questions.length"
+        [order]="getOrderById(currentQuestionId)"
         [data]="feedbackData"
         (close)="onCloseFeedback()">
       </app-feedback-popup>

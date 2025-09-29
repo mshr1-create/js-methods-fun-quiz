@@ -36,7 +36,7 @@
         <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
 
         <div class="form-group">
-            <button class="btn-google">
+            <button class="btn-google" [disabled]="true">
                 <span class="btn-google-icon">
 
                 </span>
@@ -48,9 +48,9 @@
     <hr class="divider" />
 
         <div class="link-group">
-            <a class="link-guest" href="#">ゲストで始める</a>
-            <a class="link-forget" href="#">パスワードをお忘れですか？</a>
-            <a class="link-sign-up" routerLink="/app-signup">新規登録</a>
+            <!-- <a class="link-guest" href="#">ゲストで始める</a> -->
+            <!-- <a class="link-forget" href="#">パスワードをお忘れですか？</a> -->
+            <a class="link-sign-up" routerLink="/signup">新規登録</a>
         </div>
         </form>
     </div>

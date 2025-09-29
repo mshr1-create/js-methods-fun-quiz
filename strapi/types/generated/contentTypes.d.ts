@@ -640,6 +640,49 @@ export interface ApiQuizQuiz extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiStudySessionStudySession
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'study_sessions';
+  info: {
+    description: '';
+    displayName: 'StudySession';
+    pluralName: 'study-sessions';
+    singularName: 'study-session';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    correctCount: Schema.Attribute.Integer;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    durationSec: Schema.Attribute.Integer;
+    finishedAt: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::study-session.study-session'
+    > &
+      Schema.Attribute.Private;
+    maxStreak: Schema.Attribute.Integer;
+    mode: Schema.Attribute.Enumeration<
+      ['beginner', 'intermediate', 'advanced']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    score: Schema.Attribute.Integer;
+    startedAt: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    totalCount: Schema.Attribute.Integer;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1127,6 +1170,10 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    study_sessions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::study-session.study-session'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1157,6 +1204,7 @@ declare module '@strapi/strapi' {
       'api::global.global': ApiGlobalGlobal;
       'api::question.question': ApiQuestionQuestion;
       'api::quiz.quiz': ApiQuizQuiz;
+      'api::study-session.study-session': ApiStudySessionStudySession;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

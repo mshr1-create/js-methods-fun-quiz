@@ -7,7 +7,7 @@ import { HeaderComponent } from "./shared/header/header.component";
 import { UserService } from './services/user.service';
 
 @Component({
-  selector: 'app-home',
+  selector: 'home',
   standalone: true,
   imports: [
     CommonModule,
@@ -26,7 +26,7 @@ export class HomeComponent {
 
   onModeClick(): void {
     console.log('Mode & Duration クリック');
-    this.router.navigate(['/app-mode-duration']);
+    this.router.navigate(['/mode']);
   }
 
   onProfileClick(): void {
@@ -35,5 +35,6 @@ export class HomeComponent {
 
   onHistoryClick(): void {
     console.log('Progress/History クリック');
+    this.router.navigate(['/history']);
   }
 }

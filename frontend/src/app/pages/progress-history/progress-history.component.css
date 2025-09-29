@@ -1,0 +1,131 @@
+.progress-history-container {
+    /* 既存のスタイルの上に追記 */
+    max-width: 393px;
+    min-height: 852px;
+    margin: 0 auto;      /* 横幅を中央寄せ */
+    width: 100%;         /* 親幅いっぱいに広げる */
+    box-sizing: border-box;  /* パディング込みでサイズ管理 */
+}
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #57b5f0;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    animation: slideDown 0.3s ease-in-out;
+}
+
+.cards {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* カード同士の間隔 */
+}
+  /* 各カード */
+.card {
+    background-color: #fff;
+    overflow: hidden;
+    background: #ffffff;
+    border-radius: 12px;
+    margin-top: 16px;
+    margin-left: 32px;
+    padding: 1rem;
+    max-width: 300px;
+    width: 90%;
+    height: 190px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border: solid 1px #5cc4e0;
+}
+
+  /* 選択肢リスト */
+.cards .options {
+    list-style: none;      /* リストマーカーを消す */
+    margin: 0;
+    padding: 0;
+}
+.cards .options li {
+    margin-bottom: 8px;
+}  
+
+  /* カードヘッダー */
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #57b5f0;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 14px;
+    position: relative;
+}
+.result-card {
+    background: #ffffff;
+    border-radius: 12px;
+    margin-top: 16px;
+    margin-left: 32px;
+    padding: 1rem;
+    max-width: 300px;
+    width: 90%;
+    height: 120px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border: solid 1px #5cc4e0;
+}
+.result-text {
+    font-size: 18px;
+    font-weight: bold;
+    /* 行間を調整*/
+    line-height: 1;
+}
+.row {
+    font-size: 14px;
+}
+/* 親dlは縦に積む */
+.stats-dl {
+    margin: 0;
+    padding: 0;
+}
+.stats-dl .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+.stats-dl dt {
+    font-weight: bold;
+}
+.stats-dl dd {
+    margin: 0;
+    text-align: right;
+}
+/* 奇数・偶数行の背景 */
+.mat-mdc-table .mat-mdc-row:nth-child(odd)  { background: #f6fbfd; }
+.mat-mdc-table .mat-mdc-row:nth-child(even) { background: #eaf6fb; }
+
+/* ヘッダー固定色など（任意） */
+.mat-mdc-header-row { 
+    background: #21b7df; 
+    color: #fff; 
+}
+.table-wrap {
+    border-radius: 12px;
+    overflow: hidden;
+    display: block;
+}
+
+.button-row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}

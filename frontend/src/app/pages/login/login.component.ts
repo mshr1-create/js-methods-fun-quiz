@@ -41,7 +41,7 @@ export class LoginComponent {
 
       console.log('ログイン成功:', res);
       this.userService.saveToken(res.jwt);
-      await this.router.navigate(['/app-home']);
+      await this.router.navigate(['/home']);
     } catch (e: unknown) {
       this.errorMsg = this.errorService.toFriendlyMessage(e);
       console.error(e);

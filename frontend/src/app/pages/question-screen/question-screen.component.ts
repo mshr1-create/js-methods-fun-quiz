@@ -42,12 +42,20 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   quizResolver = quizResolver; // Resolverを使用するための変数
   errorMap: Record<number, boolean> = {};// 未回答エラーをカード単位で管理
 
+  // 表示順の安定化用: question.id -> 1-based order
+  idOrder: Record<number, number> = {};
+  // 現在フィードバック表示対象の質問ID（即時/一括共通）
+  currentQuestionId: number | null = null;
+  // 一括採点のレビューキューは不要
+  // reviewQueue: number[] = [];
+
   
   private remainingSeconds!: number; // API 取得後に初期化
   // 表示用文字列
   timerDisplay = '';
   // 定期購読保持用
   private timerSub?: Subscription;
+  private finished = false; // ★二重送信/二重遷移防止フラグ
 
     // ポップアップフィードバック
     popupOpen = false;
@@ -93,11 +101,11 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       let numberOfQuestions = 5;
       let randomIndexes: number[] = [];
       if (this.duration === 10) {
-        numberOfQuestions = 7; // 10分モードは3問
+        numberOfQuestions = 7; // 10分モードは７問
       }else if (this.duration === 15) {
-        numberOfQuestions = 10; // 15分モードは5問
+        numberOfQuestions = 10; // 15分モードは１0問
       } else if (this.duration === 30) {
-        numberOfQuestions = 20; // 30分モードは10問
+        numberOfQuestions = 20; // 30分モードは20問
       }
       
       while (randomIndexes.length < numberOfQuestions) {
@@ -109,9 +117,14 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       this.questions = randomIndexes.map(index => this.questions[index]);
       console.log('randomized questions:', this.questions);
 
+      // 質問配列が確定したタイミングでID→連番のマップを構築
+      this.buildIdOrderMap();
+
       this.timerDisplay = this.formatTime(this.remainingSeconds);
       // タイマー開始
       this.startTimer();
+      // セッション開始メタを保存（設定時間の分を一緒に保存）
+      this.quizService.beginSession(this.mode, this.duration);
     });
     this.feedbackMode = this.mode === 'beginner' ? 'immediate' : 'deferred';
   }
@@ -130,6 +143,7 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
     
     // if (!this.validateAll()) return;
     if (!this.answers[id]) return;
+    this.currentQuestionId = id;
 
     if (this.feedbackMode === 'immediate') {
       const ok = this.quizService.isCorrect(id, this.answers[id]);
@@ -144,15 +158,41 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   }
 
   submitAll() {
-    if (!this.validateAll()) return;
-    Object.keys(this.answers).forEach(key => this.showInlineFeedback(+key));
-    // console.log('All answers submitted:', this.answers);
+    this.finalizeQuiz('manual'); // 結果画面に遷移
+  }
+
+  // ★時間切れハンドラ
+  private onTimeUp() {
+    if (this.finished) return;
+    this.finalizeQuiz('timeout'); // バリデーションなしで採点→結果へ
+  }
+
+  // ★共通の締め処理：採点→保存→結果画面遷移
+  private finalizeQuiz(trigger: 'manual' | 'timeout') {
+    if (this.finished) return;
+
+    // manual のときだけ未回答チェック
+    if (trigger === 'manual' && !this.validateAll()) {
+      return;
+    }
+
+    // timeout のときは赤枠などのエラー表示をクリア（任意）
+    if (trigger === 'timeout') {
+      this.errorMap = {};
+    }
+
+    // immediate モード時、manual のときだけインラインFBを出す
+    if (trigger === 'manual') {
+      Object.keys(this.answers).forEach(key => this.showInlineFeedback(+key));
+    }
+
     const totalDurationSec = this.duration * 60;
     const remainingSec = this.remainingSeconds ?? 0;
-  
+
     this.quizService.finishQuiz(this.questions, this.answers, totalDurationSec, remainingSec);
-  
-    // ★結果画面へ
+
+    this.finished = true;
+    this.timerSub?.unsubscribe();
     this.router.navigate(['/result']);
   }
 
@@ -167,7 +207,6 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
   // フィードバックウインドウを閉じる
   onCloseFeedback(): void {
     this.popupOpen = false;
-    // 次の問題表示ロジックなど
   }
 
   private startTimer() {
@@ -176,6 +215,9 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.remainingSeconds--;
         this.timerDisplay = this.formatTime(this.remainingSeconds);
+        if (this.remainingSeconds === 0) {
+          this.onTimeUp(); // ★0になった瞬間に自動採点→結果へ
+        }
       });
   }
 
@@ -207,4 +249,23 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
 
     return missingIds.length === 0;
   }
+
+  // ===== 連番マップ & ヘルパー =====
+  private buildIdOrderMap() {
+    this.idOrder = Object.fromEntries(
+      this.questions.map((q, idx) => [q.id, idx + 1])
+    );
+  }
+
+  getOrderById = (id: number | null): number => {
+    if (id == null) return 0;
+    return this.idOrder[id] ?? (this.questions.findIndex(q => q.id === id) + 1);
+  }
+
+  getQuestionById(id: number | null) {
+    if (id == null) return undefined as any;
+    return this.questions.find(q => q.id === id);
+  }
+
+  // 一括採点後のレビュー制御は不要
 }

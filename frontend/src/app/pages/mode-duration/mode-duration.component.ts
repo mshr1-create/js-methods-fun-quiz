@@ -9,7 +9,7 @@ import {FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
 import { QuizService } from '../../services/quiz.service';
 
 @Component({
-  selector: 'app-mode-duration',
+  selector: 'mode',
   standalone: true,
   imports: [
     CommonModule,
@@ -39,6 +39,6 @@ export class ModeDurationComponent {
 
   onBackClick(): void {
     console.log('戻るボタンをクリック');
-    this.router.navigate(['app-home']);
+    this.router.navigate(['home']);
   }
 }
