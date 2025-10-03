@@ -1,5 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { Question } from "../models/question.model";
+import { Choice } from "../models/choice.model";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
@@ -48,13 +49,16 @@ export class QuizService {
   getQuestion(mode: Mode): Observable<Question[]> {
     const params = new HttpParams()
       .set('filters[mode][$eq]', mode)
-      // .set('filters[duration][$eq]', duration)
-      .set('populate', 'questions.choices'); // choices をネストして取得
+      .set('populate[questions]', 'true')
+      .set('populate[questions][populate]', 'choices')
+      .set('populate[questions][populate][choices]', 'true');
 
     return this.http
       .get<QuizResponse>(`${environment.apiBase}/api/quizzes`, { params })
       .pipe(
         map(res => {
+          console.log('RAW:', JSON.stringify(res, null, 2));
+
           // 条件に基づいてクイズを選択
           const quizItem = res.data.find(item => item.questions && item.questions.length > 0) || res.data[0];
           if (!quizItem) {
@@ -62,6 +66,8 @@ export class QuizService {
           }
           console.log('res', res);
           console.log(quizItem);
+          // キャッシュをクリア
+          this.questionsWithAnswers = []; 
           // ネストされた Question 配列を取り出し
           const rawQs = quizItem.questions;
           console.log('rawQs', rawQs);
@@ -76,16 +82,30 @@ export class QuizService {
             })
 
             // Question 型にマッピング
+            const choiceSource = (question as unknown as {
+              choices?: unknown;
+              attributes?: { choices?: unknown };
+            });
+            const nestedChoices = choiceSource.choices ?? choiceSource.attributes?.choices;
+            const rawChoices = Array.isArray(nestedChoices)
+              ? nestedChoices
+              : ((nestedChoices as { data?: unknown[]; results?: unknown[] })?.data
+                ?? (nestedChoices as { data?: unknown[]; results?: unknown[] })?.results
+                ?? []);
+            const choices: Choice[] = rawChoices.map((choice: any) => {
+              const choicePayload = choice?.attributes ?? choice ?? {};
+              return {
+                id: choice?.id ?? choicePayload?.id ?? 0,
+                text: choicePayload?.text ?? '',
+              };
+            });
+
             return {
               id: question.id,
               text: question.text,
               code: question.code ?? '', // code がない場合は空文字を設定
               hint: question.hint ?? '',
-              choices: question.choices?.map(choice => ({
-                id: choice.id, // Choice 型に必要な id を追加
-                text: choice.text,
-                iscorrect: choice.iscorrect ?? false // Choice 型に必要な iscorrect を追加
-              })) ?? [], // choices がない場合は空配列を設定
+              choices: choices,
               quizid: question.quizid ?? 0, // quizid がない場合は 0 を設定
               explanation: question.explanation ?? '',
               type: question.type === 'multiple' ? 'multiple' : 'input', // type がない場合は 'text' を設定

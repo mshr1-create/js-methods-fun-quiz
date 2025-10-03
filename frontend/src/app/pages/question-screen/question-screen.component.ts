@@ -97,24 +97,20 @@ export class QuestionScreenComponent implements OnInit, OnDestroy {
       this.questions = d['quiz'];
       // this.remainingSeconds = (+this.route.snapshot.queryParamMap.get('duration')!) * 60;
       this.remainingSeconds = this.duration * 60; // 秒単位に変換
-      // randomize questions
+      // randomize questions (安全に上限まで切り出し)
       let numberOfQuestions = 5;
-      let randomIndexes: number[] = [];
       if (this.duration === 10) {
         numberOfQuestions = 7; // 10分モードは７問
-      }else if (this.duration === 15) {
-        numberOfQuestions = 10; // 15分モードは１0問
+      } else if (this.duration === 15) {
+        numberOfQuestions = 10; // 15分モードは10問
       } else if (this.duration === 30) {
         numberOfQuestions = 20; // 30分モードは20問
       }
-      
-      while (randomIndexes.length < numberOfQuestions) {
-        const randomIndex = Math.floor(Math.random() * this.questions.length);
-        if (!randomIndexes.includes(randomIndex)) {
-          randomIndexes.push(randomIndex);
-        }
-      }
-      this.questions = randomIndexes.map(index => this.questions[index]);
+      const total = this.questions.length;
+      const take = Math.min(numberOfQuestions, total);
+      this.questions = [...this.questions]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, take);
       console.log('randomized questions:', this.questions);
 
       // 質問配列が確定したタイミングでID→連番のマップを構築

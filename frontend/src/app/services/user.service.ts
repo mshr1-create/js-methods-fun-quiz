@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development'; // 後で environment に寄せる
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -11,8 +12,8 @@ export class UserService {
   private tokenKey = 'jwt';
 
   // ログイン状態のストリーム
-  private loggInSubject = new BehaviorSubject<boolean>(this.hasToken());
-  isLoggedIn$ = this.loggInSubject.asObservable();
+  private loggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
+  isLoggedIn$ = this.loggedInSubject.asObservable();
 
   signUp(payload: { username: string; email: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/local/register`, payload);
@@ -20,29 +21,32 @@ export class UserService {
 
   login(payload: { identifier: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/local`, payload);
+    // const params = new HttpParams()
+    // .set('populate', 'questions.choices')
+    // return this.http.get(`${this.baseUrl}/quizzes`, { params });
   }
 
   get token(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
-   private hasToken(): boolean {
+  private hasToken(): boolean {
     const t = localStorage.getItem(this.tokenKey);
     return !! t && t.trim() !== '';
   }
 
   isLoggedIn(): boolean {
-    return !!this.token;
+    return this.hasToken();
   }
 
   saveToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
-    this.loggInSubject.next(true);
+    this.loggedInSubject.next(true);
   }
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
-    this.loggInSubject.next(false);
+    this.loggedInSubject.next(false);
   }
 
 
