@@ -6,6 +6,7 @@ import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { Quiz } from "../models/quiz.model";
 import { environment } from "../../environments/environment.development";
+import { UserService } from "./user.service";
 
 interface QuizResponse {
   data: Quiz[];
@@ -44,15 +45,32 @@ export class QuizService {
   private summaryCache: Summary | null = null;
   private sessionMetaCache: SessionMeta | null = null;
   private http = inject(HttpClient);
+  private userService = inject(UserService);
 
+
+  getQ(mode: string) {
+    const params = new HttpParams().set('populate', 'choices')
+    .set('filters[id][$eq]', 215)
+    return this.http.get(`${environment.apiBase}/api/questions`, { params }).subscribe(res => {
+      console.log("map response:")
+      console.log(res)
+    })
+  }
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
   getQuestion(mode: Mode): Observable<Question[]> {
-    const params = new HttpParams()
-      .set('filters[mode][$eq]', mode)
-      .set('populate[questions]', 'true')
-      .set('populate[questions][populate]', 'choices')
-      .set('populate[questions][populate][choices]', 'true');
+   this.userService.getUserQuiz(mode)
+    // const params = new HttpParams()
+    //   .set('filters[mode][$eq]', mode)
+    //   .set('populate[questions]', 'true')
+    //   .set('populate[questions][populate]', 'choices')
+    //   .set('populate[questions][populate][choices]', 'true');
 
+    const params = new HttpParams().set('populate', 'questions.choices')
+
+    this.http.get(`${environment.apiBase}/api/quizzes`, { params }).subscribe(res => {
+      console.log("map response:")
+      console.log(res)
+    })
     return this.http
       .get<QuizResponse>(`${environment.apiBase}/api/quizzes`, { params })
       .pipe(
@@ -82,30 +100,33 @@ export class QuizService {
             })
 
             // Question 型にマッピング
-            const choiceSource = (question as unknown as {
-              choices?: unknown;
-              attributes?: { choices?: unknown };
-            });
-            const nestedChoices = choiceSource.choices ?? choiceSource.attributes?.choices;
-            const rawChoices = Array.isArray(nestedChoices)
-              ? nestedChoices
-              : ((nestedChoices as { data?: unknown[]; results?: unknown[] })?.data
-                ?? (nestedChoices as { data?: unknown[]; results?: unknown[] })?.results
-                ?? []);
-            const choices: Choice[] = rawChoices.map((choice: any) => {
-              const choicePayload = choice?.attributes ?? choice ?? {};
-              return {
-                id: choice?.id ?? choicePayload?.id ?? 0,
-                text: choicePayload?.text ?? '',
-              };
-            });
+            // const choiceSource = (question as unknown as {
+            //   choices?: unknown;
+            //   attributes?: { choices?: unknown };
+            // });
+            // const nestedChoices = choiceSource.choices ?? choiceSource.attributes?.choices;
+            // const rawChoices = Array.isArray(nestedChoices)
+            //   ? nestedChoices
+            //   : ((nestedChoices as { data?: unknown[]; results?: unknown[] })?.data
+            //     ?? (nestedChoices as { data?: unknown[]; results?: unknown[] })?.results
+            //     ?? []);
+            // const choices: Choice[] = rawChoices.map((choice: any) => {
+            //   const choicePayload = choice?.attributes ?? choice ?? {};
+            //   return {
+            //     id: choice?.id ?? choicePayload?.id ?? 0,
+            //     text: choicePayload?.text ?? '',
+            //   };
+            // });
 
             return {
               id: question.id,
               text: question.text,
               code: question.code ?? '', // code がない場合は空文字を設定
               hint: question.hint ?? '',
-              choices: choices,
+              choices: question.choices?.map(choice => ({
+                id: choice.id, // Choice 型に必要な id を追加
+                text: choice.text,
+              })) ?? [], // choices がない場合は空配列を設定
               quizid: question.quizid ?? 0, // quizid がない場合は 0 を設定
               explanation: question.explanation ?? '',
               type: question.type === 'multiple' ? 'multiple' : 'input', // type がない場合は 'text' を設定

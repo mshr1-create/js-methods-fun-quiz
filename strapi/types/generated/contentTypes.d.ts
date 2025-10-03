@@ -528,11 +528,8 @@ export interface ApiChoiceChoice extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    question: Schema.Attribute.Relation<'manyToOne', 'api::question.question'>;
     questionid: Schema.Attribute.Integer;
-    questions: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::question.question'
-    >;
     text: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -585,7 +582,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
   };
   attributes: {
     answer: Schema.Attribute.String;
-    choices: Schema.Attribute.Relation<'manyToMany', 'api::choice.choice'>;
+    choices: Schema.Attribute.Relation<'oneToMany', 'api::choice.choice'>;
     code: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

@@ -17,9 +17,9 @@
     "questionid": {
       "type": "integer"
     },
-    "questions": {
+    "question": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "manyToOne",
       "target": "api::question.question",
       "inversedBy": "choices"
     }

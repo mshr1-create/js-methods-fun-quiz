@@ -11,7 +11,7 @@ import { UserService } from './user.service';
 export class HistoryService {
   private http = inject(HttpClient);
   private readonly baseUrl = `${environment.apiBase}/api/study-sessions`;
-  // private userService = inject(UserService); // 現状未使用
+  private userService = inject(UserService); // 現状未使用
 
   list(options?: {
     page?: number;
@@ -28,7 +28,7 @@ export class HistoryService {
     if (options?.modeEq) params = params.set('filters[mode][$eq]', options.modeEq);
     // populate は不要だが将来 relations を足す場合のために残す
     // params = params.set('populate', '*');
-
+    this.userService.getUserQuiz("beginner")
     return this.http
       .get<StrapiListResponse<StudySession>>(this.baseUrl, { params })
       .pipe(
