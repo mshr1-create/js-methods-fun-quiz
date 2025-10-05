@@ -33,6 +33,9 @@ services:
       POSTGRES_USER: strapi
       POSTGRES_PASSWORD: strapi
     volumes:
-      - ./docker/data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/sql:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_data:
 

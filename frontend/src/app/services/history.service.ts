@@ -28,7 +28,6 @@ export class HistoryService {
     if (options?.modeEq) params = params.set('filters[mode][$eq]', options.modeEq);
     // populate は不要だが将来 relations を足す場合のために残す
     // params = params.set('populate', '*');
-    this.userService.getUserQuiz("beginner")
     return this.http
       .get<StrapiListResponse<StudySession>>(this.baseUrl, { params })
       .pipe(

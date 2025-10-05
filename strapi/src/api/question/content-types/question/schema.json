@@ -47,9 +47,9 @@
     },
     "choices": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::choice.choice",
-      "mappedBy": "question"
+      "mappedBy": "questions"
     }
   }
 }

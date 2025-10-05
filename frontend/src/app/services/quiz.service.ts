@@ -6,7 +6,6 @@ import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { Quiz } from "../models/quiz.model";
 import { environment } from "../../environments/environment.development";
-import { UserService } from "./user.service";
 
 interface QuizResponse {
   data: Quiz[];
@@ -45,32 +44,13 @@ export class QuizService {
   private summaryCache: Summary | null = null;
   private sessionMetaCache: SessionMeta | null = null;
   private http = inject(HttpClient);
-  private userService = inject(UserService);
 
-
-  getQ(mode: string) {
-    const params = new HttpParams().set('populate', 'choices')
-    .set('filters[id][$eq]', 215)
-    return this.http.get(`${environment.apiBase}/api/questions`, { params }).subscribe(res => {
-      console.log("map response:")
-      console.log(res)
-    })
-  }
   /** Quiz → Questions をまとめて取得し、Question[] を返す */
   getQuestion(mode: Mode): Observable<Question[]> {
-   this.userService.getUserQuiz(mode)
-    // const params = new HttpParams()
-    //   .set('filters[mode][$eq]', mode)
-    //   .set('populate[questions]', 'true')
-    //   .set('populate[questions][populate]', 'choices')
-    //   .set('populate[questions][populate][choices]', 'true');
+    const params = new HttpParams()
+      .set('filters[mode][$eq]', mode)
+      .set('populate', 'questions.choices');
 
-    const params = new HttpParams().set('populate', 'questions.choices')
-
-    this.http.get(`${environment.apiBase}/api/quizzes`, { params }).subscribe(res => {
-      console.log("map response:")
-      console.log(res)
-    })
     return this.http
       .get<QuizResponse>(`${environment.apiBase}/api/quizzes`, { params })
       .pipe(
@@ -98,25 +78,6 @@ export class QuizService {
               ...question, // 浅いコピー
               correctAnswer: rightText, // 正解のテキストを保存
             })
-
-            // Question 型にマッピング
-            // const choiceSource = (question as unknown as {
-            //   choices?: unknown;
-            //   attributes?: { choices?: unknown };
-            // });
-            // const nestedChoices = choiceSource.choices ?? choiceSource.attributes?.choices;
-            // const rawChoices = Array.isArray(nestedChoices)
-            //   ? nestedChoices
-            //   : ((nestedChoices as { data?: unknown[]; results?: unknown[] })?.data
-            //     ?? (nestedChoices as { data?: unknown[]; results?: unknown[] })?.results
-            //     ?? []);
-            // const choices: Choice[] = rawChoices.map((choice: any) => {
-            //   const choicePayload = choice?.attributes ?? choice ?? {};
-            //   return {
-            //     id: choice?.id ?? choicePayload?.id ?? 0,
-            //     text: choicePayload?.text ?? '',
-            //   };
-            // });
 
             return {
               id: question.id,
@@ -248,7 +209,7 @@ export class QuizService {
     sessionStorage.setItem(KEY_SESSION_META, JSON.stringify(meta));
   }
 
-  /** 学習セッションのメタデータ取得（結果保存用） */
+  // /** 学習セッションのメタデータ取得（結果保存用） */
   getSessionMeta(): SessionMeta | null {
     if (this.sessionMetaCache !== null) return this.sessionMetaCache;
     const raw = sessionStorage.getItem(KEY_SESSION_META);
