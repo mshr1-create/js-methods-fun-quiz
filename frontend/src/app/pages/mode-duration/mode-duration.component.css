@@ -17,6 +17,26 @@
     justify-content: center;
     align-items: center;
     background-color: #26BCE3;
+    position: relative;        /* 左固定配置の基準にする */
+}
+.header-toolbar img,
+.header-toolbar .logo-left img {
+    max-height: 48px;   /* ヘッダー(84px)より小さめに収める */
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    border-radius: 14px;
+}
+
+/* 左側に固定配置するロゴ */
+.header-toolbar .logo-left {
+    position: absolute;
+    left: 16px;                        /* ヘッダー内の左余白 */
+}
+
+/* リンク要素のデフォルト装飾を無効化 */
+.header-toolbar .logo-left {
+    text-decoration: none;
 }
 
 .logo-text {

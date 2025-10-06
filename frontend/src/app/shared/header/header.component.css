@@ -1,0 +1,45 @@
+/* ヘッダー右上に固定配置（親ツールバーに position:relative 前提） */
+:host {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.header-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    line-height: 1;
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* ログイン: ヘッダー色(#26BCE3)上で視認性の高い白アウトライン */
+.header-btn.login {
+    color: #ffffff;
+    background-color: transparent;
+    border-color: #ffffff;
+}
+.header-btn.login:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ログアウト: 目立つ警告色 */
+.header-btn.logout {
+    color: #ffffff;
+    background-color: #bbbbbb;
+    border-color: #bbbbbb;
+}
+.header-btn.logout:hover {
+    background-color: #e4e4e4;
+    border-color: #e4e4e4;
+}
+

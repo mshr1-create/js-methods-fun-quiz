@@ -17,13 +17,28 @@
     justify-content: center;
     align-items: center;
     background-color: #26BCE3;
+    position: relative; /* 右上固定の基準 */
+    padding-right: 96px; /* ボタンを小型化したので余白をやや縮小 */
 }
 
 .logo-text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     font-size: 20px;
     font-weight: 500;
     color: #ffffff;
+    margin-left: 32px;
 }
+.header-toolbar img{
+    max-height: 48px;   /* ヘッダー(84px)より小さめに収める */
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    border-radius: 14px;
+}
+
+/* 余計な固定配置は不要になったため削除 */
 
 .home-container {
     display: flex;

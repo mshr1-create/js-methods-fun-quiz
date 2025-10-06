@@ -14,11 +14,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    .logo-text {
-        font-size: 24px;
-        font-weight: bold;
-        color: #ffffff;
-    }
+}
+
+/* ヘッダー内でロゴ画像とアプリ名を横並び・中央寄せ・間隔調整 */
+.login-header .logo-text {
+    display: flex;
+    align-items: center;
+    gap: 12px;            /* 画像とテキストの間隔 */
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* ヘッダー内のロゴ画像が枠内に収まるように制限 */
+.login-header img {
+    max-height: 48px;   /* ヘッダー(84px)より小さめに収める */
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    border-radius: 14px;
 }
 
 .login-content {
@@ -28,6 +42,10 @@
     flex-direction: column;
     align-items: stretch;
     background-color: #ffffff;
+}
+
+.logo-image {
+    width: 10px;
 }
 
 .form-group {
