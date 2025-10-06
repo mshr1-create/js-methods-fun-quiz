@@ -20,19 +20,7 @@ export class UserService {
   }
 
   login(payload: { identifier: string; password: string }): Observable<any> {
-    this.getUserQuiz("beginner")
-
     return this.http.post(`${this.baseUrl}/auth/local`, payload);
-  }
-
-  getUserQuiz(mode:string){
-    const params = new HttpParams()
-    .set('populate', 'questions.choices')
-    // .set('filters[mode][$eq]', mode)
-    return this.http.get(`${environment.apiBase}/api/quizzes`, { params }).subscribe(res => {
-      console.log("getUserQuiz: map quiz response:")
-      console.log(res)
-    })
   }
 
   get token(): string | null {

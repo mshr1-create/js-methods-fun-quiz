@@ -88,7 +88,6 @@ export class QuizService {
                 id: choice.id, // Choice 型に必要な id を追加
                 text: choice.text,
               })) ?? [], // choices がない場合は空配列を設定
-              quizid: question.quizid ?? 0, // quizid がない場合は 0 を設定
               explanation: question.explanation ?? '',
               type: question.type === 'multiple' ? 'multiple' : 'input', // type がない場合は 'text' を設定
               order: question.order ?? 0, // order がない場合は 0 を設定

@@ -6,7 +6,6 @@ export interface Question {
     code: string;
     hint: string;
     choices: Choice[];
-    quizid: number;
     explanation: string;
     type: string;
     order: number;
