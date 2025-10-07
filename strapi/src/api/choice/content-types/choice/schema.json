@@ -17,12 +17,9 @@
     "questionid": {
       "type": "integer"
     },
-    "iscorrect": {
-      "type": "boolean"
-    },
-    "question": {
+    "questions": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::question.question",
       "inversedBy": "choices"
     }

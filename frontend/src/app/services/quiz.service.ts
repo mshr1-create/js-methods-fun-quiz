@@ -1,5 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { Question } from "../models/question.model";
+import { Choice } from "../models/choice.model";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
@@ -48,13 +49,14 @@ export class QuizService {
   getQuestion(mode: Mode): Observable<Question[]> {
     const params = new HttpParams()
       .set('filters[mode][$eq]', mode)
-      // .set('filters[duration][$eq]', duration)
-      .set('populate', 'questions.choices'); // choices をネストして取得
+      .set('populate', 'questions.choices');
 
     return this.http
       .get<QuizResponse>(`${environment.apiBase}/api/quizzes`, { params })
       .pipe(
         map(res => {
+          console.log('RAW:', JSON.stringify(res, null, 2));
+
           // 条件に基づいてクイズを選択
           const quizItem = res.data.find(item => item.questions && item.questions.length > 0) || res.data[0];
           if (!quizItem) {
@@ -62,6 +64,8 @@ export class QuizService {
           }
           console.log('res', res);
           console.log(quizItem);
+          // キャッシュをクリア
+          this.questionsWithAnswers = []; 
           // ネストされた Question 配列を取り出し
           const rawQs = quizItem.questions;
           console.log('rawQs', rawQs);
@@ -75,7 +79,6 @@ export class QuizService {
               correctAnswer: rightText, // 正解のテキストを保存
             })
 
-            // Question 型にマッピング
             return {
               id: question.id,
               text: question.text,
@@ -84,9 +87,7 @@ export class QuizService {
               choices: question.choices?.map(choice => ({
                 id: choice.id, // Choice 型に必要な id を追加
                 text: choice.text,
-                iscorrect: choice.iscorrect ?? false // Choice 型に必要な iscorrect を追加
               })) ?? [], // choices がない場合は空配列を設定
-              quizid: question.quizid ?? 0, // quizid がない場合は 0 を設定
               explanation: question.explanation ?? '',
               type: question.type === 'multiple' ? 'multiple' : 'input', // type がない場合は 'text' を設定
               order: question.order ?? 0, // order がない場合は 0 を設定
@@ -207,7 +208,7 @@ export class QuizService {
     sessionStorage.setItem(KEY_SESSION_META, JSON.stringify(meta));
   }
 
-  /** 学習セッションのメタデータ取得（結果保存用） */
+  // /** 学習セッションのメタデータ取得（結果保存用） */
   getSessionMeta(): SessionMeta | null {
     if (this.sessionMetaCache !== null) return this.sessionMetaCache;
     const raw = sessionStorage.getItem(KEY_SESSION_META);

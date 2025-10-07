@@ -17,12 +17,6 @@
     "hint": {
       "type": "string"
     },
-    "choices": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::choice.choice",
-      "mappedBy": "question"
-    },
     "questionid": {
       "type": "integer"
     },
@@ -50,6 +44,12 @@
     },
     "answer": {
       "type": "string"
+    },
+    "choices": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::choice.choice",
+      "mappedBy": "questions"
     }
   }
 }
