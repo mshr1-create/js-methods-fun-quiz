@@ -1,0 +1,152 @@
+questionid,title,text,code,hint,choices,answer,explanation,quiz,type
+201,部分配列の取得（非破壊）,配列の一部を取り出して新しい配列を返し、元の配列を変更しないメソッドは？,"const arr = [10, 20, 30, 40, 50];
+// 2番目(インデックス1)から3要素取り出す
+const part = arr.____(1, 4);
+console.log(part); // [20, 30, 40]
+console.log(arr);  // [10, 20, 30, 40, 50]",元配列を“破壊しない”ことがポイント。,"slice, splice, substring, substr",slice,"slice[正解] - 開始/終了インデックスで範囲を取り出し、非破壊。
+splice[不正解] - 破壊的に要素を挿入/削除して返す。
+substring[不正解] - 文字列用で配列には使えない。
+substr[不正解] - 非推奨の文字列メソッド。",QuizIntermediate1,multiple
+202,条件に合う要素の位置を取得,コールバックの条件を満たす“最初の要素のインデックス”を返すメソッドは？,"const users = [
+  { name: 'Aki', age: 17 },
+  { name: 'Haru', age: 20 },
+  { name: 'Nao', age: 22 }
+];
+const idx = users.____(u => u.age >= 20);
+console.log(idx); // 1",値そのものではなく“インデックス”を返す点に注意。,"findIndex, indexOf, find, some",findIndex,"findIndex[正解] - 条件に一致する最初のインデックスを返す。
+indexOf[不正解] - プリミティブ一致のみ。オブジェクトの条件検索には不向き。
+find[不正解] - 一致する“要素”を返す。
+some[不正解] - 条件を満たす要素が存在するかどうかの真偽値。",QuizIntermediate1,multiple
+203,ネスト配列の変換とフラット化,各要素を分割してから1段だけ平坦化した新配列を返すメソッドは？,"const words = ['hello world', 'foo', 'bar baz'];
+const list = words.____(w => w.split(' '));
+console.log(list); // ['hello', 'world', 'foo', 'bar', 'baz']",“mapしてからflat(1)”を1回で行えるメソッド。,"flatMap, map, flat, reduce",flatMap,"flatMap[正解] - 各要素を配列に変換し、1段階フラット化して返す。
+map[不正解] - ネスト配列がそのまま残る。
+flat[不正解] - 既に配列になっている前提で平坦化のみ行う。
+reduce[不正解] - 任意の畳み込みは可能だが今回は過剰。",QuizIntermediate1,multiple
+204,合計値の算出（集約）【入力】,配列の全要素を走査して1つの値に畳み込むメソッドは？（カート金額の合計）,"const cart = [
+  { name: 'Book', price: 1200 },
+  { name: 'Pen',  price: 200  },
+  { name: 'Note', price: 400  }
+];
+const total = cart.____((sum, item) => sum + item.price, 0);
+console.log(total); // 1800",初期値を第2引数に与えると安全に集約できる。,"reduce, map, forEach, sum",reduce,"reduce[正解] - 累積値(アキュムレータ)を用いて1値へ集約。
+map[不正解] - 各要素を変換するだけで集約しない。
+forEach[不正解] - 戻り値を持たず、連鎖不可。
+sum[不正解] - JS標準には存在しない。",QuizIntermediate1,multiple
+205,条件一致の存在確認【入力】,配列内に“1つでも”しきい値を超える要素があるか判定するメソッドは？,"const nums = [10, 50, 120, 80];
+const over100 = nums.____(n => n > 100);
+console.log(over100); // true",“1つでもあればtrue”／“全てならtrue”のどちらかを思い出す。,"some, every, find, filter",some,"some[正解] - 条件に合致する要素が1つでもあればtrue。
+every[不正解] - すべての要素が条件を満たす場合のみtrue。
+find[不正解] - 条件に合う最初の“要素”を返す。
+filter[不正解] - 条件に合う“配列”を返す。",QuizIntermediate1,multiple
+206,要素の削除・挿入（破壊的）,配列の任意位置で要素を削除・挿入し、元配列を直接変更するメソッドは？,"const arr = [1, 2, 3, 4];
+// 2番目から1つ削除して'X'を挿入
+arr.____(1, 1, 'X');
+console.log(arr); // [1, 'X', 3, 4]",「元配列を変更する（破壊的）」がキーワード。,"splice, slice, toSpliced, replace",splice,"splice[正解] - 指定位置で削除や挿入を行い、元配列を変更。
+slice[不正解] - 非破壊で部分配列を取得。
+toSpliced[不正解] - 非破壊で削除/挿入の結果の新配列を返す。
+replace[不正解] - 文字列の置換。",QuizIntermediate1,multiple
+207,削除・挿入（非破壊）,配列の任意位置の削除/挿入を“非破壊”で行い、新しい配列を返すメソッドは？,"const arr = [1, 2, 3, 4];
+const next = arr.____(1, 1, 'X');
+console.log(next); // [1, 'X', 3, 4]
+console.log(arr);  // [1, 2, 3, 4]",ES2023の非破壊版。,"splice, toSpliced, slice, toSorted",toSpliced,"toSpliced[正解] - 非破壊で削除/挿入を反映した新配列を返す。
+splice[不正解] - 破壊的。
+slice[不正解] - 部分取得のみ。
+toSorted[不正解] - 非破壊ソート。",QuizIntermediate1,multiple
+208,非破壊ソート,元配列を変更せず、ソート済みの“新しい配列”を返すメソッドは？,"const nums = [3, 1, 2];
+const sorted = nums.____();
+console.log(sorted); // [1, 2, 3]
+console.log(nums);   // [3, 1, 2]",ES2023の“to*”系列。,"sort, toSorted, toSpliced, reverse",toSorted,"toSorted[正解] - 非破壊で並べ替え結果を返す。
+sort[不正解] - 破壊的に並べ替える。
+toSpliced[不正解] - 非破壊の挿入/削除。
+reverse[不正解] - 破壊的に反転。",QuizIntermediate1,multiple
+209,数値の昇順ソート,数値を昇順に並べ替えるための適切な比較関数と共に使うメソッドは？,"const nums = [10, 2, 30];
+nums.____((a, b) => a - b);
+console.log(nums); // [2, 10, 30]",文字列比較の罠に注意（デフォルトは文字列順）。,"sort, toSorted, orderBy, compare",sort,"sort[正解] - 比較関数(a-b)で数値昇順。
+toSorted[不正解] - 非破壊版。コード例は破壊的結果を想定。
+orderBy[不正解] - 標準ではない（Lodash等）。
+compare[不正解] - 標準にない。",QuizIntermediate1,multiple
+210,全件が条件を満たすか,配列の全要素が条件を満たすかどうかを真偽値で返すメソッドは？,"const scores = [70, 80, 90];
+const ok = scores.____(s => s >= 60);
+console.log(ok); // true",「1つでも」ではなく「すべて」。,"every, some, filter, find",every,"every[正解] - すべての要素が条件を満たすとtrue。
+some[不正解] - 1つでも満たせばtrue。
+filter[不正解] - 要素を抽出して配列で返す。
+find[不正解] - 最初の一致要素を返す。",QuizIntermediate1,multiple
+211,条件抽出（非破壊）,条件に合う要素“だけ”を抽出した新しい配列を返すメソッドは？,"const nums = [1, 2, 3, 4, 5];
+const evens = nums.____(n => n % 2 === 0);
+console.log(evens); // [2, 4]",抽出であり、変換ではない。,"filter, map, reduce, some",filter,"filter[正解] - 条件に合う要素を抽出。
+map[不正解] - 各要素を変換。
+reduce[不正解] - 集約。
+some[不正解] - 存在チェック。",QuizIntermediate1,multiple
+212,要素変換（マッピング）,各要素を別の値に変換した新配列を返すメソッドは？,"const names = ['aki', 'NAO'];
+const norm = names.____(s => s.toLowerCase());
+console.log(norm); // ['aki', 'nao']",配列の形は同じで中身だけ変える。,"map, filter, forEach, flatMap",map,"map[正解] - 各要素を変換して新配列。
+filter[不正解] - 抽出。
+forEach[不正解] - 戻り値なし。
+flatMap[不正解] - map+1段フラット化。",QuizIntermediate1,multiple
+213,最初の一致要素の取得,条件に一致する最初の“要素”そのものを返すメソッドは？,"const users = [{n:'A',a:19},{n:'B',a:22}];
+const adult = users.____(u => u.a >= 20);
+console.log(adult); // {n:'B', a:22}",インデックスではなく“要素”。,"find, findIndex, some, filter",find,"find[正解] - 最初の一致要素を返す。
+findIndex[不正解] - インデックスを返す。
+some[不正解] - 真偽値。
+filter[不正解] - 一致要素の配列。",QuizIntermediate1,multiple
+214,最後の一致要素の取得,条件に一致する“最後の要素”を返すメソッドは？（ES2023）,"const nums = [1, 3, 2, 4, 2];
+const last2 = nums.____(n => n === 2);
+console.log(last2); // 2",後ろから探す新メソッド。,"findLast, find, findLastIndex, last",findLast,"findLast[正解] - 条件に合う最後の要素を返す。
+find[不正解] - 最初の要素。
+findLastIndex[不正解] - 最後のインデックス。
+last[不正解] - 標準にはない。",QuizIntermediate1,multiple
+215,最後の一致インデックス,条件に一致する“最後のインデックス”を返すメソッドは？（ES2023）,"const nums = [1, 2, 3, 2];
+const idx = nums.____(n => n === 2);
+console.log(idx); // 3",“要素”ではなく“インデックス”。,"findLastIndex, lastIndexOf, findIndex, indexOf",findLastIndex,"findLastIndex[正解] - 条件に合う最後の位置。
+lastIndexOf[不正解] - 値一致の最後の位置（述語不可）。
+findIndex[不正解] - 最初の位置。
+indexOf[不正解] - 値一致の最初の位置。",QuizIntermediate1,multiple
+216,非破壊リバース【入力】,配列の順序を“非破壊”で逆順にした新しい配列を返すメソッドは？,"const nums = [1, 2, 3];
+const rev = nums.____();
+console.log(rev);  // [3, 2, 1]
+console.log(nums); // [1, 2, 3]",ES2023の to* 系。,-,toReversed,元配列を変更せず逆順配列を返す。,QuizIntermediate1,input
+217,特定範囲を同じ値で埋める【入力】,配列の指定範囲を同じ値で“破壊的”に書き換えるメソッドは？,"const arr = [0, 0, 0, 0];
+arr.____(7, 1, 3);
+console.log(arr); // [0, 7, 7, 0]",開始は含み、終了は“含まない”。,-,fill,指定範囲を同値で埋める（破壊的）。,QuizIntermediate1,input
+218,同一配列内での部分コピー【入力】,配列内の要素の一部を“別位置へ”コピーして上書きするメソッドは？,"const a = [1, 2, 3, 4, 5];
+a.____(0, 3);
+console.log(a); // [4, 5, 3, 4, 5]","target, start, end の順。",-,copyWithin,同一配列内で範囲をコピーし上書きする（破壊的）。,QuizIntermediate1,input
+219,ネスト配列の平坦化【入力】,入れ子配列を“1段”だけ平坦化するメソッドは？,"const nested = [1, [2, 3], [4, [5]]];
+const flat1 = nested.____(1);
+console.log(flat1); // [1, 2, 3, 4, [5]]",深さは引数で指定（既定1）。,-,flat,指定の深さ分だけ平坦化する。,QuizIntermediate1,input
+220,自前プロパティの存在確認【入力】,オブジェクトが“自身の”プロパティを持つか安全に判定するメソッドは？（ES2022）,"const user = Object.create({ role: 'guest' });
+user.name = 'Aki';
+console.log(Object.____(user, 'name')); // true
+console.log(Object.____(user, 'role')); // false",proto継承は含めない。,-,hasOwn,Object.hasOwnで自身のプロパティのみ判定。,QuizIntermediate1,input
+221,一部置換の非破壊更新【入力】,指定インデックスの要素だけを置き換えた“新配列”を返すメソッドは？（ES2023）,"const arr = [10, 20, 30];
+const next = arr.____(1, 99);
+console.log(next); // [10, 99, 30]
+console.log(arr);  // [10, 20, 30]",非破壊更新。,-,with,指定位置を差し替えた新配列を返す。,QuizIntermediate1,input
+222,配列連結（非破壊）【入力】,複数の配列や値を連結した“新しい配列”を返すメソッドは？,"const a = [1,2];
+const b = [3];
+const all = a.____(b, 4);
+console.log(all); // [1,2,3,4]",元配列は変わらない。,-,concat,配列を非破壊で連結する。,QuizIntermediate1,input
+223,要素の反復処理【入力】,各要素に対して副作用的な処理を実行するが、戻り値を持たないメソッドは？,"const logs = [];
+[1,2,3].____(n => logs.push(n*n));
+console.log(logs); // [1,4,9]",チェーンはできない。,-,forEach,副作用目的で各要素を処理。戻り値なし。,QuizIntermediate1,input
+224,存在確認（配列/文字列）【入力】,指定の値や部分文字列を“含むか”を真偽値で返すメソッドは？,"console.log([1,2,3].____(2));   // true
+console.log('abc'.____('b')); // true",厳密一致。,-,includes,含有の真偽値を返す。,QuizIntermediate1,input
+225,条件に合う要素のカウント【入力】,条件を満たす要素数を数える際に、1パスで合計を算出できるメソッドは？,"const evens = [1,2,3,4,5,6].____((acc,n)=>acc+(n%2===0),0);
+console.log(evens); // 3",畳み込みで数える。,-,reduce,累積値で1パス集計。,QuizIntermediate1,input
+226,末尾の要素を取り出す【入力】,配列の末尾から要素を1つ“取り出し”て返し、配列を縮めるメソッドは？,"const s = [10,20,30];
+const x = s.____();
+console.log(x, s); // 30, [10,20]",破壊的。,-,pop,末尾要素を取り出す（破壊的）。,QuizIntermediate1,input
+227,末尾へ要素を追加【入力】,配列の末尾に要素を追加し、新しい長さを返すメソッドは？,"const s = [1,2];
+const len = s.____(3,4);
+console.log(len, s); // 4, [1,2,3,4]",破壊的。,-,push,末尾に追加して長さを返す。,QuizIntermediate1,input
+228,先頭から要素を取り出す【入力】,配列の先頭要素を取り出して返し、配列を前詰めにするメソッドは？,"const q = [9,8,7];
+const head = q.____();
+console.log(head, q); // 9, [8,7]",キューの取り出し。,-,shift,先頭要素を取り出す（破壊的）。,QuizIntermediate1,input
+229,先頭へ要素を追加【入力】,配列の先頭に要素を追加し、新しい長さを返すメソッドは？,"const q = [3,4];
+const len = q.____(1,2);
+console.log(len, q); // 4, [1,2,3,4]",スタックの反対側。,-,unshift,先頭に追加して長さを返す。,QuizIntermediate1,input
+230,数値昇順（非破壊）【入力】,比較関数を指定して“非破壊”に数値昇順へ並べ替えるメソッドは？,"const a = [10,2,30];
+const b = a.____((x,y)=>x-y);
+console.log(b); // [2,10,30]
+console.log(a); // [10,2,30]",to* 系。,-,toSorted,非破壊で並べ替え結果を返す。,QuizIntermediate1,input

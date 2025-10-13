@@ -599,7 +599,7 @@ export interface ApiQuestionQuestion extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    questionid: Schema.Attribute.Integer;
+    questionid: Schema.Attribute.Integer & Schema.Attribute.Unique;
     quiz: Schema.Attribute.Relation<'manyToOne', 'api::quiz.quiz'>;
     text: Schema.Attribute.Text;
     title: Schema.Attribute.String;

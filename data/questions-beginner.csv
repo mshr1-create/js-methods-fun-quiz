@@ -1,0 +1,515 @@
+questionid,title,text,code,hint,choices,answer,explanation
+1,配列に値が含まれているかチェック,配列に 'banana' が含まれているかを調べて true / false を返すメソッドは？,"const fruits = ['apple', 'banana', 'orange'];
+console.log(fruits.____('banana')); // ?",指定した値が存在するかどうかを真偽値で返す,"includes ,indexOf ,find ,some",includes,"includes [正解] - 値を含むかを true/false で返す。
+indexOf [不正解] - 一致位置を数値で返す。
+find [不正解] - 条件関数を使い最初の要素を返す。
+some [不正解] - 条件関数が必要で真偽値のみ返す。"
+2,配列の末尾に要素を追加,配列の末尾に 4 を追加し、新しい長さを返すメソッドは？,"const nums = [1, 2, 3];
+console.log(nums.____(4));",末尾に「押し込む」イメージ,"push ,pop ,unshift ,shift",push,"push [正解] - 末尾に追加し配列の新しい長さを返す。
+pop [不正解] - 末尾を削除。
+unshift [不正解] - 先頭に追加。
+shift [不正解] - 先頭を削除。"
+3,配列の先頭から要素を取り出す,先頭要素 'first' を取り除き、返すメソッドは？,"const queue = ['first', 'second', 'third'];
+console.log(queue.____()); // ?",「列を左にずらす」イメージ,"pop ,shift ,push ,slice",shift,"shift [正解] - 先頭要素を削除して返す。
+pop [不正解] - 末尾を削除。
+push [不正解] - 末尾へ追加。
+slice [不正解] - 部分コピーで削除しない。"
+4,文字列を区切り文字で配列に分割,"文字列を ',' で区切って ['John', 'Doe'] に変換するメソッドは？","const name = 'John,Doe';
+console.log(name.____(',')); // ?",文字列を「切り分ける」,"join ,split ,slice ,replace",split,"split [正解] - 区切り文字で分割し配列を返す。
+join [不正解] - 配列を文字列に結合。
+slice [不正解] - 部分文字列を取得。
+replace [不正解] - 置換を行う。"
+5,配列要素を文字列として連結,配列を空白で結合し 'Hello World' を返すメソッドは？,"const words = ['Hello', 'World'];
+console.log(words.____(' ')); // ?",配列→文字列（逆は split）,"concat ,join ,push ,map",join,"join [正解] - 区切り文字で連結し 1 つの文字列を返す。
+concat [不正解] - 配列同士を結合し配列を返す。
+push [不正解] - 末尾に追加。
+map [不正解] - 要素変換で新配列を返す。"
+6,配列の一部をコピーして取得,インデックス 1 から 3 の直前までを抜き出すメソッドは？,"const letters = ['a', 'b', 'c', 'd'];
+console.log(letters.____(1, 3)); // ?",元配列を壊さず“スライス”する,"slice ,splice ,substr ,filter",slice,"slice [正解] - 非破壊で部分配列をコピー。
+splice [不正解] - 破壊的に削除や挿入。
+substr [不正解] - 文字列用旧 API。
+filter [不正解] - 条件抽出で要素を選ぶ。"
+7,配列を逆順に並べ替える,"配列を [3, 2, 1] に並べ替えるメソッドは？","const nums = [1, 2, 3];
+console.log(nums.____()); // ?",配列を“反転”する,"sort ,reverse ,map ,reduce",reverse,"reverse [正解] - 要素順を反転、元配列を直接変更。
+sort [不正解] - 比較関数しだいで並べ替え。
+map [不正解] - 変換のみ。
+reduce [不正解] - 累積計算用。"
+8,すべての要素が条件を満たすか判定,全員が 18 歳以上かどうかを真偽値で返すメソッドは？,"const ages = [18, 20, 25];
+console.log(ages.____(n => n >= 18)); // ?",“すべて”を確認,"some ,every ,filter ,find",every,"every [正解] - 全要素が条件を満たすか判定。
+some [不正解] - 1 つでも満たせば true。
+filter [不正解] - 条件要素を抽出。
+find [不正解] - 最初の要素を返す。"
+9,少なくとも1つの要素が条件を満たすか判定,60 点以上の人がいるかどうかを調べるメソッドは？,"const scores = [40, 55, 70];
+console.log(scores.____(s => s >= 60)); // ?",“1つでもあれば true”,"every ,some ,find ,map",some,"some [正解] - 条件を満たす要素が 1 つでもあれば true。
+every [不正解] - 全要素が満たすか確認。
+find [不正解] - 条件を満たす最初の要素を返す。
+map [不正解] - 変換処理のみ。"
+10,配列を操作して要素を削除・追加,インデックス 1 の 'green' を削除し 'yellow' を挿入するメソッドは？,"const colors = ['red', 'green', 'blue'];
+colors.____(1, 1, 'yellow');
+console.log(colors); // ['red', 'yellow', 'blue']",“配列を切って貼る”万能メソッド（破壊的）,"splice ,slice ,concat ,push",splice,"splice [正解] - 挿入/削除で配列を直接変更。
+slice [不正解] - 非破壊コピー。
+concat [不正解] - 配列を結合し新配列を返す。
+push [不正解] - 末尾に追加。"
+11,配列を文字列に連結,要素をハイフンで連結した文字列を作るメソッドは？,"const fruits = [""apple"", ""banana"", ""orange""];
+console.log(fruits.____(""-""));",配列要素を区切り文字で結合するメソッド！,"join ,concat ,push ,toString",join,"join [正解] - 区切り文字で連結し 1 つの文字列を返す。
+concat [不正解] - 配列結合で配列を返す。
+push [不正解] - 末尾に追加。
+toString [不正解] - カンマ区切りで文字列化する。"
+12,部分文字列の位置を取得,world' が始まる位置を返すメソッドは？,"const str = ""hello world"";
+console.log(str.____(""world""));",見つからないと -1 を返すメソッド,"indexOf ,search ,includes ,slice",indexOf,"indexOf [正解] - 部分文字列の最初の位置を返す。
+search [不正解] - 正規表現で位置を返す。
+includes [不正解] - 含むか真偽値で返す。
+slice [不正解] - 部分文字列を取得する。"
+13,配列の末尾に要素を追加,4 を末尾に追加するメソッドは？,"const nums = [1, 2, 3];
+nums.____(4);
+console.log(nums);",戻り値は新しい配列長,"push ,unshift ,pop ,shift",push,"push [正解] - 末尾に追加し配列長を返す。
+unshift [不正解] - 先頭に追加。
+pop [不正解] - 末尾削除。
+shift [不正解] - 先頭削除。"
+14,文字列が指定文字列で始まるか判定,文字列が 'https' で始まるか判定するメソッドは？,"const url = ""https://example.com"";
+console.log(url.____(""https""));",endsWith の逆にあたるメソッド,"startsWith ,includes ,indexOf ,slice",startsWith,"startsWith [正解] - 先頭一致を true/false で返す。
+includes [不正解] - 位置を問わず含むかを返す。
+indexOf [不正解] - 先頭かどうかは判別できない。
+slice [不正解] - 部分文字列を取得する。"
+15,配列の各要素を順に処理,各要素を使って sum に加算するメソッドは？,"const arr = [1, 2, 3];
+let sum = 0;
+arr.____(n => sum += n);
+console.log(sum);",戻り値は undefined で副作用目的,"forEach ,map ,filter ,reduce",forEach,"forEach [正解] - 各要素に対する処理を実行し戻り値は undefined。
+map [不正解] - 新配列を返す変換用。
+filter [不正解] - 条件抽出。
+reduce [不正解] - 累積計算で単一値を返す。"
+16,配列に値が含まれているか確認,配列に特定の値が含まれているか確認するメソッドは？,"const colors = [""red"", ""blue"", ""green""];
+console.log(colors.____(""blue""));",値が含まれているか真偽値で返すメソッド,"includes ,indexOf ,some ,filter",includes,"includes [正解] - 要素の存在を true/false で返す。
+indexOf [不正解] - 位置を数値で返す。
+some [不正解] - コールバック必要。
+filter [不正解] - 条件要素を抽出する。"
+17,配列の先頭に要素を追加,配列の先頭に要素を追加するメソッドは？,"const nums = [2, 3];
+nums.____(1);
+console.log(nums);",先頭に追加し戻り値は新しい length,"unshift ,push ,shift ,pop",unshift,"unshift [正解] - 先頭に追加し新しい長さを返す。
+push [不正解] - 末尾に追加。
+shift [不正解] - 先頭削除。
+pop [不正解] - 末尾削除。"
+18,配列の末尾の要素を削除,配列の末尾の要素を取り出して削除するメソッドは？,"const fruits = [""apple"", ""banana"", ""orange""];
+const removed = fruits.____();
+console.log(removed);",配列の最後の要素を取り出し戻り値で返す,"pop ,push ,shift ,slice",pop,"pop [正解] - 末尾を削除し要素を返す。
+push [不正解] - 末尾追加。
+shift [不正解] - 先頭削除。
+slice [不正解] - 非破壊コピー。"
+19,配列の先頭の要素を削除,配列の先頭の要素を取り出して削除するメソッドは？,"const queue = [""first"", ""second""];
+const first = queue.____();
+console.log(first);",配列が 1 つ短くなる,"shift ,unshift ,pop ,slice",shift,"shift [正解] - 先頭削除し要素を返す。
+unshift [不正解] - 先頭追加。
+pop [不正解] - 末尾削除。
+slice [不正解] - コピーのみ。"
+20,配列を結合する,2 つの配列を結合して新しい配列を返すメソッドは？,"const arr1 = [1, 2];
+const arr2 = [3, 4];
+const combined = arr1.____(arr2);
+console.log(combined);",元の配列を変更しない,"concat ,push ,join ,splice",concat,"concat [正解] - 非破壊で配列を結合し新配列を返す。
+push [不正解] - 末尾追加で破壊的。
+join [不正解] - 配列→文字列変換。
+splice [不正解] - 破壊的挿入削除。"
+21,文字列を大文字に変換,文字列をすべて大文字に変換するメソッドは？,"const msg = ""hello"";
+console.log(msg.____());",引数なしの to…Case 系メソッド,"toUpperCase ,toLowerCase ,capitalize ,replace",toUpperCase,"toUpperCase [正解] - すべて大文字に変換。
+toLowerCase [不正解] - 小文字に変換。
+capitalize [不正解] - 標準メソッドなし。
+replace [不正解] - 文字列置換を行う。"
+22,文字列を小文字に変換,文字列をすべて小文字に変換するメソッドは？,"const msg = ""HELLO"";
+console.log(msg.____());",引数なしの to…Case 系メソッド,"toLowerCase ,toUpperCase ,trim ,replace",toLowerCase,"toLowerCase [正解] - すべて小文字に変換。
+toUpperCase [不正解] - 大文字に変換。
+trim [不正解] - 前後空白を除去。
+replace [不正解] - 置換。"
+23,指定位置の文字を取得,文字列の 5 文字目 (index 4) の文字を取得するメソッドは？,"const str = ""JavaScript"";
+console.log(str.____(4));",インデックスを渡して取得,"charAt ,substring ,slice ,at",charAt,"charAt [正解] - 指定インデックスの文字を返す。
+substring [不正解] - 範囲指定で部分文字列を返す。
+slice [不正解] - substring に似るが負数可。
+at [不正解] - ES2022 汎用取得。"
+24,文字列を繰り返す,文字列を 3 回繰り返した結果を返すメソッドは？,"const word = ""ha"";
+console.log(word.____(3));",ES6 追加の繰り返し,"repeat ,padEnd ,concat ,replaceAll",repeat,"repeat [正解] - 文字列を指定回数繰り返し新しい文字列を返す。
+padEnd [不正解] - 右側に文字を埋める。
+concat [不正解] - 文字列を結合。
+replaceAll [不正解] - 文字列全置換。"
+25,配列の一部分を取り出す,インデックス 1 以上 3 未満の要素を取り出すメソッドは？,"const letters = [""a"", ""b"", ""c"", ""d""];
+const part = letters.____(1, 3);
+console.log(part);",元の配列は変更しない,"slice ,splice ,substr ,filter",slice,"slice [正解] - 非破壊で部分配列を返す。
+splice [不正解] - 破壊的に変更。
+substr [不正解] - 文字列用旧 API。
+filter [不正解] - 条件抽出メソッド。"
+26,文字列を配列に分割,文字列をカンマで区切って配列を得るメソッドは？,"const data = ""a,b,c"";
+const arr = data.____(",");",区切り文字で分割し配列を返します,"split,slice,substring,join",split,"split [正解] - 文字列を区切り文字で分割し新しい配列を返します (元の文字列はそのまま)。
+slice [不正解] - 文字列/配列の一部分をコピーするだけで配列化しません。
+substring [不正解] - 文字列の一部を取得して文字列で返します。
+join [不正解] - 配列を文字列へ連結するメソッドで分割とは逆方向です。"
+27,文字列を置換する,文字列の最初の 'cat' を 'dog' に置き換えるメソッドは？,"const str = ""cat and cat"";
+console.log(str.____(""cat"",""dog""));",最初に一致した部分だけ置換します,"replace,replaceAll,match,search",replace,"replace [正解] - 最初に一致した部分だけ置換し新しい文字列を返します。第二引数に関数を渡すと動的置換も可能です。
+replaceAll [不正解] - すべての一致を置換します。今回の要件は「最初だけ」なので該当しません。
+match [不正解] - 正規表現に一致する部分を配列で返すだけで置換はしません。
+search [不正解] - 一致した位置を数値で返すだけで置換機能はありません。"
+28,前後の空白を除去,文字列の前後にある空白を取り除くメソッドは？,"const name = ""  Alice  "";
+console.log(name.____());",引数なしで前後の空白を削除,"trim,slice,padStart,repeat",trim,"trim [正解] - 文字列両端の空白・改行・タブを削除して新しい文字列を返します。内部の空白は対象外です。
+slice [不正解] - 開始/終了位置で部分文字列を取得するだけで空白除去はしません。
+padStart [不正解] - 指定長になるまで左側に文字を追加するメソッドです。
+repeat [不正解] - 文字列を指定回数繰り返します。空白除去とは無関係です。"
+29,文字列が指定語で終わるか確認,文字列が '.jpg' で終わるか調べるメソッドは？,"const file = ""photo.jpg"";
+console.log(file.____("".jpg""));",末尾一致を真偽値で返すメソッド,"endsWith,startsWith,includes,indexOf",endsWith,"endsWith [正解] - 末尾が指定文字列に一致するか判定します。第 2 引数で比較長を指定できます。
+startsWith [不正解] - 先頭が一致するかを判定します。
+includes [不正解] - 文字列全体に指定語を含むか判定します。位置は問わず末尾限定ではありません。
+indexOf [不正解] - 一致した位置を数値で返すだけで末尾かどうかは分かりません。"
+30,部分文字列を取得,インデックス 0〜4 の部分文字列を取得するメソッドは？,"const word = ""JavaScript"";
+console.log(word.____(0,4));",開始と終了インデックスで指定,"substring,slice,substr,charAt",substring,"substring [正解] - 開始位置と終了位置(終了は含まない)を指定して部分文字列を取得します。start > end の場合自動で入れ替わる仕様があります。
+slice [不正解] - slice(0,4) でも同じ結果ですが負のインデックスを扱えるなど仕様が異なります。
+substr [不正解] - 開始位置と長さを指定する旧 API で現在は非推奨です。
+charAt [不正解] - 単一文字を取得するメソッドで範囲指定はできません。"
+31,文字列が指定語で始まるか確認,文字列が 'https' で始まるか調べるメソッドは？,"const url = ""https://example.com"";
+console.log(url.____(""https""));",先頭一致を true/false で返す,"startsWith,endsWith,includes,indexOf",startsWith,"startsWith [正解] - 文字列の先頭が指定文字で始まるかを判定し **true/false** を返します。第 2 引数で開始位置をずらせます。
+endsWith [不正解] - 末尾が一致するかを調べる。
+includes [不正解] - 部分文字列を含むかを調べるだけで位置は限定しない。
+indexOf [不正解] - 一致位置を数値で返すだけで真偽値にはならない。"
+32,文字列を繰り返す,文字列を 3 回繰り返して連結するメソッドは？,"const laugh = ""ha"";
+console.log(laugh.____(3));",ES6 で追加されたメソッド,"repeat,padEnd,concat,replace",repeat,"repeat [正解] - 引数の回数だけ文字列を繰り返し **新しい文字列** を返します。負の数や Infinity を渡すとエラーになります。
+padEnd [不正解] - 右側に文字を埋めて長さをそろえる。
+concat [不正解] - 2 つ以上の文字列を結合する。
+replace [不正解] - 一部分を別の文字列に置き換える。"
+33,配列を好きな区切りで連結,配列を ' - ' 区切りで連結した文字列を作るメソッドは？,"const colors = [""red"",""green"",""blue""];
+console.log(colors.____("" - ""));",配列 → 文字列 方向のメソッド,"join,toString,concat,map",join,"join [正解] - 区切り文字を指定して配列要素を連結し **1 つの文字列** を返します。空文字や改行も指定可能。
+toString [不正解] - 区切りは常にカンマで固定。
+concat [不正解] - 配列同士を結合して新配列を返す。
+map [不正解] - 要素変換を行い新配列を返す。"
+34,最初の一致位置を取得,配列に 'b' がある最初の位置を返すメソッドは？,"const letters = [""a"",""b"",""c"",""b""];
+console.log(letters.____(""b""));",見つからなければ -1 を返す,"indexOf,findIndex,includes,some",indexOf,"indexOf [正解] - 指定値が最初に現れるインデックスを返す。見つからない場合は -1。
+findIndex [不正解] - コールバック関数の条件で検索する。
+includes [不正解] - 値を含むかどうかを **true/false** で返すだけ。
+some [不正解] - 条件を満たす要素があるかを真偽値で返す。"
+35,配列の末尾に要素を追加,配列末尾に 4 を追加するメソッドは？,"const nums = [1,2,3];
+nums.____(4);
+console.log(nums);",戻り値は新しい length,"push,unshift,pop,shift",push,"push [正解] - 要素を末尾に追加し配列の **新しい長さ** を返します。元配列が直接更新されます。
+unshift [不正解] - 先頭に追加する。
+pop [不正解] - 末尾の要素を削除して返す。
+shift [不正解] - 先頭の要素を削除して返す。"
+36,配列をソートする,数値配列を昇順にソートするメソッドは？,"const numbers = [3,1,2];
+console.log(numbers.____((a,b)=>a-b));",比較関数で並べ替え,"sort,reverse,filter,push",sort,"sort [正解] - 比較関数を指定して並べ替える。配列は直接変更される。
+reverse [不正解] - 要素の順序を逆転させるだけ。
+filter [不正解] - 条件抽出で並べ替えは行わない。
+push [不正解] - 要素を末尾に追加する。"
+37,各要素を変換,配列内の数を 2 倍にした新配列を得るメソッドは？,"const nums = [1,2,3];
+const doubled = nums.____(n=>n*2);
+console.log(doubled);",新しい配列を返す,"map,forEach,filter,reduce",map,"map [正解] - 各要素を関数で変換し、新しい配列を返す。元配列はそのまま。
+forEach [不正解] - 副作用目的で戻り値は undefined。
+filter [不正解] - 条件を満たす要素を抽出する。
+reduce [不正解] - 配列を単一値に畳み込む。"
+38,条件抽出,偶数だけを取り出すメソッドは？,"const nums = [1,2,3,4];
+const evens = nums.____(n=>n%2===0);
+console.log(evens);",条件を通過した要素を残す,"filter,map,some,every",filter,"filter [正解] - true を返した要素だけを集めた新配列を返す。
+map [不正解] - 変換処理で抽出はしない。
+some [不正解] - 条件を満たす要素があるかを真偽値で返す。
+every [不正解] - 全要素が条件を満たすかを真偽値で返す。"
+39,値を畳み込む,配列の合計を求めるメソッドは？,"const nums = [1,2,3];
+const total = nums.____((sum,n)=>sum+n,0);
+console.log(total);",初期値を渡して累積する,"reduce,map,forEach,slice",reduce,"reduce [正解] - 先頭から順に累積し単一の値を返す。ここでは合計を計算。
+map [不正解] - 新配列を作るだけで累積しない。
+forEach [不正解] - 副作用のみで戻り値なし。
+slice [不正解] - 部分配列を切り出す。"
+40,条件に合う最初の要素,奇数を最初に見つけるメソッドは？,"const nums = [2,4,5,6];
+console.log(nums.____(n=>n%2));",要素を返し ないときは undefined,"find,filter,some,findIndex",find,"find [正解] - 条件を満たす最初の要素を返す。見つからなければ undefined。
+filter [不正解] - 条件を満たすすべての要素を新配列で返す。
+some [不正解] - 条件を満たすかどうかだけを真偽値で返す。
+findIndex [不正解] - 条件を満たす最初のインデックスを返す。"
+41,条件に合うインデックス,3 のインデックスを返すメソッドは？,"const nums = [1,3,5];
+console.log(nums.____(n=>n===3));",見つからないと -1,"findIndex,indexOf,includes,some",findIndex,"findIndex [正解] - コールバック条件を満たす最初のインデックスを返す。
+indexOf [不正解] - 値が一致する最初の位置を返すだけ。
+includes [不正解] - 値を含むかを真偽値で返す。
+some [不正解] - 条件を満たす要素が存在するかを真偽値で返す。"
+42,全要素が条件を満たすか,すべて偶数かどうか判定するメソッドは？,"const nums = [2,4,6];
+console.log(nums.____(n=>n%2===0));",すべて true なら true,"every,some,filter,reduce",every,"every [正解] - 全要素が条件を満たすかを真偽値で返す。
+some [不正解] - 1 つでも満たせば true。
+filter [不正解] - 条件を満たす要素を抽出する。
+reduce [不正解] - 累積計算用。"
+43,一部要素が条件を満たすか,配列に負数があるかを調べるメソッドは？,"const nums = [1,-1,2];
+console.log(nums.____(n=>n<0));",1 つでも true なら true,"some,every,find,includes",some,"some [正解] - 条件を満たす要素が 1 つでもあれば true。
+every [不正解] - 全要素が満たすかを判定する。
+find [不正解] - 条件を満たす最初の要素を返す。
+includes [不正解] - 値の有無だけを真偽値で返す。"
+44,配列を平坦化する,ネストを 1 段だけ平坦化するメソッドは？,"const nested = [1,[2,3]];
+console.log(nested.____());",引数なしで深さ 1 を平坦化,"flat,flatMap,concat,reduce",flat,"flat [正解] - ネスト配列を 1 段分だけ平坦化した新配列を返す。
+flatMap [不正解] - 変換後に平坦化を行う複合メソッド。
+concat [不正解] - 配列を結合するだけで平坦化はしない。
+reduce [不正解] - ループ処理次第で平坦化できるが目的が異なる。"
+45,変換後に平坦化,各要素を 2 倍にして 1 段平坦化するメソッドは？,"const nums = [1,2];
+console.log(nums.____(n=>[n*2]));",map と flat の組み合わせ,"flatMap,map,flat,reduce",flatMap,"flatMap [正解] - map で変換後に深さ 1 で平坦化した配列を返す。
+map [不正解] - 変換するがネスト配列のまま。
+flat [不正解] - 変換は行わず平坦化だけ。
+reduce [不正解] - 自前で展開できるが複雑になる。"
+46,配列を同じ値で埋める,インデックス 0〜2 を 'x' で埋めるメソッドは？,"const arr = [""a"",""b"",""c""];
+arr.____(""x"",0,2);
+console.log(arr);",破壊的に書き換える,"fill,splice,copyWithin,push",fill,"fill [正解] - 指定範囲を同じ値で上書きする。
+splice [不正解] - 挿入や削除を行う汎用メソッド。
+copyWithin [不正解] - 配列内の一部を他位置へコピー。
+push [不正解] - 要素を末尾に追加する。"
+47,配列をコピーする,末尾 2 要素を先頭にコピーするメソッドは？,"const arr = [1,2,3,4];
+arr.____(0,2);
+console.log(arr);",長さは変わらない,"copyWithin,splice,fill,slice",copyWithin,"copyWithin [正解] - 配列内部の値を別の位置にコピーしながら上書きする。
+splice [不正解] - 挿入や削除で配列長が変わる可能性がある。
+fill [不正解] - 同じ値で埋める。
+slice [不正解] - 非破壊で部分配列を取得する。"
+48,最後の一致位置を取得,文字列中の最後の 'a' の位置を返すメソッドは？,"const word = ""banana"";
+console.log(word.____(""a""));",後ろから調べる,"lastIndexOf,indexOf,includes,search",lastIndexOf,"lastIndexOf [正解] - 指定文字が最後に現れる位置を返す。
+indexOf [不正解] - 最初に現れる位置を返す。
+includes [不正解] - 存在するかを真偽値で返すだけ。
+search [不正解] - 正規表現での最初の一致位置を返す。"
+49,文字コードを取得,文字 'A' の UTF-16 コードを取得するメソッドは？,"const ch = ""A"";
+console.log(ch.____(0));",16 ビットのコードを返す,"charCodeAt,codePointAt,fromCharCode,charAt",charCodeAt,"charCodeAt [正解] - UTF-16 コードユニットを数値で返す。
+codePointAt [不正解] - サロゲートペアを考慮したコードポイントを返す。
+fromCharCode [不正解] - 数値から文字を生成する静的メソッド。
+charAt [不正解] - 指定位置の文字を取得する。"
+50,コードポイントを取得,絵文字のコードポイントを取得するメソッドは？,"const smile = ""😀"";
+console.log(smile.____(0));",サロゲートペア対応,"codePointAt,charCodeAt,at,substring",codePointAt,"codePointAt [正解] - サロゲートペアを正しく扱いコードポイントを返す。
+charCodeAt [不正解] - 16 ビット単位でしか取得できない。
+at [不正解] - インデックスで文字を取得するメソッド。
+substring [不正解] - 部分文字列を取得するだけ。"
+51,固定小数点文字列に変換,数値を小数第 2 位までの文字列にするメソッドは？,"const n = 1.2345;
+console.log((n).____(2));",戻り値は文字列,"toFixed,toPrecision,toString,round",toFixed,"toFixed [正解] - 小数点以下を固定桁で丸め文字列として返す。
+toPrecision [不正解] - 有効桁数で丸める。
+toString [不正解] - 文字列変換で丸め処理はしない。
+round [不正解] - Math ライブラリの四捨五入で戻り値は数値。"
+52,有効桁数で丸める,数値を 3 桁の精度に丸めるメソッドは？,"const n = 123.456;
+console.log((n).____(3));",指数表記になる場合あり,"toPrecision,toFixed,toExponential,floor",toPrecision,"toPrecision [正解] - 有効桁数指定で丸め文字列を返す。指数表記になることがある。
+toFixed [不正解] - 小数点以下の桁を固定。
+toExponential [不正解] - 指数表記で文字列化。
+floor [不正解] - 整数に切り捨てる Math 関数。"
+53,指数表記文字列に変換,数値を指数表記に変換するメソッドは？,"const n = 1000;
+console.log((n).____(2));",指数部の桁数を指定,"toExponential,toString,toFixed,ceil",toExponential,"toExponential [正解] - 指数表記の文字列を返す。
+toString [不正解] - 基数を指定して文字列化する一般メソッド。
+toFixed [不正解] - 固定小数点形式に変換。
+ceil [不正解] - 数値を切り上げる Math 関数。"
+54,文字列をロケール比較,a' と 'b' をロケール順で比較するメソッドは？,"console.log(""a"".____(""b""));","戻り値は -1, 0, 1","localeCompare,compare,indexOf,includes",localeCompare,"localeCompare [正解] - ロケール設定に従い大小を比較し数値で返す。
+compare [不正解] - 標準メソッドには存在しない。
+indexOf [不正解] - 部分文字列の位置を検索する。
+includes [不正解] - 部分文字列の有無を真偽値で返す。"
+55,正規表現マッチ,文字列中の数字だけ抽出するメソッドは？,"const str = ""a1b2"";
+console.log(str.____(/\\d/g));",配列または null を返す,"match,search,replace,test",match,"match [正解] - 正規表現に一致した部分を配列で返す。
+search [不正解] - 最初の一致位置を返すだけ。
+replace [不正解] - 一致部分を置換する。
+test [不正解] - 正規表現オブジェクトのメソッドで真偽値を返す。"
+56,正規表現検索位置,最初の数字の位置を返すメソッドは？,"const str = ""abc123"";
+console.log(str.____(/\\d/));",見つからなければ -1,"search,indexOf,match,replace",search,"search [正解] - 正規表現の最初の一致位置を返す。
+indexOf [不正解] - 文字列パターンのみ検索可能で正規表現は不可。
+match [不正解] - 一致部分を配列で返す。
+replace [不正解] - 一致部分を置換する。"
+57,すべて置換,文字列中の '-' を '/' に全置換するメソッドは？,"const date = ""2025-08-05"";
+console.log(date.____(""-"",""/""));",ES2021 で追加,"replaceAll,replace,split,join",replaceAll,"replaceAll [正解] - すべての一致を置換して新しい文字列を返す。
+replace [不正解] - 最初の一致のみ置換。
+split [不正解] - 区切って配列を作成する。
+join [不正解] - 配列要素を連結して文字列にする。"
+58,キーと値のイテレータ,"配列から [index, value] のイテレータを得るメソッドは？","const arr = [""a"",""b""];
+const it = arr.____();
+console.log(it.next().value);",双方向ループで便利,"entries,keys,values,forEach",entries,"entries [正解] - [インデックス, 値] を返すイテレータを取得。
+keys [不正解] - インデックスだけを列挙する。
+values [不正解] - 値だけを列挙する。
+forEach [不正解] - コールバックで要素を処理するだけ。"
+59,値だけのイテレータ,配列の値を順に取り出すイテレータを得るメソッドは？,"const arr = [10,20];
+const it = arr.____();
+console.log(it.next().value);",ES2015 の iterable,"values,entries,keys,map",values,"values [正解] - 要素の値を列挙するイテレータを取得。
+entries [不正解] - [インデックス, 値] のペアを列挙する。
+keys [不正解] - インデックスのみを列挙する。
+map [不正解] - 配列を変換して新配列を返す。"
+60,at メソッド,配列の最後の要素を取得する簡単なメソッドは？,"const arr = [1,2,3];
+console.log(arr.____(-1));",負のインデックスが使える,"at,pop,slice,charAt",at,"at [正解] - 正負のインデックスで要素を取得する。負数は後ろから数える。
+pop [不正解] - 末尾要素を削除して返す。
+slice [不正解] - 部分配列を取得して元は変えない。
+charAt [不正解] - 文字列専用で配列には使えない。"
+61,右から畳み込む,文字列を右から結合するメソッドは？,"const arr = [""a"",""b"",""c""];
+console.log(arr.____((acc,v)=>acc+v,""""));",右端から処理,"reduceRight,reduce,join,reverse",reduceRight,"reduceRight [正解] - 右端から左に向かって累積処理を行う。
+reduce [不正解] - 左から右へ累積処理。
+join [不正解] - 区切り文字で連結する簡易メソッド。
+reverse [不正解] - 要素順を反転するだけ。"
+62,末尾へ要素追加,配列末尾に 'x' を追加するメソッドは？,"const arr = [""a""];
+arr.____(""x"");
+console.log(arr);",戻り値は新しい length,"push,unshift,concat,fill",push,"push [正解] - 要素を末尾に追加し長さを返す。配列は直接更新される。
+unshift [不正解] - 先頭に追加する。
+concat [不正解] - 配列同士を結合して新配列を返す。
+fill [不正解] - 同じ値で範囲を埋める。"
+63,末尾要素を削除,配列末尾要素を削除して返すメソッドは？,"const arr = [""a"",""b""];
+const last = arr.____();
+console.log(last);",配列長が 1 減る,"pop,shift,slice,splice",pop,"pop [正解] - 末尾の要素を削除し、その要素を返す。
+shift [不正解] - 先頭要素を削除する。
+slice [不正解] - 非破壊で部分配列を取得する。
+splice [不正解] - 挿入や削除を行う汎用メソッド。"
+64,先頭要素を削除,配列先頭要素を削除して返すメソッドは？,"const arr = [1,2];
+const first = arr.____();
+console.log(first);",配列長が 1 減る,"shift,pop,unshift,slice",shift,"shift [正解] - 先頭要素を削除して返す。
+pop [不正解] - 末尾要素を削除する。
+unshift [不正解] - 先頭に要素を追加する。
+slice [不正解] - 非破壊で部分配列を取得する。"
+65,先頭要素を追加,配列先頭に 0 を追加するメソッドは？,"const arr = [1,2];
+arr.____(0);
+console.log(arr);",戻り値は新しい length,"unshift,push,concat,fill",unshift,"unshift [正解] - 先頭に要素を追加し配列長を返す。
+push [不正解] - 末尾に追加する。
+concat [不正解] - 新配列を返す非破壊結合。
+fill [不正解] - 範囲を同じ値で上書きする。"
+66,配列を結合,2 つの配列を結合し新配列を返すメソッドは？,"const a = [1];
+const b = [2];
+const c = a.____(b);
+console.log(c);",元の配列は変更しない,"concat,push,splice,flat",concat,"concat [正解] - 配列を結合して新しい配列を返す。
+push [不正解] - 末尾に追加して元配列を変える。
+splice [不正解] - 挿入や削除を行い元配列が変わる。
+flat [不正解] - ネスト配列の平坦化に使う。"
+67,部分配列を取得,配列の index 1 以降を取り出すメソッドは？,"const arr = [""a"",""b"",""c""];
+const part = arr.____(1);
+console.log(part);",非破壊でコピーする,"slice,splice,substr,filter",slice,"slice [正解] - 開始・終了インデックスで部分配列を新しく作る。元配列は変わらない。
+splice [不正解] - 挿入や削除を行う破壊的メソッド。
+substr [不正解] - 文字列専用の旧 API。
+filter [不正解] - 条件抽出で要素を選ぶ。"
+68,配列を挿入削除,インデックス 1 の要素を削除するメソッドは？,"const arr = [""a"",""b"",""c""];
+arr.____(1,1);
+console.log(arr);",戻り値は削除した配列,"splice,slice,pop,fill",splice,"splice [正解] - 挿入・削除を行い元配列が変わる。戻り値は削除要素の配列。
+slice [不正解] - 部分配列を取得するだけ。
+pop [不正解] - 末尾要素を削除する。
+fill [不正解] - 範囲を同じ値で上書きする。"
+69,部分文字列を含むか判定,文字列に 'cat' を含むか調べるメソッドは？,"const str = ""concatenate"";
+console.log(str.____(""cat""));",真偽値で返す,"includes,indexOf,search,find",includes,"includes [正解] - 文字列に部分文字列を含むか true/false を返す。
+indexOf [不正解] - 最初の一致位置を数値で返す。
+search [不正解] - 正規表現の一致位置を返す。
+find [不正解] - 配列専用メソッドで文字列には使わない。"
+70,最初の位置を取得,配列に 5 がある最初の位置を返すメソッドは？,"const nums = [3,5,5];
+console.log(nums.____(5));",見つからなければ -1,"indexOf,findIndex,includes,some",indexOf,"indexOf [正解] - 指定値が最初に現れるインデックスを返す。
+findIndex [不正解] - 条件関数で検索する。
+includes [不正解] - 含むかどうかを真偽値で返す。
+some [不正解] - 条件を満たす要素があるかを真偽値で返す。"
+71,区切り文字なしで連結,配列を '' 区切りで連結した文字列を作るメソッドは？,"const chars = [""H"",""i""];
+console.log(chars.____(""""));",配列 → 文字列 方向,"join,concat,toString,map",join,"join [正解] - 区切り文字を指定して配列を連結し文字列を返す。
+concat [不正解] - 配列同士を結合して新配列を返す。
+toString [不正解] - 区切りは常にカンマ。
+map [不正解] - 要素変換を行い新配列を返す。"
+72,絶対値を求める,-3 の絶対値を返すメソッドは？,console.log(Math.____(-3));,引数は 1 つ,"abs,floor,ceil,round",abs,"abs [正解] - 引数の絶対値を返す。
+floor [不正解] - 小さい整数に切り捨てる。
+ceil [不正解] - 大きい整数に切り上げる。
+round [不正解] - 四捨五入する。"
+73,切り捨て,3.9 を小さい整数に切り捨てるメソッドは？,console.log(Math.____(3.9));,戻り値は 3,"floor,ceil,round,trunc",floor,"floor [正解] - 小数点以下を切り捨てて整数を返す。
+ceil [不正解] - 切り上げ。
+round [不正解] - 四捨五入。
+trunc [不正解] - 整数部分を返すが負数の扱いが floor と異なる。"
+74,切り上げ,3.1 を大きい整数に切り上げるメソッドは？,console.log(Math.____(3.1));,戻り値は 4,"ceil,floor,round,abs",ceil,"ceil [正解] - 小数点以下を切り上げて整数を返す。
+floor [不正解] - 切り捨てる。
+round [不正解] - 四捨五入。
+abs [不正解] - 絶対値を返す。"
+75,四捨五入,3.6 を四捨五入するメソッドは？,console.log(Math.____(3.6));,0.5 以上は繰り上げ,"round,ceil,floor,trunc",round,"round [正解] - 四捨五入して最も近い整数を返す。
+ceil [不正解] - 常に切り上げ。
+floor [不正解] - 常に切り捨て。
+trunc [不正解] - 小数部を単純に除く。"
+76,最大値を求める,最大値を取得するメソッドは？,"console.log(Math.____(1,4,2));",可変長引数,"max,min,ceil,floor",max,"max [正解] - 引数の中で最大の数値を返す。
+min [不正解] - 最小値を返す。
+ceil [不正解] - 切り上げ計算。
+floor [不正解] - 切り捨て計算。"
+77,最小値を求める,最小値を取得するメソッドは？,"console.log(Math.____(1,4,2));",可変長引数,"min,max,abs,round",min,"min [正解] - 引数の中で最小の数値を返す。
+max [不正解] - 最大値を返す。
+abs [不正解] - 絶対値を返す。
+round [不正解] - 四捨五入する。"
+78,乱数を生成,0 以上 1 未満の乱数を返すメソッドは？,console.log(Math.____());,引数は不要,"random,floor,abs,sqrt",random,"random [正解] - 擬似乱数を 0 以上 1 未満で返す。
+floor [不正解] - 整数に切り捨てる。
+abs [不正解] - 絶対値。
+sqrt [不正解] - 平方根を求める。"
+79,べき乗を求める,2 の 3 乗を計算するメソッドは？,"console.log(Math.____(2,3));",演算子 ** の代替,"pow,sqrt,max,min",pow,"pow [正解] - 基数と指数を渡してべき乗を返す。
+sqrt [不正解] - 平方根を求める。
+max [不正解] - 最大値を求める。
+min [不正解] - 最小値を求める。"
+80,平方根を求める,16 の平方根を求めるメソッドは？,console.log(Math.____(16));,戻り値は 4,"sqrt,pow,abs,round",sqrt,"sqrt [正解] - 引数の平方根を返す。
+pow [不正解] - べき乗を計算する。
+abs [不正解] - 絶対値。
+round [不正解] - 四捨五入。"
+81,整数部分を取得,3.9 の整数部分を取得するメソッドは？,console.log(Math.____(3.9));,符号は保持,"trunc,floor,round,ceil",trunc,"trunc [正解] - 小数部を切り捨て整数部分だけを返す。
+floor [不正解] - 正の数では trunc と同じだが負数では異なる。
+round [不正解] - 四捨五入。
+ceil [不正解] - 切り上げ。"
+82,符号を判定,-5 の符号を調べるメソッドは？,console.log(Math.____(-5));,"戻り値は -1, 0, 1","sign,abs,floor,min",sign,"sign [正解] - 数値の符号を -1, 0, 1 で返す。
+abs [不正解] - 絶対値で符号情報は失う。
+floor [不正解] - 切り捨て。
+min [不正解] - 最小値を求める。"
+83,現在のタイムスタンプ,Date.now で現在のミリ秒を取得するメソッドは？,console.log(Date.____());,UNIX エポックからの ms,"now,getTime,valueOf,parse",now,"now [正解] - 現在時刻のタイムスタンプを返す。
+getTime [不正解] - Date インスタンスから取得するメソッド。
+valueOf [不正解] - getTime と同等だがインスタンス用。
+parse [不正解] - 日付文字列を解析してタイムスタンプに変換する。"
+84,年を取得,Date オブジェクトから西暦年を取得するメソッドは？,"const d = new Date(""2025-08-05"");
+console.log(d.____());",4 桁の年を返す,"getFullYear,getYear,getMonth,getDate",getFullYear,"getFullYear [正解] - 西暦年を 4 桁で返す。
+getYear [不正解] - 1900 を基準とした値を返し推奨されない。
+getMonth [不正解] - 月(0-11)を返す。
+getDate [不正解] - 日(1-31)を返す。"
+85,月を取得,Date オブジェクトから月 (0-11) を取得するメソッドは？,"const d = new Date(""2025-08-05"");
+console.log(d.____());",0 が 1 月,"getMonth,getDate,getDay,getHours",getMonth,"getMonth [正解] - 月を 0-11 で返す。
+getDate [不正解] - 日付を返す。
+getDay [不正解] - 曜日を返す。
+getHours [不正解] - 時を返す。"
+86,日を取得,Date オブジェクトから日付 (1-31) を取得するメソッドは？,"const d = new Date(""2025-08-05"");
+console.log(d.____());",月中の日を返す,"getDate,getDay,getMonth,getMinutes",getDate,"getDate [正解] - 日付を 1-31 で返す。
+getDay [不正解] - 曜日(0-6)を返す。
+getMonth [不正解] - 月を返す。
+getMinutes [不正解] - 分を返す。"
+87,曜日を取得,Date オブジェクトから曜日 (0-6) を取得するメソッドは？,"const d = new Date(""2025-08-05"");
+console.log(d.____());",0 が日曜日,"getDay,getDate,getMonth,getHours",getDay,"getDay [正解] - 曜日を 0-6 で返す。
+getDate [不正解] - 日付を返す。
+getMonth [不正解] - 月を返す。
+getHours [不正解] - 時を返す。"
+88,時を取得,Date から時 (0-23) を取得するメソッドは？,"const d = new Date(""2025-08-05T15:00"");
+console.log(d.____());",24 時間表記,"getHours,getMinutes,getSeconds,getMilliseconds",getHours,"getHours [正解] - 時を 0-23 で返す。
+getMinutes [不正解] - 分を返す。
+getSeconds [不正解] - 秒を返す。
+getMilliseconds [不正解] - ミリ秒を返す。"
+89,分を取得,Date から分 (0-59) を取得するメソッドは？,"const d = new Date(""2025-08-05T15:20"");
+console.log(d.____());",0-59 を返す,"getMinutes,getSeconds,getHours,getDate",getMinutes,"getMinutes [正解] - 分を 0-59 で返す。
+getSeconds [不正解] - 秒を返す。
+getHours [不正解] - 時を返す。
+getDate [不正解] - 日付を返す。"
+90,秒を取得,Date から秒 (0-59) を取得するメソッドは？,"const d = new Date(""2025-08-05T15:20:45"");
+console.log(d.____());",0-59 を返す,"getSeconds,getMinutes,getMilliseconds,getHours",getSeconds,"getSeconds [正解] - 秒を 0-59 で返す。
+getMinutes [不正解] - 分を返す。
+getMilliseconds [不正解] - ミリ秒を返す。
+getHours [不正解] - 時を返す。"
+91,年を設定,年を 2030 に変更するメソッドは？,"const d = new Date(""2025-01-01"");
+d.____(2030);
+console.log(d.getFullYear());",破壊的に変更する,"setFullYear,setYear,setDate,setMonth",setFullYear,"setFullYear [正解] - 年を 4 桁で設定する。
+setYear [不正解] - 推奨されない旧メソッド。
+setDate [不正解] - 日を設定する。
+setMonth [不正解] - 月を設定する。"
+92,月を設定,月を 11 月 (10) に変更するメソッドは？,"const d = new Date();
+d.____(10);
+console.log(d.getMonth());",0 ベースで指定,"setMonth,setDate,setHours,setFullYear",setMonth,"setMonth [正解] - 月を 0-11 で設定する。
+setDate [不正解] - 日を設定する。
+setHours [不正解] - 時を設定する。
+setFullYear [不正解] - 年を設定する。"
+93,日を設定,日付を 15 日に変更するメソッドは？,"const d = new Date();
+d.____(15);
+console.log(d.getDate());",月をまたぐと自動調整,"setDate,setDay,setMonth,setMinutes",setDate,"setDate [正解] - 日付を 1-31 で設定する。
+setDay [不正解] - 標準メソッドには存在しない。
+setMonth [不正解] - 月を設定する。
+setMinutes [不正解] - 分を設定する。"
+94,時を設定,時を 9 時に変更するメソッドは？,"const d = new Date();
+d.____(9);
+console.log(d.getHours());",24 時間表記,"setHours,setMinutes,setSeconds,setFullYear",setHours,"setHours [正解] - 時を 0-23 で設定する。
+setMinutes [不正解] - 分を設定する。
+setSeconds [不正解] - 秒を設定する。
+setFullYear [不正解] - 年を設定する。"
+95,ISO 文字列に変換,Date を ISO 形式文字列に変換するメソッドは？,"const d = new Date(""2025-08-05T00:00:00Z"");
+console.log(d.____());",Z 付きの UTC 文字列,"toISOString,toString,toUTCString,toLocaleString",toISOString,"toISOString [正解] - ISO 8601 形式の UTC 文字列を返す。
+toString [不正解] - ローカルタイムを含む書式。
+toUTCString [不正解] - 人間向けの UTC 文字列。
+toLocaleString [不正解] - ロケールに依存した書式で返す。"
+96,オブジェクトを JSON 化,オブジェクトを JSON 文字列に変換するメソッドは？,"const obj = {a:1};
+console.log(JSON.____(obj));",インデントなし,"stringify,parse,toString,encodeURI",stringify,"stringify [正解] - JavaScript オブジェクトを JSON 形式の文字列にする。
+parse [不正解] - 文字列をオブジェクトに変換する逆操作。
+toString [不正解] - オブジェクトの型名などを返すだけ。
+encodeURI [不正解] - URI をエンコードする。"
+97,JSON 文字列を解析,JSON 文字列をオブジェクトに変換するメソッドは？,"const s = ""{\""a\"":1}"";
+console.log(JSON.____(s));",第 2 引数で変換関数が指定可,"parse,stringify,eval,decodeURI",parse,"parse [正解] - JSON 文字列を JavaScript オブジェクトに変換する。
+stringify [不正解] - オブジェクトを文字列化する。
+eval [不正解] - セキュリティ上推奨されないコード実行。
+decodeURI [不正解] - URI デコード関数。"
+98,NaN か判定,値が NaN かどうか判定するメソッドは？,console.log(Number.____(NaN));,厳密比較でのみ true,"isNaN,parseInt,isFinite,abs",isNaN,"isNaN [正解] - 値が NaN であるかを厳密に判定する。
+parseInt [不正解] - 文字列を整数に変換する関数。
+isFinite [不正解] - 有限数かどうかを判定する。
+abs [不正解] - 絶対値を求める。"
+99,文字列を整数に変換,10 を基数 2 として数値に変換するメソッドは？,"console.log(Number.____(""10"",2));",第二引数は基数,"parseInt,parseFloat,toString,valueOf",parseInt,"parseInt [正解] - 指定した基数で文字列を整数に変換する。
+parseFloat [不正解] - 浮動小数点数に変換する。
+toString [不正解] - 数値を文字列に変換。
+valueOf [不正解] - オブジェクトの原始値を返す。"
+100,文字列を浮動小数に変換,3.14 を数値に変換するメソッドは？,"console.log(Number.____(""3.14""));",小数点を解釈,"parseFloat,parseInt,toFixed,round",parseFloat,"parseFloat [正解] - 文字列を浮動小数点数に変換する。
+parseInt [不正解] - 整数として変換し小数部を切り捨てる。
+toFixed [不正解] - 数値を固定小数点の文字列に変換。
+round [不正解] - 四捨五入して整数を返す。"

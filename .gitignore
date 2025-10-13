@@ -55,3 +55,6 @@ strapi/src/extensions/documentation/**/full_documentation.json
 # Explicitly ignore specific generated files
 strapi/src/extensions/documentation/documentation/1.0.0/full_documentation.json
 strapi/types/generated/contentTypes.d.ts
+
+# .env file
+.env
