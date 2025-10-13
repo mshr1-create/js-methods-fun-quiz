@@ -1,0 +1,202 @@
+/* スマートフォンサイズに固定 */
+.smartphone-wrapper {
+    width: 393px;
+    max-width: 100%;
+    min-height: 852px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+
+.header-toolbar {
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #26BCE3;
+    position: relative; /* 右上固定の基準 */
+    padding-right: 96px; /* ボタンを小型化したので余白をやや縮小 */
+}
+
+.logo-text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-left: 32px;
+}
+.header-toolbar img{
+    max-height: 48px;   /* ヘッダー(84px)より小さめに収める */
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    border-radius: 14px;
+}
+
+/* 本文レイアウト */
+.profile-body {
+    padding: 24px;
+}
+
+.profile-hero {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 8px 0 16px;
+}
+
+.avatar {
+    width: 160px;
+    height: 160px;
+    border: 4px solid #26BCE3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9e9e9e;
+    font-weight: 600;
+}
+
+.user-info .caption {
+    color: #6b6b6b;
+    font-size: 14px;
+}
+
+.user-info .username {
+    font-size: 28px;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.separator {
+    border-bottom: 2px solid #26BCE3;
+    margin: 16px 0 12px;
+}
+
+.kv {
+    display: grid;
+    gap: 8px;
+}
+
+.kv .row {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    column-gap: 12px;
+}
+
+.kv dt {
+    color: #333;
+    font-weight: 600;
+}
+
+.kv dd {
+    margin: 0;
+}
+
+.kv .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.kv .masked {
+    letter-spacing: 3px;
+}
+
+.link-like {
+    background: transparent;
+    border: none;
+    color: #26BCE3;
+    cursor: pointer;
+}
+
+.link-like[disabled],
+.link-like[aria-disabled="true"] {
+    color: #bdbdbd;          /* 灰色表示 */
+    cursor: not-allowed;     /* 無効カーソル */
+    text-decoration: none;   /* リンク風の装飾を抑える */
+    pointer-events: none;    /* クリック不可をさらに明示 */
+}
+
+.badge {
+    width: 36px;
+    height: 36px;
+    background-color: #43A047;
+    border-radius: 50%;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.profile-button.mat-mdc-stroked-button {
+    border: 2px solid #26BCE3; /* border-width, style も一緒に書いたほうが確実 */
+    color: #26BCE3;
+    border-width: #26BCE3;
+    font-style: #26BCE3;
+}  
+
+.profile-button{
+    width: 80%;
+    max-width: 400px;
+    height: 50px;
+    margin: 16px auto 0; /* 中央寄せ */
+    display: block;      /* 横幅を持たせて中央に配置 */
+    padding: 16px 0;
+    border-color: #26BCE3;
+    color: #26BCE3;
+    border-radius: 8px;
+    background-color: transparent;
+    font-family: Arial, sans-serif;
+}
+
+
+.profile-button:hover {
+    background-color: rgba(38, 188, 227, 0.1);
+}
+
+/* 無効状態の見た目 */
+.profile-button[disabled] {
+    border-color: #bdbdbd;
+    color: #bdbdbd;
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.button-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.label-ja {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin: 12px auto 0;
+    color: #6b6b6b;          /* 落ち着いたグレー */
+    text-decoration: none;
+    width: fit-content;
+    cursor: pointer;         /* ホバーでポインター */
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+

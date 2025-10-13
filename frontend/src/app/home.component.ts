@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from "./shared/header/header.component";
 import { UserService } from './services/user.service';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @Component({
   selector: 'home',
@@ -13,7 +14,7 @@ import { UserService } from './services/user.service';
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
-    HeaderComponent
+    HeaderComponent,
 ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
@@ -30,7 +31,8 @@ export class HomeComponent {
   }
 
   onProfileClick(): void {
-    console.log('Profile クリック');
+    console.log('編集ボタンをクリック');
+    this.router.navigate(['/profile']);
   }
 
   onHistoryClick(): void {
