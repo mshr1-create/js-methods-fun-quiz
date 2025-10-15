@@ -1,6 +1,8 @@
 <header class="app-header">
-    <span *ngIf="user.isLoggedIn$ | async" (click)="user.logout()">
-        <button (click)="onLogout()">ログアウト</button>
-    </span>
-    <a *ngIf="!(user.isLoggedIn$ | async)" routerLink="/login">Quiz Appログイン</a>
+    <ng-container *ngIf="user.isLoggedIn$ | async; else loginLink">
+        <button class="header-btn logout" (click)="onLogout()">ログアウト</button>
+    </ng-container>
+    <ng-template #loginLink>
+        <a class="header-btn login" routerLink="/login">ログイン</a>
+    </ng-template>
 </header>
