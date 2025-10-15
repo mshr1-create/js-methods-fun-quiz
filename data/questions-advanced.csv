@@ -1,0 +1,84 @@
+questionid,title,text,code,hint,choices,answer,explanation
+401,全一致の詳細取得（反復可能）【入力】,正規表現の“全ての一致”をイテレータで取得するメソッドは？,"const s = 'id=12,id=34';
+const re = /id=(\d+)/g;
+for (const m of s.____(re)) {
+  console.log(m[1]); // 12, 34
+}",-,-,matchAll,`String.prototype.matchAll`は、グローバル正規表現での全一致を**反復可能なイテレータ**として返す。各要素は`exec`と同様のマッチ配列（キャプチャ含む）。部分一致の走査やインデックス取得に向く。
+402,コードポイント単位の取得【入力】,サロゲートペアに対応して、指定位置の“コードポイント”を取得するメソッドは？,const s = 'A💡Z';
+console.log(s.____(1).toString(16)); // 1f4a1,-,-,codePointAt,`String.prototype.codePointAt(pos)`はUTF-16の**コードユニット**ではなく**Unicodeコードポイント**を返す。絵文字などサロゲートペアも1文字として正しく扱える。未範囲なら`undefined`。
+403,Mapのキー存在確認【入力】,Mapで指定キーが存在するか真偽値を返すメソッドは？,"const m = new Map([['x',1]]);
+console.log(m.____('x')); // true",-,-,has,`Map.prototype.has(key)`はキーの存在をO(1)で判定。オブジェクトの`in`演算子はプロパティ探索なのでMapには不適切。比較はSameValueZero準拠で`NaN`も同一扱い。
+404,安全なプロパティ存在判定（Reflect）【入力】,プロパティの存在を安全に判定するReflectのメソッドは？,"const o = Object.create({a:1});
+o.b = 2;
+console.log(Reflect.____(o,'a')); // true
+console.log(Reflect.____(o,'b')); // true",-,-,has,"`Reflect.has(target, key)`は抽象操作`HasProperty`を関数化したもの。`key in target`と同等で、継承プロパティも探索し、Proxyの`has`トラップも発火する。"
+405,プロパティ定義（成功/失敗を返す）【入力】,プロパティを定義し、成功ならtrueを返すReflectのメソッドは？,"const o = {};
+const ok = Reflect.____(o, 'x', { value: 1, writable: false });
+console.log(ok, o.x); // true, 1",-,-,defineProperty,"`Reflect.defineProperty(target, key, desc)`は`Object.defineProperty`相当だが**例外の代わりに真偽値**を返す。Proxyの`defineProperty`トラップ経由の制御にも有用。"
+406,全キー列挙（Symbol含む）【入力】,列挙可否に関わらず“自前の全キー（含Symbol）”を配列で返すメソッドは？,"const sym = Symbol('s');
+const o = {[sym]:1, x:2};
+console.log(Reflect.____(o).length >= 2); // true",-,-,ownKeys,`Reflect.ownKeys(obj)`は自前プロパティの**文字列キー+Symbolキー**をすべて返す。列挙可能性に依らず取得でき、順序は整数様キー→文字列→Symbolの仕様順。
+407,TypedArrayの部分ビュー取得【入力】,TypedArrayで“コピーせず”部分を切り出すビューを得るメソッドは？,"const u8 = Uint8Array.from([10,20,30,40]);
+const v = u8.____(1,3);
+console.log([...v]); // [20,30]",-,-,subarray,"`TypedArray.prototype.subarray(begin, end)`は**同一ArrayBufferを参照**する軽量ビューを返す。コピーしないため高速だが、元とビューで内容が共有される点に注意。"
+408,TypedArrayへの高速コピー【入力】,TypedArrayへ他配列/TypedArrayの内容を“まとめて”書き込むメソッドは？,"const u = new Uint8Array(4);
+u.____([1,2], 1);
+console.log([...u]); // [0,1,2,0]",-,-,set,"`TypedArray.prototype.set(source, offset=0)`は`source`全体を一括コピー。メモリ転送として最適化されていることが多く、高速。重なりの自己コピーにも安全。"
+409,DataViewで32bit読取【入力】,ArrayBufferをDataView経由でリトルエンディアンの32bit符号なし整数として読むメソッドは？,"const buf = new ArrayBuffer(4);
+new DataView(buf).setUint32(0, 0x78563412, true);
+const dv = new DataView(buf);
+console.log(dv.____(0, true).toString(16)); // 78563412",-,-,getUint32,"`DataView.prototype.getUint32(byteOffset, littleEndian)`で読み取り。`littleEndian=true`でLE解釈。バイナリプロトコルのパースで不可欠。"
+410,Promiseの最終処理【入力】,成功/失敗に関わらず最後に必ず実行されるハンドラを登録するメソッドは？,fetch('/x')
+ .then(()=>console.log('ok'))
+ .catch(()=>console.log('ng'))
+ .____(()=>console.log('done')),-,-,finally,`Promise.prototype.finally(onFinally)`は解決/拒否に無関係で実行。**値は透過**される（finally内で返した値は無視され次のthen/catchへ元の結果が流れる）。
+411,すべての結果を収集（失敗も含む）【入力】,複数のPromiseの“成否を問わず”結果配列を返す静的メソッドは？,"const ps=[Promise.resolve(1), Promise.reject('e')];
+Promise.____(ps).then(r=>console.log(r.map(x=>x.status)));
+// ['fulfilled','rejected']",-,-,allSettled,"`Promise.allSettled(iterable)`は各要素の完了を待ち、`{status:'fulfilled', value}`または`{status:'rejected', reason}`の配列を返す。部分失敗を許容して集計する用途に最適。"
+412,"配列のイテレータで[idx, 値]列挙【入力】",配列のインデックスと値のペアを反復するメソッドは？,"for (const [i,v] of ['a','b'].____()) {
+  console.log(i, v);
+}",-,-,entries,"`Array.prototype.entries()`は`[index, value]`の**イテレータ**を返す。`for...of`と相性が良く、キーと値を同時に扱うループを簡潔に書ける。"
+413,RegExpで真偽判定【入力】,文字列がパターンに一致するかを真偽値で返すメソッドは？,const re = /^\\d+$/;
+console.log(re.____('123')); // true,-,-,test,`RegExp.prototype.test(str)`はマッチ有無のみを高速に返す。`/g`フラグ時は`lastIndex`が進む挙動に注意（連続判定で意図しない結果になり得る）。
+414,オブジェクトの凍結【入力】,オブジェクトを“凍結”して追加/削除/再設定を禁止するメソッドは？,const o = {x:1};
+Object.____(o);
+o.x = 2;
+console.log(o.x); // 1,-,-,freeze,`Object.freeze(obj)`は浅いイミュータブル化。ネストオブジェクトは別途対処（必要なら再帰的にfreeze）。`strict mode`では違反操作が例外になる。
+415,"[キー,値]配列→オブジェクト【入力】","`[['k',1], ['m',2]]`の形式からオブジェクトを作るメソッドは？","const kv = [['x',1],['y',2]];
+const o = Object.____(kv);
+console.log(o.y); // 2",-,-,fromEntries,`Object.fromEntries(iterable)`は`entries`配列や`Map`からプレーンオブジェクトを生成。重複キーは**後勝ち**。逆変換は`Object.entries(obj)`。
+416,URLクエリの複数値取得【入力】,URLSearchParamsから同名キーの“全ての値”を配列で取得するメソッドは？,"const p = new URLSearchParams('a=1&a=2&b=3');
+console.log(p.____('a')); // ['1','2']",-,-,getAll,`URLSearchParams.prototype.getAll(name)`は同名キーの全値を配列で返す。単一のみは`get`、追記は`append`、全削除は`delete`。
+417,ISO8601のUTC文字列【入力】,DateをISO 8601のUTC文字列へ変換するメソッドは？,"const d = new Date(Date.UTC(2025,0,1,0,0,0));
+console.log(d.____()); // '2025-01-01T00:00:00.000Z'",-,-,toISOString,`Date.prototype.toISOString()`は常に**UTC（Z）**で出力し、ローカル時差の影響を受けない。API通信やログ出力の標準形式として広く使われる。
+418,ロケールに応じた比較【入力】,文字列をロケール感度で比較し、負/0/正を返すメソッドは？,"console.log('ä'.____('z','de')); // 負の値（ドイツ語規則）",-,-,localeCompare,"`String.prototype.localeCompare(target, locales, options)`は言語規則に基づく順序比較。ソートでは`arr.sort((a,b)=>a.localeCompare(b,'ja'))`のように使用。"
+419,非破壊のsplice【入力】,要素の削除/挿入を“非破壊”で行い新配列を返すES2023のメソッドは？,"const a=[1,2,3,4];
+const b=a.____(1,2,'X');
+console.log(b); // [1,'X',4]
+console.log(a); // [1,2,3,4]",-,-,toSpliced,"`Array.prototype.toSpliced(start, deleteCount, ...items)`は`splice`の**非破壊版**。元配列を保持しつつ変更結果だけ新配列に反映でき、イミュータブルな状態管理に最適。"
+420,末尾の要素を“参照”【入力】,配列の末尾（負のインデックス対応）を取得するメソッドは？,"const xs=[10,20,30];
+console.log(xs.____(-1)); // 30",-,-,at,`Array.prototype.at(index)`は負の値で末尾相対参照（`-1`で最後）。範囲外でも`undefined`を返し例外にしない。
+421,正規化フォーム変換【入力】,文字列をUnicode正規化（例：NFC）するメソッドは？,const s = '\\u0041\\u030A'; // 'A'+'◌̊'
+console.log(s.____('NFC')); // 'Å',-,-,normalize,`String.prototype.normalize(form)`は**NFC/NFD/NFKC/NFKD**に変換可能。合成済み文字と結合文字の差異を吸収して一貫した比較・検索を実現。
+422,BigIntの固定幅変換（符号なし）【入力】,ビット幅を超えたBigIntを“符号なし”で丸める静的メソッドは？,"const x = 0x1_ffffn;
+console.log(BigInt.____(16, x).toString(16)); // 'ffff'",-,-,asUintN,"`BigInt.asUintN(bits, value)`は下位`bits`のみを残す**モジュロ2^bits**。固定長レジスタの再現、ビットマスク、暗号系の補助に有用。"
+423,有限数の厳密判定【入力】,数値がNaN/Infinityでない“有限数”か判定する静的メソッドは？,console.log(Number.____(42)); // true
+console.log(Number.____(Infinity)); // false,-,-,isFinite,`Number.isFinite(value)`は**型変換を行わない**厳密判定。グローバル`isFinite('42')===true`と異なり、文字列や非数値は`false`となる。
+424,自前記述子の一括取得【入力】,オブジェクトの“自前プロパティ”のプロパティ記述子をまとめて取得するメソッドは？,const o={x:1};
+const d=Object.____(o);
+console.log(d.x.writable); // true,-,-,getOwnPropertyDescriptors,`Object.getOwnPropertyDescriptors(obj)`は各プロパティの`value/get/set/writable/configurable/enumerable`等を**まとめて**返す。精密コピーやミックスインに便利。
+425,Symbolキーの取得【入力】,オブジェクトの“自前のSymbolプロパティ”のみの配列を取得するメソッドは？,"const s=Symbol('k');
+const o={[s]:1, x:2};
+console.log(Object.____(o).length); // 1",-,-,getOwnPropertySymbols,`Object.getOwnPropertySymbols(obj)`は自前のSymbolキーのみを返す。`Object.keys`や`for...in`では見えないメタ的プロパティの列挙に使える。
+426,プロキシ越しのプロパティ取得【入力】,Proxyの`get`トラップを呼び出して値を取得するReflectメソッドは？,"const h={ get(t,k){ return 'v:'+t[k]; } };
+const p=new Proxy({x:1},h);
+console.log(Reflect.____(p,'x')); // 'v:1'",-,-,get,"`Reflect.get(target, key, receiver?)`は抽象操作`Get`を呼び出し、Proxyの`get`トラップやアクセサの`this`束縛を正しく扱う。`receiver`で参照先指定も可能。"
+427,Mapのメソッドチェーン【入力】,Mapに連続して値を設定できる（自身を返す）メソッドは？,"const m=new Map();\nm.____('a',1).____('b',2);\nconsole.log(m.size); // 2",-,-,set,"`Map.prototype.set(key, value)`は**Map自身を返す**ためメソッドチェーンが可能。初期化時の`set().set()`パターンに便利。"
+428,右畳み込み【入力】,配列を“右から”畳み込み、右結合の演算に使えるメソッドは？,"const expr = ['1','+','2','*','3'];
+const r = expr.____((acc,x)=>`(${x}${acc})`,'');
+console.log(r); // ((1+(2*3)))",-,-,reduceRight,`Array.prototype.reduceRight`は末尾から累積。パーサの構築や右結合演算（冪等）で有用。初期値未指定時は末尾要素が初期値。
+429,JSONのフィルタ変換【入力】,`JSON.stringify`で特定キーだけを残す“置換関数(replacer)”を指定するメソッドは？,"const o={a:1,b:2,c:3};
+const s=JSON.____(o,(k,v)=> k && k!=='b' ? v : undefined);
+console.log(s); // {""a"":1,""c"":3}",-,-,stringify,"`JSON.stringify(value, replacer, space?)`の`replacer`に関数を渡すと、キーごとの出力可否や値変換を制御できる。`space`で整形出力も可能。循環参照は例外。"
+430,Intlで数値を整形【入力】,`Intl.NumberFormat`で作成したフォーマッタで数値を整形するメソッドは？,"const nf=new Intl.NumberFormat('ja-JP',{style:'currency',currency:'JPY'});
+console.log(nf.____(123456)); // ￥123,456",-,-,format,`NumberFormat.prototype.format(number)`はロケール規則で桁区切りや通貨記号を付与。大量フォーマット時は**インスタンス再利用**が推奨。

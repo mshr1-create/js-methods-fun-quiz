@@ -18,7 +18,8 @@
       "type": "string"
     },
     "questionid": {
-      "type": "integer"
+      "type": "integer",
+      "unique": true
     },
     "explanation": {
       "type": "text"

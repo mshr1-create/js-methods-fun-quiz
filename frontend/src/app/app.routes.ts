@@ -5,7 +5,7 @@ import { SignupComponent } from './pages/signup/signup.component';
 // import { ModeSettingsComponent } from './mode-settings.component';
 import { ModeDurationComponent } from './pages/mode-duration/mode-duration.component';
 import { QuestionScreenComponent } from './pages/question-screen/question-screen.component';
-// import { ProfileComponent } from './profile.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { HttpClient } from '@angular/common/http';
 import { quizResolver } from './pages/question-screen/quiz.resolver';
 import { ResultComponent } from './pages/result/result.component';
@@ -34,5 +34,6 @@ export const routes: Routes = [
         loadComponent: () =>
             import('./pages/result/result.component').then(m => m.ResultComponent)
     },
+    { path: 'profile', component: ProfileComponent },
     { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

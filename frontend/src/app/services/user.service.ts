@@ -46,6 +46,13 @@ export class UserService {
     this.loggedInSubject.next(false);
   }
 
+  // ログイン中ユーザー情報の取得
+  getMe(): Observable<{ id: number; username: string; email: string }> {
+    return this.http.get<{ id: number; username: string; email: string }>(
+      `${this.baseUrl}/users/me`
+    );
+  }
+
 
 }
 

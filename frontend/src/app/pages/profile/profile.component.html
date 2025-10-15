@@ -1,0 +1,50 @@
+<div class="smartphone-wrapper">
+    <mat-toolbar color="primary" class="header-toolbar">
+        <span class="logo-text"><img src="assets/logo.jpeg" alt="logo">プロフィール</span>
+    </mat-toolbar>
+
+    <section class="profile-body">
+        <!-- 上部: アバター + ユーザー名 -->
+        <div class="profile-hero">
+            <div class="avatar">IMG</div>
+            <div class="user-info">
+                <div class="caption">ユーザー ネーム</div>
+                <div class="username">{{ username || '—' }}</div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <!-- 情報行: Email / パスワード -->
+        <dl class="kv">
+            <div class="row">
+                <dt>Email</dt>
+                <dd class="truncate">{{ email || '—' }}</dd>
+            </div>
+            <div class="row">
+                <dt>Password</dt>
+                <dd class="masked">●●●●●●●●</dd>
+                <button class="link-like" type="button" disabled aria-disabled="true" title="現在は変更できません">変更</button>
+            </div>
+        </dl>
+
+        <div class="separator"></div>
+
+
+        <!-- ボタン②:編集画面へ遷移 -->
+        <button mat-stroked-button color="primary" class="profile-button" (click)="onEditClick()" disabled aria-disabled="true" title="現在は編集できません">
+            <div class="button-label">
+                <div class="label-ja">編集する</div>
+            </div>
+        </button>
+
+        <!-- ボタン②：ログアウト -->
+        <button mat-stroked-button color="primary" class="profile-button" (click)="onLogout()">
+            <div class="button-label">
+                <div class="label-ja">ログアウト</div>
+            </div>
+        </button>
+        <!-- リンク：ホーム画面へ戻る -->
+        <div class="back-link" (click)="onHomeClick()">ホーム画面にもどる</div>
+    </section>
+</div>
